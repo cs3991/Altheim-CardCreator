@@ -51,7 +51,7 @@
             <!-- sous_type -->
             <div class="champ sous_types">
                 <div class="titre_bouton">
-                    <label for="sous-types1">Sous-types/Classes </label>
+                    <label>Sous-types/Classes </label>
                     <button type="button" onclick="ajouterSousType()" class="button_add">+</button><br>
                 </div>
                 <input type="text" class="sous_types"><br>
@@ -60,7 +60,7 @@
             <!-- devotions -->
             <div class="champ devotions">
                 <div class="titre_bouton">
-                    <label for="devotion1" class="devotions">Dévotions </label>
+                    <label class="devotions">Dévotions </label>
                     <button type="button" onclick="ajouterDevotion()" class="button_add">+</button><br>
                 </div>
                 <input type="text" class="devotions"><br>
@@ -69,7 +69,7 @@
             <!-- contraintes -->
             <div class="champ contraintes">
                 <div class="titre_bouton">
-                    <label for="contrainte_text_1">Contraintes :</label><br>
+                    <label>Contraintes :</label><br>
                     <button type="button" onclick="ajouterContrainte()" class="button_add">+</button><br>
                 </div>
                 <input type="text" class="contrainte_text contraintes">
@@ -102,7 +102,7 @@
 
             <!-- texte effet -->
             <div class="champ texte_effet">
-                <label for="texte-effet">Texte d'effet : </label><br>
+                <label>Texte d'effet : </label><br>
                 <textarea name="texte_effet" rows="7" id="texte_effet" class="texte_effet"></textarea>
                 <br>
             </div>
@@ -124,7 +124,7 @@
     <div class="colonne">
         <h2>Code JSON :</h2>
         <textarea name="json" rows="20" id="json" class="json" spellcheck="false"></textarea>
-        <button type="button" name="add_to_collection" , onclick="javascript:ajouterALaCollection(carte)">Ajouter à la Collection</button>
+        <button type="button" name="add_to_collection" onclick="javascript:ajouterALaCollection(carte)">Ajouter à la Collection</button>
 
     </div>
     <div class="colonne">
@@ -153,7 +153,7 @@
     </div>
     <div class="colonne">
         <div class="collection">
-            <textarea rows="20" class="collection_text" , spellcheck="false"></textarea> <br>
+            <textarea rows="20" class="collection_text" spellcheck="false"></textarea> <br>
             <button type="button" onclick="viderCollection()">
                 Vider la collection
             </button>
