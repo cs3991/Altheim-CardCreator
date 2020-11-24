@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="scaffolded-by" content="https://github.com/dart-lang/stagehand">
+    <title>CardCreator</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="icon" href="favicon.ico">
+    <script defer src="main.dart.js"></script>
+</head>
+
+<body>
+
+<h1>Créateur de cartes</h1>
+<div class="explications">
+    <p>
+        Créez votre carte en selectionnant ses attributs dans la colonne de gauche.
+        Le code correspondant s'affiche au fur et à mesure dans la colonne centrale.
+        Une fois que vous êtes satisfait de votre carte, vous pouvez appuyer sur "Ajouter à la collection"
+        et créer une autre carte. Toutes les cartes créées s'affichent ensuite dans la section
+        "Collection".
+    </p>
+</div>
+<div class="ligne">
+    <div class="colonne">
+        <h2>Attributs de la carte :</h2>
+        <form id="form">
+
+            <!-- types -->
+            <div class="type">
+                <label for="type">Type </label>
+                <select name="type" id="type">
+                    <option value="creature">Créature</option>
+                    <option value="construction">Construction</option>
+                    <option value="lieu">Lieu</option>
+                    <option value="miracle">Miracle</option>
+                </select>
+                <br>
+            </div>
+
+            <!-- nom -->
+            <div class="champ nom">
+                <label for="nom">Nom de la carte </label>
+                <input type="text" name="nom" id="nom">
+                <br>
+            </div>
+
+            <!-- sous_type -->
+            <div class="champ sous_types">
+                <div class="titre_bouton">
+                    <label for="sous-types1">Sous-types/Classes </label>
+                    <button type="button" onclick="ajouterSousType()" class="button_add">+</button><br>
+                </div>
+                <input type="text" class="sous_types"><br>
+            </div>
+
+            <!-- devotions -->
+            <div class="champ devotions">
+                <div class="titre_bouton">
+                    <label for="devotion1" class="devotions">Dévotions </label>
+                    <button type="button" onclick="ajouterDevotion()" class="button_add">+</button><br>
+                </div>
+                <input type="text" class="devotions"><br>
+            </div>
+
+            <!-- contraintes -->
+            <div class="champ contraintes">
+                <div class="titre_bouton">
+                    <label for="contrainte_text_1">Contraintes :</label><br>
+                    <button type="button" onclick="ajouterContrainte()" class="button_add">+</button><br>
+                </div>
+                <input type="text" class="contrainte_text contraintes">
+                <input type="number" min="1" max="99" class="contrainte_nb contraintes"><br>
+            </div>
+
+            <!-- mots-cles -->
+            <div class="champ mots_cles">
+                <label>Mots-clés :</label><br>
+                <input type="checkbox" name="mots-cles" value="acclimatation" class="mots_cles" id="acclimatation">
+                <label for="acclimatation">Acclimatation</label><br>
+
+                <input type="checkbox" name="mots-cles" value="percee" class="mots_cles" id="percee">
+                <label for="percee">Percée</label><br>
+
+                <input type="checkbox" name="mots-cles" value="jet" class="mots_cles" id="jet">
+                <label for="jet">Jet</label><br>
+
+                <input type="checkbox" name="mots-cles" value="riposte" class="mots_cles" id="riposte">
+                <label for="riposte">Riposte</label><br>
+
+                <input type="checkbox" name="mots-cles" value="migration" class="mots_cles" id="migration">
+                <label for="migration">Migration
+                    <input type="number" min="1" max="99" id="migration_nb" class="mots_cles"></label><br>
+
+                <input type="checkbox" name="mots-cles" value="armure" class="mots_cles" id="armure">
+                <label for="armure">Armure
+                    <input type="number" min="1" max="99" class="mots_cles" id="armure_nb"></label><br>
+            </div>
+
+            <!-- texte effet -->
+            <div class="champ texte_effet">
+                <label for="texte-effet">Texte d'effet : </label><br>
+                <textarea name="texte_effet" rows="7" id="texte_effet" class="texte_effet"></textarea>
+                <br>
+            </div>
+
+            <!-- puissance -->
+            <div class="champ puissance">
+                <label for="puissance">Puissance </label>
+                <input type="number" min="0" max="999" class="puissance" id="puissance"><br>
+            </div>
+
+            <!-- resistance -->
+            <div class="champ resistance">
+                <label for="resistance">Résistance </label>
+                <input type="number" min="0" max="999" class="resistance" id="resistance">
+            </div>
+        </form>
+    </div>
+
+    <div class="colonne">
+        <h2>Code JSON :</h2>
+        <textarea name="json" rows="20" id="json" class="json" spellcheck="false"></textarea>
+        <button type="button" name="add_to_collection" , onclick="javascript:ajouterALaCollection(carte)">Ajouter à la Collection</button>
+
+    </div>
+    <div class="colonne">
+        <h2>Visualisation :</h2>
+        prochainement
+    </div>
+</div>
+
+
+
+
+
+<h1>Collection</h1>
+<div class="explications">
+    <p> Ici, vous retrouverez toutes les cartes que vous avez codées et ajoutées à la collection.
+        Vous pouvez les supprimer grâce au bouton "&times" dans la colonne de droite.
+        Le code s'affiche dans la colonne de droite. Pour voir vos nouvelles cartes dans le jeu, n'hesitez
+        pas à partager ce code dans #version-numérique !</p>
+</div>
+<div class="ligne">
+    <div class="colonne">
+        <h2>Cartes ajoutées à la collection</h2>
+        <div class="liste_collection">
+
+        </div>
+    </div>
+    <div class="colonne">
+        <div class="collection">
+            <textarea rows="20" class="collection_text" , spellcheck="false"></textarea> <br>
+            <button type="button" onclick="viderCollection()">
+                Vider la collection
+            </button>
+        </div>
+    </div>
+</div>
+<h1>Créateur de decks</h1>
+    prochainement
+
+</body>
+</html>
