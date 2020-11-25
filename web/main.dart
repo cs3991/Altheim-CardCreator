@@ -3,18 +3,15 @@ import 'dart:convert';
 import 'models/Card.dart';
 
 void main() {
-  Card test = Card.fromJson({
-    "NOM": {
-      "type": "creature",
-      "sous_types": ["SOUSTYPE1", "SOUSTYPE2"],
-      "devotions": ["DEVOTION1", "DEVOTION2"],
-      "contraintes": {"CONTRAINTE": 1, "C": 2},
-      "mots_cles": {"acclimatation": 1, "percee": 1},
-      "texte_effet": "TEXT",
-      "puissance": 2,
-      "resistance": 1
-    }
+  var card = Card.empty();
+  var form = querySelector('#form');
+
+  // Each change in the form trigger the update of the card
+  form.onInput.listen((event) {
+    card.updateFromForm(form);
+    querySelector('#json').text = jsonEncode(card.toJson());
   });
-  print(test);
-  querySelector('#json').text = jsonEncode(test.toJson());
+
+  card.updateFromForm(querySelector('#form'));
+  querySelector('#json').text = jsonEncode(card.toJson());
 }

@@ -1,3 +1,5 @@
+import 'dart:html';
+
 import 'CardType.dart';
 
 class Card {
@@ -14,6 +16,8 @@ class Card {
   Card(this.name, this.type, this.subtypes, this.devotions, this.constraints, this.keywords, this.effect, this.power,
       this.resistance);
 
+  Card.empty();
+
   Card.fromJson(Map<String, dynamic> json) {
     name = json.keys.first;
     var cardProperties = json[name];
@@ -28,20 +32,48 @@ class Card {
     resistance = cardProperties['resistance'];
   }
 
-  static CardType cardTypeOf(String s) {
-    switch (s) {
-      case ("creature"):
-        return CardType.creature;
-      case ("construction"):
-        return CardType.construction;
-      case ("miracle"):
-        return CardType.miracle;
-      case ("devotion"):
-        return CardType.devotion;
-      case ("lieu"):
-        return CardType.place;
-      default:
-        return null;
+  void updateFromForm(FormElement form) {
+    name = (form.querySelector('#nom') as InputElement).value;
+    type = CardTypeExtension.fromString((form.querySelector('#type') as SelectElement).value);
+    subtypes = [];
+    for (InputElement element in querySelectorAll('input.sous_types')) {
+      if (element.value != '') {
+        subtypes.add(element.value);
+      }
+    }
+    devotions = [];
+    for (InputElement element in querySelectorAll('input.devotions')) {
+      if (element.value != '') {
+        devotions.add(element.value);
+      }
+    }
+    constraints = {};
+    List<InputElement> constraintsText = form.querySelectorAll('input.contrainte_text');
+    List<InputElement> constraintsNb = form.querySelectorAll('input.contrainte_nb');
+    for (int i = 0; i < constraintsText.length; i++) {
+      if (constraintsText[i].value != '') {
+        constraints[constraintsText[i].value] = int.parse(constraintsNb[i].value);
+      }
+    }
+    keywords = {};
+    for (dynamic keyword in form.querySelectorAll('input.mots_cles')) {
+      var checked = keyword.checked;
+      var value = keyword.value;
+      if (checked) {
+        List<InputElement> nb = form.querySelectorAll('input#' + value + '_nb');
+        if (nb.isEmpty) {
+          keywords[value] = 1;
+        } else if (nb[0].value == '') {
+          keywords[value] = 1;
+        } else {
+          keywords[value] = int.parse(nb[0].value);
+        }
+      }
+
+      // keywords = data['mots_cles'];
+      effect = (form.querySelector('#texte_effet') as TextAreaElement).value;
+      power = int.parse((form.querySelector('#puissance') as InputElement).value);
+      resistance = int.parse((form.querySelector('#resistance') as InputElement).value);
     }
   }
 
