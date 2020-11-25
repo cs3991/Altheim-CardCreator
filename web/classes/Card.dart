@@ -3,6 +3,7 @@ import 'dart:html';
 import 'CardType.dart';
 
 class Card {
+  // todo : rarete, extension, id
   String name;
   CardType type;
   List<String> subtypes;
@@ -77,18 +78,25 @@ class Card {
     }
   }
 
-  Map<String, dynamic> toJson() => {
-        name: {
-          'type': type.toText(),
-          'sous_types': subtypes,
-          'devotions': devotions,
-          'contraintes': constraints,
-          'mots_cles': keywords,
-          'texte_effet': effect,
-          'puissance': power,
-          'resistance': resistance,
-        },
-      };
+  void addIfDisplayed(Map json, dynamic property, String className) {
+    print(querySelector('div.' + className).style.display != 'none');
+    if (querySelector('div.' + className).style.display != 'none') {
+      json[name][className] = property;
+    }
+  }
+
+  Map<String, dynamic> toJson() {
+    var json = {name: {}};
+    addIfDisplayed(json, type.toText(), 'type');
+    addIfDisplayed(json, subtypes, 'sous_types');
+    addIfDisplayed(json, devotions, 'devotions');
+    addIfDisplayed(json, constraints, 'contraintes');
+    addIfDisplayed(json, keywords, 'mots_cles');
+    addIfDisplayed(json, effect, 'texte_effet');
+    addIfDisplayed(json, power, 'puissance');
+    addIfDisplayed(json, resistance, 'resistance');
+    return json;
+  }
 
   @override
   String toString() {

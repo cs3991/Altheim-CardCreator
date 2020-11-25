@@ -1,18 +1,18 @@
-enum CardType { creature, construction, miracle, devotion, place }
+enum CardType { creature, construction, miracle, divinity, place }
 
 extension CardTypeExtension on CardType {
   String toText() {
     switch (this) {
       case (CardType.creature):
-        return "creature";
+        return 'creature';
       case (CardType.construction):
-        return "construction";
+        return 'construction';
       case (CardType.miracle):
-        return "miracle";
-      case (CardType.devotion):
-        return "devotion";
+        return 'miracle';
+      case (CardType.divinity):
+        return 'divinity';
       case (CardType.place):
-        return "lieu";
+        return 'lieu';
       default:
         return null;
     }
@@ -20,15 +20,15 @@ extension CardTypeExtension on CardType {
 
   static CardType fromString(String s) {
     switch (s) {
-      case ("creature"):
+      case ('creature'):
         return CardType.creature;
-      case ("construction"):
+      case ('construction'):
         return CardType.construction;
-      case ("miracle"):
+      case ('miracle'):
         return CardType.miracle;
-      case ("devotion"):
-        return CardType.devotion;
-      case ("lieu"):
+      case ('divinite'):
+        return CardType.divinity;
+      case ('lieu'):
         return CardType.place;
       default:
         return null;
