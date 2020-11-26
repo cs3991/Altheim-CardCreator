@@ -125,7 +125,7 @@
     <div class="colonne">
         <h2>Code JSON :</h2>
         <textarea name="json" rows="20" id="json" class="json" spellcheck="false"></textarea>
-        <button type="button" name="add_to_collection" onclick="javascript:ajouterALaCollection(carte)">Ajouter à la Collection</button>
+        <button type="button" name="add_to_collection" id="button_add_collection">Ajouter à la Collection</button>
 
     </div>
     <div class="colonne">
@@ -148,14 +148,14 @@
 <div class="ligne">
     <div class="colonne">
         <h2>Cartes ajoutées à la collection</h2>
-        <div class="liste_collection">
+        <div id="liste_collection">
 
         </div>
     </div>
     <div class="colonne">
         <div class="collection">
-            <textarea rows="20" class="collection_text" spellcheck="false"></textarea> <br>
-            <button type="button" onclick="viderCollection()">
+            <textarea rows="20" class="collection_text" id="collection_text_area" spellcheck="false"></textarea> <br>
+            <button type="button" id="button_clear_collection">
                 Vider la collection
             </button>
         </div>

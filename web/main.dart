@@ -1,6 +1,7 @@
 import 'dart:html';
 import 'dart:convert';
 import 'classes/Card.dart';
+import 'classes/Collection.dart';
 import 'classes/Form.dart';
 
 void main() {
@@ -23,4 +24,13 @@ void main() {
 
   propertiesForm.card.updateFromForm(querySelector('#form'));
   querySelector('#json').text = jsonEncode(propertiesForm.card.toJson());
+
+  var collection = Collection();
+
+  querySelector('#button_add_collection').onClick.listen((event) {
+    collection.add(propertiesForm.card);
+  });
+  querySelector('#button_clear_collection').onClick.listen((event) {
+    collection.clear();
+  });
 }

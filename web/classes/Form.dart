@@ -83,9 +83,8 @@ class PropertiesForm {
     querySelector('#json').text = jsonEncode(card.toJson());
   }
 
+  /// Adds an element to the document
   void _addElement(String parentClass, String elementTag, String elementId, String elementClass, String html) {
-    // Adds an element to the document
-    var p = document.querySelector(parentClass);
     var newElement = DivElement();
     newElement.id = elementId;
     newElement.classes = [elementClass];
@@ -102,7 +101,7 @@ class PropertiesForm {
     subtypes_id++; // increment sous_type_id to get a unique ID for the new element
     var html = '<input type="text" class="sous_types">'
         '<button>&times;</button>';
-    _addElement('.sous_types', 'div', 'sous_types_' + subtypes_id.toString(), "removable", html);
+    _addElement('.sous_types', 'div', 'sous_types_' + subtypes_id.toString(), 'removable', html);
   }
 
   void addDevotion() {
@@ -110,7 +109,7 @@ class PropertiesForm {
     var html = '<input type="text" class="devotions">'
         '<button>&times;</button>';
 
-    _addElement('.devotions', 'div', 'devotions_' + devotions_id.toString(), "removable", html);
+    _addElement('.devotions', 'div', 'devotions_' + devotions_id.toString(), 'removable', html);
   }
 
   void addConstraints() {
@@ -118,6 +117,6 @@ class PropertiesForm {
     var html = '<input type="text" class="contrainte_text contraintes">'
         '<input type="number" min="1" max="99" class="contrainte_nb contraintes"><br>'
         '<button>&times;</button>';
-    _addElement('.contraintes', 'div', 'contraintes_' + constraints_id.toString(), "removable", html);
+    _addElement('.contraintes', 'div', 'contraintes_' + constraints_id.toString(), 'removable', html);
   }
 }

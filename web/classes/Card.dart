@@ -100,6 +100,11 @@ class Card {
     return json;
   }
 
+  /// since Dart doesn't support cloning object, this function is just a workaround for this
+  Card copy() {
+    return Card(name, type, subtypes, devotions, constraints, keywords, effect, power, resistance);
+  }
+
   @override
   String toString() {
     return 'Card : $name :\n'
@@ -112,4 +117,13 @@ class Card {
         'power: $power, \n'
         'resistance: $resistance\n';
   }
+
+  /// to be able to compare two different cards : Card('name') == Card('name'); -> true
+  // todo : better implementation with ids
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) || other is Card && runtimeType == other.runtimeType && name == other.name;
+
+  @override
+  int get hashCode => name.hashCode;
 }
