@@ -1,9 +1,15 @@
+import 'dart:convert';
 import 'dart:html';
 
+import 'Card.dart';
 import 'CardType.dart';
 
 class PropertiesForm {
+  Card card = Card.empty();
   FormElement form;
+  var subtypes_id = 0;
+  var devotions_id = 0;
+  var constraints_id = 0;
 
   PropertiesForm(this.form);
 
@@ -16,6 +22,7 @@ class PropertiesForm {
     }
   }
 
+  /// activates the fields of the form corresponding to the type of card selected
   void changeType(CardType type) {
     switch (type) {
       case CardType.construction:
@@ -66,5 +73,51 @@ class PropertiesForm {
         ]);
         break;
     }
+  }
+
+  /// Updates the card attribute to match the values from the form and shows the resulting
+  /// json in the text area.
+  void updateJson() {
+    card.updateFromForm(form);
+    changeType(card.type);
+    querySelector('#json').text = jsonEncode(card.toJson());
+  }
+
+  void _addElement(String parentClass, String elementTag, String elementId, String elementClass, String html) {
+    // Adds an element to the document
+    var p = document.querySelector(parentClass);
+    var newElement = DivElement();
+    newElement.id = elementId;
+    newElement.classes = [elementClass];
+    newElement.setInnerHtml(html);
+    newElement.querySelector('button').onClick.listen((event) {
+      newElement.remove();
+      updateJson();
+    });
+    var parent = querySelector(parentClass);
+    parent.children.add(newElement);
+  }
+
+  void addSubType() {
+    subtypes_id++; // increment sous_type_id to get a unique ID for the new element
+    var html = '<input type="text" class="sous_types">'
+        '<button>&times;</button>';
+    _addElement('.sous_types', 'div', 'sous_types_' + subtypes_id.toString(), "removable", html);
+  }
+
+  void addDevotion() {
+    devotions_id++; // increment devotion_id to get a unique ID for the new element
+    var html = '<input type="text" class="devotions">'
+        '<button>&times;</button>';
+
+    _addElement('.devotions', 'div', 'devotions_' + devotions_id.toString(), "removable", html);
+  }
+
+  void addConstraints() {
+    constraints_id++; // increment devotion_id to get a unique ID for the new element
+    var html = '<input type="text" class="contrainte_text contraintes">'
+        '<input type="number" min="1" max="99" class="contrainte_nb contraintes"><br>'
+        '<button>&times;</button>';
+    _addElement('.contraintes', 'div', 'contraintes_' + constraints_id.toString(), "removable", html);
   }
 }

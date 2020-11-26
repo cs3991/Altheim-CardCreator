@@ -1,4 +1,10 @@
-An absolute bare-bones web app.
+# Créateur de cartes Altheim
 
-Created from templates made available by Stagehand under a BSD-style
-[license](https://github.com/dart-lang/stagehand/blob/master/LICENSE).
+![Logo Altheim](web/titre.png)
+
+Une appli Dart Web pour génerer le code JSON correspondant à une carte,
+ une collection ou un deck du jeu _Altheim : Artisans des mondes_.
+ 
+ Une version plus ancienne en JavaScript est disponible 
+ [ici](https://www.etud.insa-toulouse.fr/~ysimard/altheim/).
+ 

@@ -4,16 +4,23 @@ import 'classes/Card.dart';
 import 'classes/Form.dart';
 
 void main() {
-  var card = Card.empty();
   var propertiesForm = PropertiesForm(querySelector('#form'));
 
   // Each change in the form triggers the update of the card
   propertiesForm.form.onInput.listen((event) {
-    card.updateFromForm(propertiesForm.form);
-    propertiesForm.changeType(card.type);
-    querySelector('#json').text = jsonEncode(card.toJson());
+    propertiesForm.updateJson();
   });
 
-  card.updateFromForm(querySelector('#form'));
-  querySelector('#json').text = jsonEncode(card.toJson());
+  querySelector('.sous_types>div>button').onClick.listen((event) {
+    propertiesForm.addSubType();
+  });
+  querySelector('.contraintes>div>button').onClick.listen((event) {
+    propertiesForm.addConstraints();
+  });
+  querySelector('.devotions>div>button').onClick.listen((event) {
+    propertiesForm.addDevotion();
+  });
+
+  propertiesForm.card.updateFromForm(querySelector('#form'));
+  querySelector('#json').text = jsonEncode(propertiesForm.card.toJson());
 }

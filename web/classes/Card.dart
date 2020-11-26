@@ -33,6 +33,8 @@ class Card {
     resistance = cardProperties['resistance'];
   }
 
+  /// Updates all attributes of card to match the values in the form.
+  /// Does not update the json text area and the form fields.
   void updateFromForm(FormElement form) {
     name = (form.querySelector('#nom') as InputElement).value;
     type = CardTypeExtension.fromString((form.querySelector('#type') as SelectElement).value);
@@ -53,7 +55,7 @@ class Card {
     List<InputElement> constraintsNb = form.querySelectorAll('input.contrainte_nb');
     for (int i = 0; i < constraintsText.length; i++) {
       if (constraintsText[i].value != '') {
-        constraints[constraintsText[i].value] = int.parse(constraintsNb[i].value);
+        constraints[constraintsText[i].value] = int.tryParse(constraintsNb[i].value);
       }
     }
     keywords = {};
@@ -67,19 +69,19 @@ class Card {
         } else if (nb[0].value == '') {
           keywords[value] = 1;
         } else {
-          keywords[value] = int.parse(nb[0].value);
+          keywords[value] = int.parse((nb[0].value == null) ? '1' : nb[0].value);
         }
       }
 
       // keywords = data['mots_cles'];
       effect = (form.querySelector('#texte_effet') as TextAreaElement).value;
-      power = int.parse((form.querySelector('#puissance') as InputElement).value);
-      resistance = int.parse((form.querySelector('#resistance') as InputElement).value);
+      power = int.tryParse((form.querySelector('#puissance') as InputElement).value);
+      resistance = int.tryParse((form.querySelector('#resistance') as InputElement).value);
     }
   }
 
+  /// add to json if the display property is not set to 'none'.
   void addIfDisplayed(Map json, dynamic property, String className) {
-    print(querySelector('div.' + className).style.display != 'none');
     if (querySelector('div.' + className).style.display != 'none') {
       json[name][className] = property;
     }
