@@ -1,6 +1,6 @@
 import 'dart:html';
 import 'dart:convert';
-import 'classes/Card.dart';
+import 'classes/Action.dart';
 import 'classes/Collection.dart';
 import 'classes/Form.dart';
 
@@ -21,6 +21,9 @@ void main() {
   querySelector('.devotions>div>button').onClick.listen((event) {
     propertiesForm.addDevotion();
   });
+
+  querySelector('#condition_div').append(Action('bool', 'condition', null).mainDiv);
+  querySelector('#action_div').append(Action('void', 'action', null).mainDiv);
 
   propertiesForm.card.updateFromForm(querySelector('#form'));
   querySelector('#json').text = jsonEncode(propertiesForm.card.toJson());

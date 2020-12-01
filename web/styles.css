@@ -111,6 +111,12 @@ p {
   max-width: 1100px;
 }
 
+.action_params {
+    margin-left: 10px;
+    padding: 8px;
+    border-left: 2px solid #fff3;
+}
+
 @media (max-width: 1100px) {
   * {
     font-size: 1.05em;
