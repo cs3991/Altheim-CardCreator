@@ -3,8 +3,11 @@ import 'dart:html';
 import 'CardType.dart';
 
 class Card {
-  // todo : rarete, extension, id
+  int id;
+  String extension;
+  String rarity;
   String name;
+  int maxNbr;
   CardType type;
   List<String> subtypes;
   List<String> devotions;
@@ -14,16 +17,19 @@ class Card {
   int power;
   int resistance;
 
-  Card(this.name, this.type, this.subtypes, this.devotions, this.constraints, this.keywords, this.effect, this.power,
-      this.resistance);
+  Card(this.id, this.name, this.maxNbr, this.type, this.extension, this.rarity, this.subtypes, this.devotions,
+      this.constraints, this.keywords, this.effect, this.power, this.resistance);
 
   Card.empty();
 
   Card.fromJson(Map<String, dynamic> json) {
-    name = json.keys.first;
-    var cardProperties = json[name];
-
+    id = int.parse(json.keys.first);
+    var cardProperties = json[id];
+    name = cardProperties['name'];
+    maxNbr = cardProperties['nbr_max'];
     type = CardTypeExtension.fromString(cardProperties['type']);
+    rarity = cardProperties['rarete'];
+    extension = cardProperties['extension'];
     subtypes = cardProperties['sous_types'];
     devotions = cardProperties['devotions'];
     constraints = cardProperties['contraintes'];
@@ -36,7 +42,11 @@ class Card {
   /// Updates all attributes of card to match the values in the form.
   /// Does not update the json text area and the form fields.
   void updateFromForm(FormElement form) {
+    id = int.parse((querySelector('#id') as InputElement).value);
+    maxNbr = (querySelector('#nbr_max') as InputElement).valueAsNumber;
     name = (form.querySelector('#nom') as InputElement).value;
+    rarity = (form.querySelector('#rarete') as SelectElement).value;
+    extension = (form.querySelector('#extension') as SelectElement).value;
     type = CardTypeExtension.fromString((form.querySelector('#type') as SelectElement).value);
     subtypes = [];
     for (InputElement element in querySelectorAll('input.sous_types')) {
@@ -83,12 +93,16 @@ class Card {
   /// add to json if the display property is not set to 'none'.
   void addIfDisplayed(Map json, dynamic property, String className) {
     if (querySelector('div.' + className).style.display != 'none') {
-      json[name][className] = property;
+      json[id.toString()][className] = property;
     }
   }
 
   Map<String, dynamic> toJson() {
-    var json = {name: {}};
+    var json = {id.toString(): {}};
+    addIfDisplayed(json, name, 'nom');
+    addIfDisplayed(json, maxNbr, 'nbr_max');
+    addIfDisplayed(json, rarity, 'rarete');
+    addIfDisplayed(json, extension, 'extension');
     addIfDisplayed(json, type.toText(), 'type');
     addIfDisplayed(json, subtypes, 'sous_types');
     addIfDisplayed(json, devotions, 'devotions');
@@ -102,13 +116,30 @@ class Card {
 
   /// since Dart doesn't support cloning object, this function is just a workaround for this
   Card copy() {
-    return Card(name, type, subtypes, devotions, constraints, keywords, effect, power, resistance);
+    return Card(id, name, maxNbr, type, extension, rarity, subtypes, devotions, constraints, keywords, effect, power,
+        resistance);
+  }
+
+  Map getPropertiesMap() {
+    return toJson()[id.toString()];
+  }
+
+  void addToMap(Map<String, dynamic> map) {
+    map[id.toString()] = getPropertiesMap();
+  }
+
+  void incrementId() {
+    (querySelector('#id') as InputElement).valueAsNumber = id + 1;
   }
 
   @override
   String toString() {
     return 'Card : $name :\n'
+        'id: $id,\n'
         'type: $type,\n'
+        'rarity: $rarity,\n'
+        'extension: $extension,\n'
+        'maxNbr: $maxNbr,\n'
         'subtypes: $subtypes,\n'
         'devotions: $devotions, \n'
         'constraints: $constraints, \n'
@@ -122,8 +153,8 @@ class Card {
   // todo : better implementation with ids
   @override
   bool operator ==(Object other) =>
-      identical(this, other) || other is Card && runtimeType == other.runtimeType && name == other.name;
+      identical(this, other) || other is Card && runtimeType == other.runtimeType && id == other.id;
 
   @override
-  int get hashCode => name.hashCode;
+  int get hashCode => id.hashCode;
 }

@@ -42,10 +42,44 @@
                 <br>
             </div>
 
+            <!-- id -->
+            <div class="champ id">
+                <label for="id">Id (doit être unique parmi les cartes de la collection) </label>
+                <input type="number" min="0" max="99999" class="id" id="id" value="0"><br>
+            </div>
+            <!-- limite -->
+            <div class="champ nbr_max">
+                <label for="nbr_max">Limite par deck </label>
+                <input type="number" min="0" max="5" class="nbr_max" id="nbr_max" value="1"><br>
+            </div>
+
             <!-- nom -->
             <div class="champ nom">
                 <label for="nom">Nom de la carte </label>
                 <input type="text" name="nom" id="nom">
+                <br>
+            </div>
+
+            <!-- rarete -->
+            <div class="rarete">
+                <label for="rarete">Rareté </label>
+                <select name="rarete" id="rarete">
+                    <option value="banal">Banal</option>
+                    <option value="remarquable">Remarquable</option>
+                    <option value="exceptionnel">Exceptionnel</option>
+                    <option value="unique">Unique</option>
+                </select>
+                <br>
+            </div>
+
+            <!-- extension -->
+            <div class="extension">
+                <label for="extension">Extension </label>
+                <select name="extension" id="extension">
+                    <option value="aube">Aube</option>
+                    <option value="ascension">Ascension</option>
+                    <option value="zenith">Zenith</option>
+                </select>
                 <br>
             </div>
 

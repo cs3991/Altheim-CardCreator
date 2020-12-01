@@ -28,6 +28,10 @@ class PropertiesForm {
       case CardType.construction:
         activateDiv([
           'nom',
+          'id',
+          'nbr_max',
+          'rarete',
+          'extension',
           'contraintes',
           'mots_cles',
           'texte_effet',
@@ -38,6 +42,10 @@ class PropertiesForm {
       case CardType.place:
         activateDiv([
           'nom',
+          'id',
+          'nbr_max',
+          'rarete',
+          'extension',
           'sous_types',
           'texte_effet',
         ]);
@@ -45,6 +53,10 @@ class PropertiesForm {
       case CardType.miracle:
         activateDiv([
           'nom',
+          'id',
+          'nbr_max',
+          'rarete',
+          'extension',
           'sous_types',
           'contraintes',
           'texte_effet',
@@ -53,6 +65,10 @@ class PropertiesForm {
       case CardType.divinity:
         activateDiv([
           'nom',
+          'id',
+          'nbr_max',
+          'rarete',
+          'extension',
           'sous_types',
           'devotions',
           'contraintes',
@@ -63,6 +79,10 @@ class PropertiesForm {
       default:
         activateDiv([
           'nom',
+          'id',
+          'nbr_max',
+          'rarete',
+          'extension',
           'sous_types',
           'devotions',
           'contraintes',
