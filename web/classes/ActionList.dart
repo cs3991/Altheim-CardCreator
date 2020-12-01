@@ -19,8 +19,7 @@ final actions = [
   },
   {
     'name': 'modifier_stats',
-    'doc':
-        'Ajoute des points de puissance et de résistance à une carte. Valeur négatives possibles.',
+    'doc': 'Ajoute des points de puissance et de résistance à une carte. Valeur négatives possibles.',
     'params': [
       {'name': 'carte', 'type': 'carte'},
       {'name': 'puissance', 'type': 'int'},
@@ -100,8 +99,7 @@ final actions = [
   },
   {
     'name': 'blessures_infligees',
-    'doc':
-        "Le nombre de blessures infligées par l'attaque. Ne peut s'utiliser que quand le déclencheur est attaque.",
+    'doc': "Le nombre de blessures infligées par l'attaque. Ne peut s'utiliser que quand le déclencheur est attaque.",
     'params': [],
     'return': 'int',
     'enable_if': {
@@ -120,8 +118,7 @@ final actions = [
   },
   {
     'name': 'attaquant',
-    'doc':
-        "La carte qui a initié l'attaque. Ne peut s'utiliser que quand le déclencheur est attaque ou défense.",
+    'doc': "La carte qui a initié l'attaque. Ne peut s'utiliser que quand le déclencheur est attaque ou défense.",
     'params': [],
     'return': 'carte',
     'enable_if': {
@@ -140,8 +137,7 @@ final actions = [
   },
   {
     'name': 'carte_animee',
-    'doc':
-        "La carte qui est animée. Ne peut s'utiliser que quand le déclencheur est animation ou migration.",
+    'doc': "La carte qui est animée. Ne peut s'utiliser que quand le déclencheur est animation ou migration.",
     'params': [],
     'return': 'carte',
     'enable_if': {
@@ -150,8 +146,7 @@ final actions = [
   },
   {
     'name': 'cette_carte',
-    'doc':
-        "Cette carte (celle dont vous êtes en train d'éditer les effets en ce moment).",
+    'doc': "Cette carte (celle dont vous êtes en train d'éditer les effets en ce moment).",
     'params': [],
     'return': 'carte'
   },
@@ -177,18 +172,8 @@ final actions = [
     'return': 'liste_de_cartes'
   },
 
-  {
-    'name': 'possesseur de la carte',
-    'doc': 'Joueur qui possède la carte.',
-    'params': [],
-    'return': 'joueur'
-  },
-  {
-    'name': 'adversaire',
-    'doc': 'Le joueur adverse à celui qui possède cette carte.',
-    'params': [],
-    'return': 'joueur'
-  },
+  {'name': 'possesseur de la carte', 'doc': 'Joueur qui possède la carte.', 'params': [], 'return': 'joueur'},
+  {'name': 'adversaire', 'doc': 'Le joueur adverse à celui qui possède cette carte.', 'params': [], 'return': 'joueur'},
 
   {
     'name': 'territoire',
@@ -222,12 +207,138 @@ final actions = [
     ],
     'return': 'liste_de_cartes'
   },
-// Position
-// Origine / Destination (pour migration) -> position
-// Adjacent
-// i-ème ligne
-// Ajouter action
-// Trigger (mettre le menu déroulant trigger comme les conditions et les actions, pour pouvoir mettre des triggers en paramètres de fonctions)
+
+  {
+    'name': 'position_de',
+    'doc': 'La position de la carte spécifiée.',
+    'params': [
+      {'name': 'carte', 'type': 'carte'}
+    ],
+    'return': 'position'
+  },
+
+  {
+    'name': 'origine',
+    'doc': "La position d'origine de la carte qui migre.",
+    'params': [],
+    'return': 'position',
+    'enable_if': {
+      'trigger': ['migration']
+    }
+  },
+  {
+    'name': 'destination',
+    'doc': 'La position de destination de la carte qui migre.',
+    'params': [],
+    'return': 'position',
+    'enable_if': {
+      'trigger': ['migration']
+    }
+  },
+  {
+    'name': 'adjacent',
+    'doc': 'Vrai si les 2 positions sont adjacentes.',
+    'params': [
+      {'name': 'a', 'type': 'position'},
+      {'name': 'b', 'type': 'position'}
+    ],
+    'return': 'bool'
+  },
+  {
+    'name': 'ligne',
+    'doc': 'La ligne correspondant à cette position.',
+    'params': [
+      {'name': 'position', 'type': 'position'}
+    ],
+    'return': 'int'
+  },
+  {
+    'name': 'colonne',
+    'doc': 'La colonne correspondant à cette position.',
+    'params': [
+      {'name': 'position', 'type': 'position'}
+    ],
+    'return': 'int'
+  },
+
+  {
+    'name': 'ajouter_effet',
+    'doc': 'Ajoute un effet à une carte.',
+    'params': [
+      {'name': 'déclencheur', 'type': 'trigger'},
+      {'name': 'condition', 'type': 'bool'},
+      {'name': 'action', 'type': 'void'},
+      {'name': 'carte', 'type': 'carte'},
+    ],
+    'return': 'void'
+  },
+  {
+    'name': 'permanence',
+    'doc': 'Déclencheur en permanence.',
+    'params': [],
+    'return': 'trigger'
+  },
+  {
+    'name': 'migration',
+    'doc': 'Déclencheur migration.',
+    'params': [],
+    'return': 'trigger'
+  },
+  {
+    'name': 'invocation',
+    'doc': 'Déclencheur invocation.',
+    'params': [],
+    'return': 'trigger'
+  },
+  {
+    'name': 'découverte',
+    'doc': 'Déclencheur découverte.',
+    'params': [],
+    'return': 'trigger'
+  },
+  {
+    'name': 'animation',
+    'doc': 'Déclencheur animation.',
+    'params': [],
+    'return': 'trigger'
+  },
+  {
+    'name': 'attaque',
+    'doc': 'Déclencheur attaque.',
+    'params': [],
+    'return': 'trigger'
+  },
+  {
+    'name': 'defense',
+    'doc': 'Déclencheur defense.',
+    'params': [],
+    'return': 'trigger'
+  },
+  {
+    'name': 'fin_tour',
+    'doc': 'Déclencheur fin de tour.',
+    'params': [],
+    'return': 'trigger'
+  },
+  {
+    'name': 'fin_action',
+    'doc': 'Déclencheur fin d\'action.',
+    'params': [],
+    'return': 'trigger'
+  },
+  {
+    'name': 'mort',
+    'doc': 'Déclencheur mort d\'une entité.',
+    'params': [],
+    'return': 'trigger'
+  },
+  {
+    'name': 'effet_declenché',
+    'doc': 'Déclencheur effet declenché par le joueur.',
+    'params': [],
+    'return': 'trigger'
+  },
+
 // Carte invoquée (pour invocation)
 // Carte morte (pour mort)
 

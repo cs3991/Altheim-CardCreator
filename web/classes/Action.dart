@@ -5,9 +5,12 @@ class Action {
   final String _name;
   final String _type;
   final Action _parent;
+  String _functionName = '';
   String _doc = '';
   final List<Action> _params = [];
   DivElement _mainDiv;
+  bool _varOnly = false;
+  int _varValue;
 
   Action(this._type, this._name, this._parent) {
     _mainDiv = document.createElement('div');
@@ -24,6 +27,7 @@ class Action {
       var input = document.createElement('input');
       input.setAttribute('class', 'action_int_input');
       input.setAttribute('type', 'number');
+      input.addEventListener('change', (evt) => _onInputChange(evt));
       _mainDiv.append(input);
     }
 
@@ -42,19 +46,34 @@ class Action {
     _mainDiv.append(select);
   }
 
+  Map<String, dynamic> toJson() {
+    if (_type == 'int' && _varOnly) {
+      return {'int': _varValue};
+    }
+    return {_functionName: _params.map((e) => e.toJson()).toList()};
+  }
+
+  Action getRoot() {
+    return parent == null ? this : parent.getRoot();
+  }
+
   void _selectChangeCallback(HtmlElement div, Event evt) {
     var select = evt.target as SelectElement;
     var val = select.value;
     var action = actions.firstWhere((a) => a['name'] == val, orElse: () => null);
+    _params.clear();
     if (action != null) {
       _doc = action['doc'];
-      _params.clear();
+      _functionName = action['name'];
       for (var param in action['params']) {
-        print('param ' + param['name'] + ' added');
         _params.add(Action(param['type'], param['name'], this));
       }
-      _populateParamsDiv();
+    } else {
+      _doc = '';
+      _functionName = '';
     }
+    _populateParamsDiv();
+    print(getRoot().toJson());
   }
 
   void _populateParamsDiv() {
@@ -102,6 +121,15 @@ class Action {
     return true;
   }
 
+  void _onInputChange(Event evt) {
+    var input = evt.target as InputElement;
+    if (_type == 'int' && input.value != '') {
+      _varValue = int.tryParse(input.value);
+      _varOnly = _varValue != null;
+    }
+  }
+
+
   String get name => _name;
 
   String get type => _type;
@@ -113,4 +141,8 @@ class Action {
   List<Action> get params => _params;
 
   DivElement get mainDiv => _mainDiv;
+
+  String get functionName => _functionName;
+
+
 }
