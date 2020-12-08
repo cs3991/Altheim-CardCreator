@@ -1,4 +1,102 @@
-final actions = [
+final actionsTest = [
+  {
+    'name': 'param T',
+    'template' : 'T',
+    'doc': '',
+    'params': [
+      {'name': 't1', 'type': 'T'},
+      {'name': 't2', 'type': 'T'},
+    ],
+    'return': 'void'
+  },
+  {
+    'name': 'T param T',
+    'template' : 'T',
+    'doc': '',
+    'params': [
+      {'name': 't1', 'type': 'T'},
+    ],
+    'return': 'T'
+  },
+  {
+    'name': 'list<T> param T',
+    'template' : 'T',
+    'doc': '',
+    'params': [
+      {'name': 't1', 'type': 'T'},
+    ],
+    'return': {'type':'liste', 'template': 'T'}
+  },
+  {
+    'name': 'T param list<T>',
+    'template' : 'T',
+    'doc': '',
+    'params': [
+      {'name': 't1', 'type': {'type':'liste', 'template': 'T'}},
+    ],
+    'return': 'T'
+  },
+  {
+    'name': 'list<int>',
+    'doc': '',
+    'params': [],
+    'return': {'type':'liste', 'template': 'int'}
+  },
+  {
+    'name': 'int',
+    'doc': '',
+    'params': [],
+    'return': 'int'
+  },
+  {
+    'name': 'bool',
+    'doc': '',
+    'params': [],
+    'return': 'bool'
+  },
+  {
+    'name': 'T',
+    'template' : 'T',
+    'doc': '',
+    'params': [],
+    'return': 'T'
+  },
+  {
+    'name': 'chercher',
+    'template' : 'T',
+    'doc': 'Le premier élément satisfaisant le prédicat dans la liste.',
+    'params': [
+      {'name': 'prédicat', 'type': 'bool'},
+      {'name': 'container', 'type': {'type': 'liste', 'template' : 'T'}}
+    ],
+    'return': 'T'
+  },
+  {
+    'name': 'élément_actuel_prédicat',
+    'template' : 'T',
+    'doc': 'L\'élément à tester pour le prédicat.',
+    'params': [],
+    'return': 'T',
+    'enable_if' : {'parents_param_name': 'prédicat'}
+  },
+  {
+    'name': 'contient',
+    'template' : 'T',
+    'doc': 'Vrai si la liste contient l\'élément.',
+    'params': [
+      {'name': 'liste', 'type': {'type': 'liste', 'template' : 'T'}},
+      {'name': 'élement', 'type': 'T'},
+    ],
+    'return': 'bool'
+  },
+
+
+
+];
+
+
+
+final List<Map<String, dynamic>> actions = [
   {
     'name': 'ajouter_condition',
     'doc': 'Ajoute une condition à une transition',
@@ -154,22 +252,43 @@ final actions = [
   {'name': 'faux', 'doc': 'faux.', 'params': [], 'return': 'bool'},
 
   {
-    'name': 'trouver_carte',
-    'doc': 'La première carte satisfaisant le prédicat dans le container.',
+    'name': 'chercher',
+    'template' : 'T',
+    'doc': 'Le premier élément satisfaisant le prédicat dans la liste.',
     'params': [
-      {'name': 'predicat', 'type': 'bool'},
-      {'name': 'container', 'type': 'liste_de_cartes'}
+      {'name': 'prédicat', 'type': 'bool'},
+      {'name': 'container', 'type': {'type': 'liste', 'template' : 'T'}}
     ],
-    'return': 'carte'
+    'return': 'T'
   },
   {
     'name': 'filtrer',
-    'doc': 'Une liste contenant seulement les cartes satisfaisant le prédicat.',
+    'template' : 'T',
+    'doc': 'Une liste contenant seulement les éléments satisfaisant le prédicat.',
     'params': [
-      {'name': 'predicat', 'type': 'bool'},
-      {'name': 'container', 'type': 'liste_de_cartes'}
+      {'name': 'prédicat', 'type': 'bool'},
+      {'name': 'container', 'type': {'type': 'liste', 'template' : 'T'}}
     ],
-    'return': 'liste_de_cartes'
+    'return': {'type': 'liste', 'template' : 'T'}
+  },
+  {
+    'name': 'élément_actuel_prédicat',
+    'template' : 'T',
+    'doc': 'L\'élément à tester pour le prédicat.',
+    'params': [],
+    'return': 'T',
+    'enable_if' : {'parents_param_name': 'prédicat'}
+  },
+
+  {
+    'name': 'contient',
+    'template' : 'T',
+    'doc': 'Vrai si la liste contient l\'élément.',
+    'params': [
+      {'name': 'liste', 'type': {'type': 'liste', 'template' : 'T'}},
+      {'name': 'élement', 'type': 'T'},
+    ],
+    'return': 'bool'
   },
 
   {'name': 'possesseur de la carte', 'doc': 'Joueur qui possède la carte.', 'params': [], 'return': 'joueur'},
@@ -181,7 +300,7 @@ final actions = [
     'params': [
       {'name': 'joueur', 'type': 'joueur'}
     ],
-    'return': 'liste_de_cartes'
+    'return': {'type': 'liste', 'template' : 'carte'}
   },
   {
     'name': 'main',
@@ -189,7 +308,7 @@ final actions = [
     'params': [
       {'name': 'joueur', 'type': 'joueur'}
     ],
-    'return': 'liste_de_cartes'
+    'return': {'type': 'liste', 'template' : 'carte'}
   },
   {
     'name': 'panthéon',
@@ -197,7 +316,7 @@ final actions = [
     'params': [
       {'name': 'joueur', 'type': 'joueur'}
     ],
-    'return': 'liste_de_cartes'
+    'return': {'type': 'liste', 'template' : 'carte'}
   },
   {
     'name': 'réserve',
@@ -205,7 +324,7 @@ final actions = [
     'params': [
       {'name': 'joueur', 'type': 'joueur'}
     ],
-    'return': 'liste_de_cartes'
+    'return': {'type': 'liste', 'template' : 'carte'}
   },
 
   {
@@ -274,73 +393,89 @@ final actions = [
   },
   {
     'name': 'permanence',
-    'doc': 'Déclencheur en permanence.',
+    'doc': 'Déclencheur : en permanence.',
     'params': [],
     'return': 'trigger'
   },
   {
     'name': 'migration',
-    'doc': 'Déclencheur migration.',
+    'doc': 'Déclencheur : migration.',
     'params': [],
     'return': 'trigger'
   },
   {
     'name': 'invocation',
-    'doc': 'Déclencheur invocation.',
+    'doc': 'Déclencheur : invocation.',
     'params': [],
     'return': 'trigger'
   },
   {
     'name': 'découverte',
-    'doc': 'Déclencheur découverte.',
+    'doc': 'Déclencheur : découverte.',
     'params': [],
     'return': 'trigger'
   },
   {
     'name': 'animation',
-    'doc': 'Déclencheur animation.',
+    'doc': 'Déclencheur : animation.',
     'params': [],
     'return': 'trigger'
   },
   {
     'name': 'attaque',
-    'doc': 'Déclencheur attaque.',
+    'doc': 'Déclencheur : attaque.',
     'params': [],
     'return': 'trigger'
   },
   {
     'name': 'defense',
-    'doc': 'Déclencheur defense.',
+    'doc': 'Déclencheur : defense.',
     'params': [],
     'return': 'trigger'
   },
   {
     'name': 'fin_tour',
-    'doc': 'Déclencheur fin de tour.',
+    'doc': 'Déclencheur : fin de tour.',
     'params': [],
     'return': 'trigger'
   },
   {
     'name': 'fin_action',
-    'doc': 'Déclencheur fin d\'action.',
+    'doc': 'Déclencheur : fin d\'action.',
     'params': [],
     'return': 'trigger'
   },
   {
     'name': 'mort',
-    'doc': 'Déclencheur mort d\'une entité.',
+    'doc': 'Déclencheur : mort d\'une entité.',
     'params': [],
     'return': 'trigger'
   },
   {
     'name': 'effet_declenché',
-    'doc': 'Déclencheur effet declenché par le joueur.',
+    'doc': 'Déclencheur : effet declenché par le joueur.',
     'params': [],
     'return': 'trigger'
   },
+  {
+    'name': 'carte_invoquée',
+    'doc': 'Carte invoquée. Disponible uniquement si le déclencheur est invocation.',
+    'params': [],
+    'return': 'carte',
+    'enable_if': {
+      'trigger': ['invocation']
+    }
+  },
+  {
+    'name': 'carte_morte',
+    'doc': 'Carte qui vient de mourir. Disponible uniquement si le déclencheur est mort.',
+    'params': [],
+    'return': 'carte',
+    'enable_if': {
+      'trigger': ['mort']
+    }
+  },
 
-// Carte invoquée (pour invocation)
-// Carte morte (pour mort)
 
 // Choix (liste_de_cartes, titre du choix -> carte)
 // Choix (liste_de_cartes, titre du choix -> liste_de_cartes)
@@ -360,7 +495,7 @@ final actions = [
 // Compter (liste, prédicat) -> int
 // pour_tout (liste_de_carte, void)
 // Longueur_liste (liste)
-// Carte_predicat (pour pout_tout et prédicats)
+// Carte_prédicat (pour pout_tout et prédicats)
 
 // Carte_bénie/maudite (miracle)
 // lieu_découvert (pour découverte)

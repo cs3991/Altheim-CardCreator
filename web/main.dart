@@ -22,6 +22,7 @@ void main() {
     propertiesForm.addDevotion();
   });
 
+  querySelector('#trigger_div').append(Action('trigger', 'déclencheur', null).mainDiv);
   querySelector('#condition_div').append(Action('bool', 'condition', null).mainDiv);
   querySelector('#action_div').append(Action('void', 'action', null).mainDiv);
 
