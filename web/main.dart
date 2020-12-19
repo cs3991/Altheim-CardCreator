@@ -1,8 +1,9 @@
 import 'dart:html';
 import 'dart:convert';
-import 'classes/Action.dart';
 import 'classes/Collection.dart';
 import 'classes/Form.dart';
+import 'classes/effect-creator/ActionPlaceholder.dart';
+import 'classes/effect-creator/Type.dart';
 
 void main() {
   var propertiesForm = PropertiesForm(querySelector('#form'));
@@ -22,9 +23,9 @@ void main() {
     propertiesForm.addDevotion();
   });
 
-  querySelector('#trigger_div').append(Action('trigger', 'déclencheur', null).mainDiv);
-  querySelector('#condition_div').append(Action('bool', 'condition', null).mainDiv);
-  querySelector('#action_div').append(Action('void', 'action', null).mainDiv);
+  var trigger = ActionPlaceholder('Déclencheur', ExplicitType('trigger'), null, parentDiv:querySelector('#trigger_div'), disableTemplates: true);
+  ActionPlaceholder('Condition', ExplicitType('bool'), null, parentDiv:querySelector('#condition_div'), triggerPlaceholder: trigger);
+  ActionPlaceholder('Action', ExplicitType('void'), null, parentDiv:querySelector('#action_div'), triggerPlaceholder: trigger);
 
   propertiesForm.card.updateFromForm(querySelector('#form'));
   querySelector('#json').text = jsonEncode(propertiesForm.card.toJson());

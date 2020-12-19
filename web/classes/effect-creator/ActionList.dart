@@ -1,205 +1,311 @@
-final actionsTest = [
+final List<Map<String, dynamic>> actionsTest = [
   {
     'name': 'param T',
-    'template' : 'T',
+    'template': ['T'],
     'doc': '',
     'params': [
-      {'name': 't1', 'type': 'T'},
-      {'name': 't2', 'type': 'T'},
+      {
+        'name': 't1',
+        'type': {'type': 'T'}
+      },
+      {
+        'name': 't2',
+        'type': {'type': 'T'}
+      },
     ],
-    'return': 'void'
+    'return': {'type': 'void'}
   },
   {
     'name': 'T param T',
-    'template' : 'T',
+    'template': ['T'],
     'doc': '',
     'params': [
-      {'name': 't1', 'type': 'T'},
+      {
+        'name': 't1',
+        'type': {'type': 'T'}
+      },
     ],
-    'return': 'T'
+    'return': {'type': 'T'}
   },
   {
     'name': 'list<T> param T',
-    'template' : 'T',
+    'template': ['T'],
     'doc': '',
     'params': [
-      {'name': 't1', 'type': 'T'},
+      {
+        'name': 't1',
+        'type': {'type': 'T'}
+      },
     ],
-    'return': {'type':'liste', 'template': 'T'}
+    'return': {
+      'type': 'liste',
+      'parameters': [
+        {'type': 'T'}
+      ]
+    }
   },
   {
     'name': 'T param list<T>',
-    'template' : 'T',
+    'template': ['T'],
     'doc': '',
     'params': [
-      {'name': 't1', 'type': {'type':'liste', 'template': 'T'}},
+      {
+        'name': 't1',
+        'type': {
+          'type': 'liste',
+          'parameters': [
+            {'type': 'T'}
+          ]
+        }
+      },
     ],
-    'return': 'T'
+    'return': {'type': 'T'}
   },
   {
     'name': 'list<int>',
     'doc': '',
     'params': [],
-    'return': {'type':'liste', 'template': 'int'}
+    'return': {
+      'type': 'liste',
+      'parameters': [
+        {'type': 'int'}
+      ]
+    }
   },
   {
     'name': 'int',
     'doc': '',
     'params': [],
-    'return': 'int'
+    'return': {'type': 'int'}
   },
   {
     'name': 'bool',
     'doc': '',
     'params': [],
-    'return': 'bool'
+    'return': {'type': 'bool'}
   },
   {
     'name': 'T',
-    'template' : 'T',
+    'template': ['T'],
     'doc': '',
     'params': [],
-    'return': 'T'
+    'return': {'type': 'T'}
   },
   {
     'name': 'chercher',
-    'template' : 'T',
+    'template': ['T'],
     'doc': 'Le premier élément satisfaisant le prédicat dans la liste.',
     'params': [
-      {'name': 'prédicat', 'type': 'bool'},
-      {'name': 'container', 'type': {'type': 'liste', 'template' : 'T'}}
+      {
+        'name': 'prédicat',
+        'type': {'type': 'bool'}
+      },
+      {
+        'name': 'container',
+        'type': {
+          'type': 'liste',
+          'parameters': [
+            {'type': 'T'}
+          ]
+        }
+      }
     ],
-    'return': 'T'
+    'return': {'type': 'T'}
   },
   {
     'name': 'élément_actuel_prédicat',
-    'template' : 'T',
+    'template': ['T'],
     'doc': 'L\'élément à tester pour le prédicat.',
     'params': [],
-    'return': 'T',
-    'enable_if' : {'parents_param_name': 'prédicat'}
+    'return': {'type': 'T'},
   },
   {
     'name': 'contient',
-    'template' : 'T',
+    'template': ['T'],
     'doc': 'Vrai si la liste contient l\'élément.',
     'params': [
-      {'name': 'liste', 'type': {'type': 'liste', 'template' : 'T'}},
-      {'name': 'élement', 'type': 'T'},
+      {
+        'name': 'liste',
+        'type': {
+          'type': 'liste',
+          'parameters': [
+            {'type': 'T'}
+          ]
+        }
+      },
+      {
+        'name': 'élement',
+        'type': {'type': 'T'}
+      },
     ],
-    'return': 'bool'
+    'return': {'type': 'bool'}
   },
-
-
-
 ];
-
-
 
 final List<Map<String, dynamic>> actions = [
   {
     'name': 'ajouter_condition',
     'doc': 'Ajoute une condition à une transition',
     'params': [
-      {'name': 'transition', 'type': 'transition'},
-      {'name': 'condition', 'type': 'bool'}
+      {
+        'name': 'transition',
+        'type': {'type': 'transition'}
+      },
+      {
+        'name': 'condition',
+        'type': {'type': 'bool'}
+      }
     ],
-    'return': 'void'
+    'return': {'type': 'void'}
   },
   {
     'name': 'ajouter_mot_cle',
     'doc': 'Ajoute un mot-clé à une carte',
     'params': [
-      {'name': 'carte', 'type': 'carte'},
-      {'name': 'mot-clé', 'type': 'mot_clé'}
+      {
+        'name': 'carte',
+        'type': {'type': 'carte'}
+      },
+      {
+        'name': 'mot-clé',
+        'type': {'type': 'mot_clé'}
+      }
     ],
-    'return': 'void'
+    'return': {'type': 'void'}
   },
   {
     'name': 'modifier_stats',
     'doc': 'Ajoute des points de puissance et de résistance à une carte. Valeur négatives possibles.',
     'params': [
-      {'name': 'carte', 'type': 'carte'},
-      {'name': 'puissance', 'type': 'int'},
-      {'name': 'résistance', 'type': 'int'}
+      {
+        'name': 'carte',
+        'type': {'type': 'carte'}
+      },
+      {
+        'name': 'puissance',
+        'type': {'type': 'int'}
+      },
+      {
+        'name': 'résistance',
+        'type': {'type': 'int'}
+      }
     ],
-    'return': 'void'
+    'return': {'type': 'void'}
   },
   {
     'name': 'modifier_persistance',
     'doc': 'Ajoute des points de persistance. Valeur négatives possibles.',
     'params': [
-      {'name': 'joueur', 'type': 'joueur'},
-      {'name': 'points', 'type': 'int'},
+      {
+        'name': 'joueur',
+        'type': {'type': 'joueur'}
+      },
+      {
+        'name': 'points',
+        'type': {'type': 'int'}
+      },
     ],
-    'return': 'void'
+    'return': {'type': 'void'}
   },
 
   {
     'name': 'egal',
     'doc': 'Vrai si a est égal à b',
     'params': [
-      {'name': 'a', 'type': 'int'},
-      {'name': 'b', 'type': 'int'}
+      {
+        'name': 'a',
+        'type': {'type': 'int'}
+      },
+      {
+        'name': 'b',
+        'type': {'type': 'int'}
+      }
     ],
-    'return': 'bool'
+    'return': {'type': 'bool'}
   },
   {
     'name': 'meme_carte',
     'doc': 'Vrai si les deux cartes sont identiques',
     'params': [
-      {'name': 'a', 'type': 'carte'},
-      {'name': 'b', 'type': 'carte'}
+      {
+        'name': 'a',
+        'type': {'type': 'carte'}
+      },
+      {
+        'name': 'b',
+        'type': {'type': 'carte'}
+      }
     ],
-    'return': 'bool'
+    'return': {'type': 'bool'}
   },
   {
     'name': 'instance_de',
     'doc': 'Vrai si la carte est une instance de ce modèle de carte',
     'params': [
-      {'name': 'carte', 'type': 'carte'},
-      {'name': 'modèle', 'type': 'modèle_carte'}
+      {
+        'name': 'carte',
+        'type': {'type': 'carte'}
+      },
+      {
+        'name': 'modèle',
+        'type': {'type': 'modèle_carte'}
+      }
     ],
-    'return': 'bool'
+    'return': {'type': 'bool'}
   },
   {
     'name': 'superieur',
     'doc': 'Vrai si a est supérieur à b',
     'params': [
-      {'name': 'a', 'type': 'int'},
-      {'name': 'b', 'type': 'int'}
+      {
+        'name': 'a',
+        'type': {'type': 'int'}
+      },
+      {
+        'name': 'b',
+        'type': {'type': 'int'}
+      }
     ],
-    'return': 'bool'
+    'return': {'type': 'bool'}
   },
   {
     'name': 'modele',
     'doc': 'Le modèle duquel la carte est une instance',
     'params': [
-      {'name': 'carte', 'type': 'carte'}
+      {
+        'name': 'carte',
+        'type': {'type': 'carte'}
+      }
     ],
-    'return': 'modèle_carte'
+    'return': {'type': 'modèle_carte'}
   },
   {
     'name': 'type',
     'doc': 'Le type de la carte',
     'params': [
-      {'name': 'carte', 'type': 'carte'}
+      {
+        'name': 'carte',
+        'type': {'type': 'carte'}
+      }
     ],
-    'return': 'type_carte'
+    'return': {'type': 'type_carte'}
   },
   {
     'name': 'sous_types',
     'doc': 'Les sous-types de la carte',
     'params': [
-      {'name': 'carte', 'type': 'carte'}
+      {
+        'name': 'carte',
+        'type': {'type': 'carte'}
+      }
     ],
-    'return': 'liste_sous_types'
+    'return': {'type': 'liste_sous_types'}
   },
   {
     'name': 'blessures_infligees',
     'doc': "Le nombre de blessures infligées par l'attaque. Ne peut s'utiliser que quand le déclencheur est attaque.",
     'params': [],
-    'return': 'int',
+    'return': {'type': 'int'},
     'enable_if': {
       'trigger': ['attaque']
     }
@@ -209,7 +315,7 @@ final List<Map<String, dynamic>> actions = [
     'doc':
         "La distance parcourue par la carte durant sa migration. Ne peut s'utiliser que quand le déclencheur est migration.",
     'params': [],
-    'return': 'int',
+    'return': {'type': 'int'},
     'enable_if': {
       'trigger': ['migration']
     }
@@ -218,7 +324,7 @@ final List<Map<String, dynamic>> actions = [
     'name': 'attaquant',
     'doc': "La carte qui a initié l'attaque. Ne peut s'utiliser que quand le déclencheur est attaque ou défense.",
     'params': [],
-    'return': 'carte',
+    'return': {'type': 'carte'},
     'enable_if': {
       'trigger': ['attaque', 'defense']
     }
@@ -228,7 +334,7 @@ final List<Map<String, dynamic>> actions = [
     'doc':
         "La carte qui a défendu l'attaque, ou rien si c'est le démiurge qui l'a subie. Ne peut s'utiliser que quand le déclencheur est défense.",
     'params': [],
-    'return': 'carte',
+    'return': {'type': 'carte'},
     'enable_if': {
       'trigger': ['defense']
     }
@@ -237,7 +343,7 @@ final List<Map<String, dynamic>> actions = [
     'name': 'carte_animee',
     'doc': "La carte qui est animée. Ne peut s'utiliser que quand le déclencheur est animation ou migration.",
     'params': [],
-    'return': 'carte',
+    'return': {'type': 'carte'},
     'enable_if': {
       'trigger': ['animation', 'migration']
     }
@@ -246,101 +352,193 @@ final List<Map<String, dynamic>> actions = [
     'name': 'cette_carte',
     'doc': "Cette carte (celle dont vous êtes en train d'éditer les effets en ce moment).",
     'params': [],
-    'return': 'carte'
+    'return': {'type': 'carte'}
   },
-  {'name': 'vrai', 'doc': 'vrai.', 'params': [], 'return': 'bool'},
-  {'name': 'faux', 'doc': 'faux.', 'params': [], 'return': 'bool'},
+  {
+    'name': 'vrai',
+    'doc': 'vrai.',
+    'params': [],
+    'return': {'type': 'bool'}
+  },
+  {
+    'name': 'faux',
+    'doc': 'faux.',
+    'params': [],
+    'return': {'type': 'bool'}
+  },
 
   {
     'name': 'chercher',
-    'template' : 'T',
+    'template': ['T'],
     'doc': 'Le premier élément satisfaisant le prédicat dans la liste.',
     'params': [
-      {'name': 'prédicat', 'type': 'bool'},
-      {'name': 'container', 'type': {'type': 'liste', 'template' : 'T'}}
+      {
+        'name': 'prédicat',
+        'type': {'type': 'bool'}
+      },
+      {
+        'name': 'container',
+        'type': {
+          'type': 'liste',
+          'parameters': [
+            {'type': 'T'}
+          ]
+        }
+      }
     ],
-    'return': 'T'
+    'return': {'type': 'T'}
   },
   {
     'name': 'filtrer',
-    'template' : 'T',
+    'template': ['T'],
     'doc': 'Une liste contenant seulement les éléments satisfaisant le prédicat.',
     'params': [
-      {'name': 'prédicat', 'type': 'bool'},
-      {'name': 'container', 'type': {'type': 'liste', 'template' : 'T'}}
+      {
+        'name': 'prédicat',
+        'type': {'type': 'bool'}
+      },
+      {
+        'name': 'container',
+        'type': {
+          'type': 'liste',
+          'parameters': [
+            {'type': 'T'}
+          ]
+        }
+      }
     ],
-    'return': {'type': 'liste', 'template' : 'T'}
+    'return': {
+      'type': 'liste',
+      'parameters': [
+        {'type': 'T'}
+      ]
+    }
   },
   {
     'name': 'élément_actuel_prédicat',
-    'template' : 'T',
+    'template': ['T'],
     'doc': 'L\'élément à tester pour le prédicat.',
     'params': [],
-    'return': 'T',
-    'enable_if' : {'parents_param_name': 'prédicat'}
+    'return': {'type': 'T'},
   },
 
   {
     'name': 'contient',
-    'template' : 'T',
+    'template': ['T'],
     'doc': 'Vrai si la liste contient l\'élément.',
     'params': [
-      {'name': 'liste', 'type': {'type': 'liste', 'template' : 'T'}},
-      {'name': 'élement', 'type': 'T'},
+      {
+        'name': 'liste',
+        'type': {
+          'type': 'liste',
+          'parameters': [
+            {'type': 'T'}
+          ]
+        }
+      },
+      {
+        'name': 'élement',
+        'type': {'type': 'T'}
+      },
     ],
-    'return': 'bool'
+    'return': {'type': 'bool'}
   },
 
-  {'name': 'possesseur de la carte', 'doc': 'Joueur qui possède la carte.', 'params': [], 'return': 'joueur'},
-  {'name': 'adversaire', 'doc': 'Le joueur adverse à celui qui possède cette carte.', 'params': [], 'return': 'joueur'},
+  {
+    'name': 'possesseur de la carte',
+    'doc': 'Joueur qui possède la carte.',
+    'params': [],
+    'return': {'type': 'joueur'}
+  },
+  {
+    'name': 'adversaire',
+    'doc': 'Le joueur adverse à celui qui possède cette carte.',
+    'params': [],
+    'return': {'type': 'joueur'}
+  },
 
   {
     'name': 'territoire',
     'doc': 'Le territoire du joueur spécifié.',
     'params': [
-      {'name': 'joueur', 'type': 'joueur'}
+      {
+        'name': 'joueur',
+        'type': {'type': 'joueur'}
+      }
     ],
-    'return': {'type': 'liste', 'template' : 'carte'}
+    'return': {
+      'type': 'liste',
+      'parameters': [
+        {'type': 'carte'}
+      ]
+    }
   },
   {
     'name': 'main',
     'doc': 'La main du joueur spécifié.',
     'params': [
-      {'name': 'joueur', 'type': 'joueur'}
+      {
+        'name': 'joueur',
+        'type': {'type': 'joueur'}
+      }
     ],
-    'return': {'type': 'liste', 'template' : 'carte'}
+    'return': {
+      'type': 'liste',
+      'parameters': [
+        {'type': 'carte'}
+      ]
+    }
   },
   {
     'name': 'panthéon',
     'doc': 'Le panthéon du joueur spécifié.',
     'params': [
-      {'name': 'joueur', 'type': 'joueur'}
+      {
+        'name': 'joueur',
+        'type': {'type': 'joueur'}
+      }
     ],
-    'return': {'type': 'liste', 'template' : 'carte'}
+    'return': {
+      'type': 'liste',
+      'parameters': [
+        {'type': 'carte'}
+      ]
+    }
   },
   {
     'name': 'réserve',
     'doc': 'La réserve du joueur spécifié.',
     'params': [
-      {'name': 'joueur', 'type': 'joueur'}
+      {
+        'name': 'joueur',
+        'type': {'type': 'joueur'}
+      }
     ],
-    'return': {'type': 'liste', 'template' : 'carte'}
+    'return': {
+      'type': 'liste',
+      'parameters': [
+        {'type': 'carte'}
+      ]
+    }
   },
 
   {
     'name': 'position_de',
     'doc': 'La position de la carte spécifiée.',
     'params': [
-      {'name': 'carte', 'type': 'carte'}
+      {
+        'name': 'carte',
+        'type': {'type': 'carte'}
+      }
     ],
-    'return': 'position'
+    'return': {'type': 'position'}
   },
 
   {
     'name': 'origine',
     'doc': "La position d'origine de la carte qui migre.",
     'params': [],
-    'return': 'position',
+    'return': {'type': 'position'},
     'enable_if': {
       'trigger': ['migration']
     }
@@ -349,7 +547,7 @@ final List<Map<String, dynamic>> actions = [
     'name': 'destination',
     'doc': 'La position de destination de la carte qui migre.',
     'params': [],
-    'return': 'position',
+    'return': {'type': 'position'},
     'enable_if': {
       'trigger': ['migration']
     }
@@ -358,110 +556,134 @@ final List<Map<String, dynamic>> actions = [
     'name': 'adjacent',
     'doc': 'Vrai si les 2 positions sont adjacentes.',
     'params': [
-      {'name': 'a', 'type': 'position'},
-      {'name': 'b', 'type': 'position'}
+      {
+        'name': 'a',
+        'type': {'type': 'position'}
+      },
+      {
+        'name': 'b',
+        'type': {'type': 'position'}
+      }
     ],
-    'return': 'bool'
+    'return': {'type': 'bool'}
   },
   {
     'name': 'ligne',
     'doc': 'La ligne correspondant à cette position.',
     'params': [
-      {'name': 'position', 'type': 'position'}
+      {
+        'name': 'position',
+        'type': {'type': 'position'}
+      }
     ],
-    'return': 'int'
+    'return': {'type': 'int'}
   },
   {
     'name': 'colonne',
     'doc': 'La colonne correspondant à cette position.',
     'params': [
-      {'name': 'position', 'type': 'position'}
+      {
+        'name': 'position',
+        'type': {'type': 'position'}
+      }
     ],
-    'return': 'int'
+    'return': {'type': 'int'}
   },
 
   {
     'name': 'ajouter_effet',
     'doc': 'Ajoute un effet à une carte.',
     'params': [
-      {'name': 'déclencheur', 'type': 'trigger'},
-      {'name': 'condition', 'type': 'bool'},
-      {'name': 'action', 'type': 'void'},
-      {'name': 'carte', 'type': 'carte'},
+      {
+        'name': 'déclencheur',
+        'type': {'type': 'trigger'}
+      },
+      {
+        'name': 'condition',
+        'type': {'type': 'bool'}
+      },
+      {
+        'name': 'action',
+        'type': {'type': 'void'}
+      },
+      {
+        'name': 'carte',
+        'type': {'type': 'carte'}
+      },
     ],
-    'return': 'void'
+    'return': {'type': 'void'}
   },
   {
     'name': 'permanence',
     'doc': 'Déclencheur : en permanence.',
     'params': [],
-    'return': 'trigger'
+    'return': {'type': 'trigger'}
   },
   {
     'name': 'migration',
     'doc': 'Déclencheur : migration.',
     'params': [],
-    'return': 'trigger'
+    'return': {'type': 'trigger'}
   },
   {
     'name': 'invocation',
     'doc': 'Déclencheur : invocation.',
     'params': [],
-    'return': 'trigger'
+    'return': {'type': 'trigger'}
   },
   {
     'name': 'découverte',
     'doc': 'Déclencheur : découverte.',
     'params': [],
-    'return': 'trigger'
+    'return': {'type': 'trigger'}
   },
   {
     'name': 'animation',
     'doc': 'Déclencheur : animation.',
     'params': [],
-    'return': 'trigger'
+    'return': {'type': 'trigger'}
   },
   {
     'name': 'attaque',
     'doc': 'Déclencheur : attaque.',
     'params': [],
-    'return': 'trigger'
+    'return': {'type': 'trigger'}
   },
   {
     'name': 'defense',
     'doc': 'Déclencheur : defense.',
     'params': [],
-    'return': 'trigger'
+    'return': {'type': 'trigger'}
   },
   {
     'name': 'fin_tour',
     'doc': 'Déclencheur : fin de tour.',
     'params': [],
-    'return': 'trigger'
+    'return': {'type': 'trigger'}
   },
   {
     'name': 'fin_action',
     'doc': 'Déclencheur : fin d\'action.',
     'params': [],
-    'return': 'trigger'
+    'return': {'type': 'trigger'}
   },
   {
     'name': 'mort',
     'doc': 'Déclencheur : mort d\'une entité.',
     'params': [],
-    'return': 'trigger'
+    'return': {'type': 'trigger'}
   },
   {
     'name': 'effet_declenché',
     'doc': 'Déclencheur : effet declenché par le joueur.',
     'params': [],
-    'return': 'trigger'
+    'return': {'type': 'trigger'}
   },
   {
     'name': 'carte_invoquée',
     'doc': 'Carte invoquée. Disponible uniquement si le déclencheur est invocation.',
     'params': [],
-    'return': 'carte',
+    'return': {'type': 'carte'},
     'enable_if': {
       'trigger': ['invocation']
     }
@@ -470,12 +692,11 @@ final List<Map<String, dynamic>> actions = [
     'name': 'carte_morte',
     'doc': 'Carte qui vient de mourir. Disponible uniquement si le déclencheur est mort.',
     'params': [],
-    'return': 'carte',
+    'return': {'type': 'carte'},
     'enable_if': {
       'trigger': ['mort']
     }
   },
-
 
 // Choix (liste_de_cartes, titre du choix -> carte)
 // Choix (liste_de_cartes, titre du choix -> liste_de_cartes)
