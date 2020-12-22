@@ -43,7 +43,7 @@ class Card {
   /// Does not update the json text area and the form fields.
   void updateFromForm(FormElement form) {
     id = int.parse((querySelector('#id') as InputElement).value);
-    maxNbr = (querySelector('#nbr_max') as InputElement).valueAsNumber;
+    maxNbr = int.tryParse((querySelector('#nbr_max') as InputElement).value);
     name = (form.querySelector('#nom') as InputElement).value;
     rarity = (form.querySelector('#rarete') as SelectElement).value;
     extension = (form.querySelector('#extension') as SelectElement).value;
@@ -88,6 +88,7 @@ class Card {
       power = int.tryParse((form.querySelector('#puissance') as InputElement).value);
       resistance = int.tryParse((form.querySelector('#resistance') as InputElement).value);
     }
+    print(this);
   }
 
   /// add to json if the display property is not set to 'none'.

@@ -29,6 +29,7 @@ class ActionView {
 
     _intInput = document.createElement('input');
     _intInput.setAttribute('type', 'number');
+    _intInput.setAttribute('class', 'action_input');
     _mainDiv.append(_intInput);
     _updateIntInputTextDisplay();
 

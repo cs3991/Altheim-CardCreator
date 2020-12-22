@@ -1,216 +1,234 @@
 <!DOCTYPE html>
 <html lang="fr" dir="ltr">
-  <head>
+<head>
     <meta charset="utf-8">
     <title>Créateur de carte Altheim</title>
     <link rel="stylesheet" href="style.css">
     <link rel="preconnect" href="https://fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css2?family=Asul:wght@400;700&display=swap" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Catamaran:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
-	 <script defer src="main.dart.js"></script>
-  </head>
-  <body>
-    <header>
-      <div id="top_left">
+    <link href="https://fonts.googleapis.com/css2?family=Catamaran:wght@100;200;300;400;500;600;700;800;900&display=swap"
+          rel="stylesheet">
+    <script defer src="main.dart.js"></script>
+</head>
+<body>
+<header>
+    <div id="top_left">
         <img src="logo Altheim.png" alt="logo Altheim" id="logo">
         <p>Altheim</p>
-      </div>
+    </div>
 
-      <div id="top_right">
+    <div id="top_right">
         <img src="questionmark.svg" alt="Point d'interrogation" id="questionmark">
         <p>Créateur de cartes</p>
-      </div>
-    </header>
-    <main>
-      <div class="collection">
+    </div>
+</header>
+<main>
+    <div class="collection">
         <div class="collection_top">
-          <h1>Collection</h1>
-          <hr>
-          <div class="collectioncarte">
-            <p>Brute en armure</p>
-            <img src="cross.png" onclick="alertyo()">
-          </div>
+            <h1>Collection</h1>
+            <hr>
+            <div class="collectioncarte">
+                <p>Brute en armure</p>
+                <img src="cross.png">
+            </div>
         </div>
 
         <div class="bot_left">
-          <button type="button" name="empty" id="empty_btn">Vider la collection</button>
-          <button type="button" name="import" id="import_btn">Importer une collection</button>
-          <button type="button" name="export" id="export_btn">Exporter la collection</button>
+            <button type="button" name="empty" id="empty_btn">Vider la collection</button>
+            <button type="button" name="import" id="import_btn">Importer une collection</button>
+            <button type="button" name="export" id="export_btn">Exporter la collection</button>
         </div>
-      </div>
-      <div class="creation">
+    </div>
+    <div class="creation">
         <div class="attributs">
-          <h1>Attributs de la carte</h1>
-          <hr>
-          <form id="form">
+            <h1>Attributs de la carte</h1>
+            <hr>
+            <form id="form">
 
-            <div class="line">
+                <div class="line">
 
-                <!-- types -->
-                <div class="type form">
-                    <label for="type">Type</label><br/>
-                    <select name="type" id="type">
-                      <!-- <option value=""> </option> -->
-                      <option value="creature">Créature</option>
-                      <option value="construction">Construction</option>
-                      <option value="lieu">Lieu</option>
-                      <option value="miracle">Miracle</option>
-                      <option value="divinite">Divinité</option>
-                    </select>
-                </div>
-
-                <!-- rarete -->
-                <div class="rarete form">
-                    <label for="rarete">Rareté</label><br/>
-                    <select name="rarete" id="rarete">
-                      <option value=""> </option>
-                        <option value="banal">Banal</option>
-                        <option value="remarquable">Remarquable</option>
-                        <option value="exceptionnel">Exceptionnel</option>
-                        <option value="unique">Unique</option>
-                    </select>
-                </div>
-
-                <!-- extension -->
-                <div class="extension form">
-                    <label for="extension">Extension </label><br/>
-                    <select name="extension" id="extension">
-                      <option value=""> </option>
-                        <option value="aube">Aube</option>
-                        <option value="ascension">Ascension</option>
-                        <option value="zenith">Zenith</option>
-                    </select>
-                </div>
-              </div>
-              <span class="br"></span>
-
-
-              <div class="line">
-                <!-- id -->
-                <div class="champ id form">
-                    <label for="id">Id</label><br/>
-                    <input type="number" min="0" max="99999" class="id" id="id" value="0"><br>
-                </div>
-
-                <!-- nom -->
-                <div class="champ nom form">
-                    <label for="nom">Nom</label><br/>
-                    <input type="text" name="nom" id="nom">
-                </div>
-
-                <div class="stats">
-
-                  <!-- puissance -->
-                  <div class="champ puissance form">
-                      <label for="puissance">Puissance</label><br/>
-                      <input type="number" min="0" max="999" class="puissance" id="puissance"><br>
-                  </div>
-
-                  <!-- resistance -->
-                  <div class="champ resistance form">
-                      <label for="resistance">Résistance </label><br/>
-                      <input type="number" min="0" max="999" class="resistance" id="resistance">
-                  </div>
-                </div>
-
-                <!-- limite par deck -->
-                <div class="champ limite form">
-                    <label for="limite">Limite / Deck </label><br/>
-                    <input type="number" min="0" max="999" class="limite" id="limite">
-                </div>
-              </div>
-
-
-              <span class="br"></span>
-
-
-              <div class="line">
-
-              <!-- sous_type -->
-              <div class="champ sous_types form">
-                  <div class="titre_bouton">
-                      <label>Sous-types/Classes </label><br/>
-                      <div class="expandable">
-                        <input type="text" class="sous_type" id="sous_types">
-                        <button type="button" name="button">-</button>
-                      </div>
-                      <button type="button" class="button_add">+</button>
-                  </div>
-              </div>
-
-              <!-- devotions -->
-              <div class="champ devotions form">
-                  <div class="titre_bouton">
-                    <label class="devotions">Dévotions </label><br/>
-                    <div class="expandable">
-                      <input type="text" class="devotions" id="devotions">
-                      <button type="button" name="button">-</button>
+                    <!-- types -->
+                    <div class="type form">
+                        <label for="type">Type</label><br/>
+                        <select name="type" id="type">
+                            <!-- <option value=""> </option> -->
+                            <option value="creature">Créature</option>
+                            <option value="construction">Construction</option>
+                            <option value="lieu">Lieu</option>
+                            <option value="miracle">Miracle</option>
+                            <option value="divinite">Divinité</option>
+                        </select>
                     </div>
-                      <button type="button" class="button_add">+</button>
-                  </div>
-              </div>
+
+                    <!-- rarete -->
+                    <div class="champ rarete form">
+                        <label for="rarete">Rareté</label><br/>
+                        <select name="rarete" id="rarete">
+                            <option value=""></option>
+                            <option value="banal">Banal</option>
+                            <option value="remarquable">Remarquable</option>
+                            <option value="exceptionnel">Exceptionnel</option>
+                            <option value="unique">Unique</option>
+                        </select>
+                    </div>
+
+                    <!-- extension -->
+                    <div class="champ extension form">
+                        <label for="extension">Extension </label><br/>
+                        <select name="extension" id="extension">
+                            <option value=""></option>
+                            <option value="aube">Aube</option>
+                            <option value="ascension">Ascension</option>
+                            <option value="zenith">Zenith</option>
+                        </select>
+                    </div>
+                </div>
+                <span class="br"></span>
 
 
+                <div class="line">
+                    <!-- id -->
+                    <div class="champ id form">
+                        <label for="id">Id</label><br/>
+                        <input type="number" min="0" max="99999" class="id" id="id" value="0"><br>
+                    </div>
 
-              <!-- contraintes -->
-              <div class="champ contraintes form">
-                  <div class="titre_bouton">
-                      <label>Contraintes :</label><br/>
-                        <div class="expandable">
-                          <input type="number" min="1" max="99" class="contrainte_nb contraintes">
-                          <input type="text" class="contrainte_text contraintes">
-                          <button type="button" name="button">-</button>
+                    <!-- nom -->
+                    <div class="champ nom form">
+                        <label for="nom">Nom</label><br/>
+                        <input type="text" name="nom" id="nom">
+                    </div>
+
+                    <div class="stats">
+
+                        <!-- puissance -->
+                        <div class="champ puissance form">
+                            <label for="puissance">Puissance</label><br/>
+                            <input type="number" min="0" max="999" class="puissance" id="puissance"><br>
                         </div>
-                      <button type="button" class="button_add">+</button>
-                  </div>
-              </div>
-            </div>
+
+                        <!-- resistance -->
+                        <div class="champ resistance form">
+                            <label for="resistance">Résistance </label><br/>
+                            <input type="number" min="0" max="999" class="resistance" id="resistance">
+                        </div>
+                    </div>
+
+                    <!-- limite par deck -->
+                    <div class="champ nbr_max form">
+                        <label for="nbr_max">Limite / Deck </label><br/>
+                        <input type="number" min="0" max="999" class="nbr_max" id="nbr_max">
+                    </div>
+                </div>
 
 
+                <span class="br"></span>
 
-               <!-- mots-cles -->
-               <div class="champ mots_cles">
-                  <label>Mots-clés :</label><br>
-                  <input type="checkbox" name="mots-cles" value="acclimatation" class="mots_cles" id="acclimatation">
-                  <label class="mots_cles" for="acclimatation">Acclimatation</label><br>
 
-                  <input type="checkbox" name="mots-cles" value="percee" class="mots_cles" id="percee">
-                  <label class="mots_cles" for="percee">Percée</label><br>
+                <div class="line">
 
-                  <input type="checkbox" name="mots-cles" value="jet" class="mots_cles" id="jet">
-                  <label class="mots_cles" for="jet">Jet</label><br>
+                    <!-- sous_types -->
+                    <div class="champ sous_types form">
+                        <div class="titre_bouton">
+                            <label>Sous-types/Classes </label><br/>
+                            <div class="expandable" id="base_sous_type">
+                                <input type="text" class="sous_types" id="sous_types">
+                                <button type="button" name="button">-</button>
+                            </div>
+                        </div>
+                        <button type="button" class="button_add">+</button>
+                    </div>
 
-                  <input type="checkbox" name="mots-cles" value="riposte" class="mots_cles" id="riposte">
-                  <label class="mots_cles" for="riposte">Riposte</label><br>
+                    <!-- devotions -->
+                    <div class="champ devotions form">
+                        <div class="titre_bouton">
+                            <label>Dévotions </label><br/>
+                            <div class="expandable" id="base_devotion">
+                                <input type="text" class="devotions" id="devotions">
+                                <button type="button" name="button">-</button>
+                            </div>
+                        </div>
+                        <button type="button" class="button_add">+</button>
+                    </div>
 
-                  <input type="checkbox" name="mots-cles" value="migration" class="mots_cles" id="migration">
-                  <label class="mots_cles" for="migration">Migration
-                  </label>
-                      <input type="number" min="1" max="99" id="migration_nb" class="mots_cles"><br>
-                  <input type="checkbox" name="mots-cles" value="armure" class="mots_cles" id="armure">
-                  <label class="mots_cles" for="armure">Armure
-                  </label>
-                      <input type="number" min="1" max="99" class="mots_cles" id="armure_nb"><br>
-              </div>
 
-               <!-- effet -->
-              <div class="champ effet">
-                  <label>Effet</label><br>
-                  <button type="button" name="effet" class="effet">Modifier les effets</button><br>
-                  <textarea name="texte_effet" rows="7" id="texte_effet" class="texte_effet"></textarea>
-              </div>
-          </form>
+                    <!-- contraintes -->
+                    <div class="champ contraintes form">
+                        <div class="titre_bouton">
+                            <label>Contraintes :</label><br/>
+                            <div class="expandable" id="base_contrainte">
+                                <input type="number" min="1" max="99" class="contrainte_nb contraintes">
+                                <input type="text" class="contrainte_text contraintes">
+                                <button type="button" name="button">-</button>
+                            </div>
+                        </div>
+                        <button type="button" class="button_add">+</button>
+                    </div>
+                </div>
+
+
+                <!-- mots-cles -->
+                <div class="champ mots_cles">
+                    <label>Mots-clés :</label><br>
+                    <input type="checkbox" name="mots-cles" value="acclimatation" class="mots_cles" id="acclimatation">
+                    <label class="mots_cles" for="acclimatation">Acclimatation</label><br>
+
+                    <input type="checkbox" name="mots-cles" value="percee" class="mots_cles" id="percee">
+                    <label class="mots_cles" for="percee">Percée</label><br>
+
+                    <input type="checkbox" name="mots-cles" value="jet" class="mots_cles" id="jet">
+                    <label class="mots_cles" for="jet">Jet</label><br>
+
+                    <input type="checkbox" name="mots-cles" value="riposte" class="mots_cles" id="riposte">
+                    <label class="mots_cles" for="riposte">Riposte</label><br>
+
+                    <input type="checkbox" name="mots-cles" value="migration" class="mots_cles" id="migration">
+                    <label class="mots_cles" for="migration">Migration
+                    </label>
+                    <input type="number" min="1" max="99" id="migration_nb" class="mots_cles"><br>
+                    <input type="checkbox" name="mots-cles" value="armure" class="mots_cles" id="armure">
+                    <label class="mots_cles" for="armure">Armure
+                    </label>
+                    <input type="number" min="1" max="99" class="mots_cles" id="armure_nb"><br>
+                </div>
+
+                <!-- effet -->
+                <div class="champ effet">
+                    <label>Effet</label><br>
+                    <button type="button" name="effet" class="effet">Modifier les effets</button>
+                    <br>
+                    <textarea name="texte_effet" rows="7" id="texte_effet" class="texte_effet"></textarea>
+                </div>
+            </form>
         </div>
         <div class="visualisation">
 
         </div>
-      </div>
-    </main>
-    <script type="text/javascript">
-      function alertyo()
-      {
-        alert('delete')
-      }
-    </script>
-  </body>
+    </div>
+
+    <div id="popup_bg" style="display: none;">
+        <div id="popup">
+            <div class="popup_header">
+                <p>Modificateur d'effet</p>
+                <img src="cross.png" id="close_popup">
+            </div>
+            <div class="popup_body">
+                <div id="trigger_div" class="effect_field">
+
+                </div>
+                <div id="condition_div" class="effect_field">
+
+                </div>
+                <div id="action_div" class="effect_field">
+
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+
+</main>
+
+</body>
 </html>

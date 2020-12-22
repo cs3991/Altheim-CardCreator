@@ -34,7 +34,7 @@ class PropertiesForm {
           'extension',
           'contraintes',
           'mots_cles',
-          'texte_effet',
+          'effet',
           'puissance',
           'resistance',
         ]);
@@ -47,7 +47,7 @@ class PropertiesForm {
           'rarete',
           'extension',
           'sous_types',
-          'texte_effet',
+          'effet',
         ]);
         break;
       case CardType.miracle:
@@ -59,7 +59,7 @@ class PropertiesForm {
           'extension',
           'sous_types',
           'contraintes',
-          'texte_effet',
+          'effet',
         ]);
         break;
       case CardType.divinity:
@@ -72,7 +72,7 @@ class PropertiesForm {
           'sous_types',
           'devotions',
           'contraintes',
-          'texte_effet',
+          'effet',
         ]);
         break;
       case CardType.creature:
@@ -87,7 +87,7 @@ class PropertiesForm {
           'devotions',
           'contraintes',
           'mots_cles',
-          'texte_effet',
+          'effet',
           'puissance',
           'resistance',
         ]);
@@ -95,18 +95,17 @@ class PropertiesForm {
     }
   }
 
-  /// Updates the card attribute to match the values from the form and shows the resulting
-  /// json in the text area.
+  /// Updates the card attribute to match the values from the form
+  // and shows the resulting json in the text area (not anymore).
   void updateJson() {
     card.updateFromForm(form);
     changeType(card.type);
-    querySelector('#json').text = jsonEncode(card.toJson());
+    // querySelector('#json').text = jsonEncode(card.toJson());
   }
 
   /// Adds an element to the document
-  void _addElement(String parentClass, String elementTag, String elementId, String elementClass, String html) {
+  void _addElement(String parentClass, String elementClass, String html) {
     var newElement = DivElement();
-    newElement.id = elementId;
     newElement.classes = [elementClass];
     newElement.setInnerHtml(html);
     newElement.querySelector('button').onClick.listen((event) {
@@ -118,25 +117,21 @@ class PropertiesForm {
   }
 
   void addSubType() {
-    subtypes_id++; // increment sous_type_id to get a unique ID for the new element
     var html = '<input type="text" class="sous_types">'
-        '<button>&times;</button>';
-    _addElement('.sous_types', 'div', 'sous_types_' + subtypes_id.toString(), 'removable', html);
+        '<button type="button" name="button">-</button>';
+    _addElement('.sous_types>.titre_bouton', 'expandable', html);
   }
 
   void addDevotion() {
-    devotions_id++; // increment devotion_id to get a unique ID for the new element
     var html = '<input type="text" class="devotions">'
-        '<button>&times;</button>';
-
-    _addElement('.devotions', 'div', 'devotions_' + devotions_id.toString(), 'removable', html);
+        '<button type="button" name="button">-</button>';
+    _addElement('.devotions>.titre_bouton', 'expandable', html);
   }
 
   void addConstraints() {
-    constraints_id++; // increment devotion_id to get a unique ID for the new element
-    var html = '<input type="text" class="contrainte_text contraintes">'
-        '<input type="number" min="1" max="99" class="contrainte_nb contraintes"><br>'
-        '<button>&times;</button>';
-    _addElement('.contraintes', 'div', 'contraintes_' + constraints_id.toString(), 'removable', html);
+    var html = '<input type="number" min="1" max="99" class="contrainte_nb contraintes"> '
+        '<input type="text" class="contrainte_text contraintes">'
+        '<button type="button" name="button">-</button>';
+    _addElement('.contraintes>.titre_bouton', 'expandable', html);
   }
 }
