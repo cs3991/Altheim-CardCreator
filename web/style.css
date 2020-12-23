@@ -137,8 +137,11 @@ h1
       overflow: auto;
       box-sizing: border-box;
       height: 100%;
+      vertical-align:top;
+        display: inline-block;
 
 }
+
 .line
 {
   display: flex;
@@ -372,6 +375,28 @@ button:active
 .mots_cles
 {
   width: 35%;
+  margin-right: 20px;
+}
+
+.list_item
+{
+    display: flex;
+    flex-flow: row nowrap;
+}
+
+.list_item > input[type="checkbox"]
+{
+    flex: 0 0 20px;
+}
+
+.list_item > label
+{
+    flex: 1 0 20px;
+}
+
+.list_item > input[type="number"]
+{
+    flex: 0 0 35px;
 }
 
 label.mots_cles
@@ -502,3 +527,16 @@ button.effet
 
 
 
+.visualisation
+{
+  width: 10%;
+  font-family: 'Catamaran', sans-serif;
+  color: #9E9E9E;
+  margin-right: 15px;
+  text-align: left;
+  padding: 20px 0px 0px 10px;
+      box-sizing: border-box;
+      height: 100%;
+      vertical-align: top;
+      display: inline-block;
+}
