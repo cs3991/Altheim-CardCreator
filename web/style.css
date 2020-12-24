@@ -81,7 +81,11 @@ main
   color: #CCCCCC;
   border-radius: 20px 0px 0px 0px;
   width: 13%;
-  height: calc(100vh - 80px);
+}
+
+#liste_collection
+{
+
 }
 
 h1
@@ -104,8 +108,18 @@ h1
   background: #3B3B3B;
   height: 34px;
   border-radius: 10px;
+  margin: auto;
   margin-top: 10px;
   cursor: pointer;
+}
+
+.collection_top .button_add
+{
+    margin: auto;
+    margin-top: 10px;
+    border-radius: 10px;
+    height: 34px;
+    width: 90%;
 }
 
 .collectioncarte p
@@ -375,7 +389,7 @@ button:active
 .mots_cles
 {
   width: 35%;
-  margin-right: 20px;
+  margin-right: 5%;
 }
 
 .list_item

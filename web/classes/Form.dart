@@ -116,22 +116,40 @@ class PropertiesForm {
     parent.children.add(newElement);
   }
 
-  void addSubType() {
-    var html = '<input type="text" class="sous_types">'
+  void addSubType([String subtype = '']) {
+    var html = '<input type="text" class="sous_types" value="$subtype">'
         '<button type="button" name="button">-</button>';
     _addElement('.sous_types>.titre_bouton', 'expandable', html);
   }
 
-  void addDevotion() {
-    var html = '<input type="text" class="devotions">'
+  void removeAllSubtypes() {
+    for (var subtype in querySelectorAll('.sous_types .expandable')) {
+      subtype.remove();
+    }
+  }
+
+  void addDevotion([String devotion = '']) {
+    var html = '<input type="text" class="devotions" value=$devotion>'
         '<button type="button" name="button">-</button>';
     _addElement('.devotions>.titre_bouton', 'expandable', html);
   }
 
-  void addConstraints() {
-    var html = '<input type="number" min="1" max="99" class="contrainte_nb contraintes"> '
-        '<input type="text" class="contrainte_text contraintes">'
+  void removeAllDevotions() {
+    for (var devotion in querySelectorAll('.devotions .expandable')) {
+      devotion.remove();
+    }
+  }
+
+  void addConstraints([String constraint = '', String nb = '']) {
+    var html = '<input type="number" min="1" max="99" class="contrainte_nb contraintes" value=$nb> '
+        '<input type="text" class="contrainte_text contraintes" value=$constraint>'
         '<button type="button" name="button">-</button>';
     _addElement('.contraintes>.titre_bouton', 'expandable', html);
+  }
+
+  void removeAllConstraints() {
+    for (var constraint in querySelectorAll('.contraintes .expandable')) {
+      constraint.remove();
+    }
   }
 }

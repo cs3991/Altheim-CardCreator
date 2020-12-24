@@ -1,9 +1,10 @@
 import 'dart:html';
 
 import 'CardType.dart';
+import 'Form.dart';
 
 class Card {
-  int id;
+  int id = 0;
   String extension;
   String rarity;
   String name;
@@ -22,10 +23,10 @@ class Card {
 
   Card.empty();
 
-  Card.fromJson(Map<String, dynamic> json) {
-    id = int.parse(json.keys.first);
+  Card.fromJson(Map<int, dynamic> json) {
+    id = json.keys.first;
     var cardProperties = json[id];
-    name = cardProperties['name'];
+    name = cardProperties['nom'];
     maxNbr = cardProperties['nbr_max'];
     type = CardTypeExtension.fromString(cardProperties['type']);
     rarity = cardProperties['rarete'];
@@ -34,7 +35,7 @@ class Card {
     devotions = cardProperties['devotions'];
     constraints = cardProperties['contraintes'];
     keywords = cardProperties['mots_cles'];
-    effect = cardProperties['texte_effet'];
+    effect = cardProperties['effet'];
     power = cardProperties['puissance'];
     resistance = cardProperties['resistance'];
   }
@@ -42,7 +43,7 @@ class Card {
   /// Updates all attributes of card to match the values in the form.
   /// Does not update the json text area and the form fields.
   void updateFromForm(FormElement form) {
-    id = int.parse((querySelector('#id') as InputElement).value);
+    id = int.tryParse((querySelector('#id') as InputElement).value) ?? id;
     maxNbr = int.tryParse((querySelector('#nbr_max') as InputElement).value);
     name = (form.querySelector('#nom') as InputElement).value;
     rarity = (form.querySelector('#rarete') as SelectElement).value;
@@ -88,18 +89,69 @@ class Card {
       power = int.tryParse((form.querySelector('#puissance') as InputElement).value);
       resistance = int.tryParse((form.querySelector('#resistance') as InputElement).value);
     }
-    print(this);
+    print(toJson());
+  }
+
+  void toForm(PropertiesForm propertiesForm) {
+    var form = propertiesForm.form;
+    (querySelector('#id') as InputElement).valueAsNumber = id;
+    (querySelector('#nbr_max') as InputElement).valueAsNumber = maxNbr;
+    (form.querySelector('#nom') as InputElement).value = name;
+    (form.querySelector('#rarete') as SelectElement).value = rarity;
+    (form.querySelector('#extension') as SelectElement).value = extension;
+    (form.querySelector('#type') as SelectElement).value = type.toText();
+    propertiesForm.removeAllSubtypes();
+    for (var subtype in subtypes) {
+      propertiesForm.addSubType(subtype);
+    }
+    propertiesForm.removeAllDevotions();
+    for (var devotion in devotions) {
+      propertiesForm.addDevotion(devotion);
+    }
+    propertiesForm.removeAllConstraints();
+    for (var constraint in constraints.keys) {
+      propertiesForm.addConstraints(constraint, constraints[constraint].toString());
+    }
+    querySelectorAll('input[type="checkbox"].mot-cles').forEach((element) {
+      (element as CheckboxInputElement).checked = false;
+    });
+    for (var keyword in keywords.entries) {
+      print('.' + keyword.key);
+      (querySelector('#' + keyword.key) as CheckboxInputElement).checked = true;
+      if (querySelectorAll('#' + keyword.key + '_nb').isNotEmpty) {
+        (querySelectorAll('#' + keyword.key + '_nb')[0] as InputElement).value = keyword.value.toString();
+      }
+    }
+    // keywords = {};
+    // for (dynamic keyword in form.querySelectorAll('input.mots_cles')) {
+    //   var checked = keyword.checked;
+    //   var value = keyword.value;
+    //   if (checked) {
+    //     List<InputElement> nb = form.querySelectorAll('input#' + value + '_nb');
+    //     if (nb.isEmpty) {
+    //       keywords[value] = 1;
+    //     } else if (nb[0].value == '') {
+    //       keywords[value] = 1;
+    //     } else {
+    //       keywords[value] = int.parse((nb[0].value == null) ? '1' : nb[0].value);
+    //     }
+    //   }
+    //
+    //   // keywords = data['mots_cles'];
+    (form.querySelector('#texte_effet') as TextAreaElement).value = effect;
+    (form.querySelector('#puissance') as InputElement).value = power.toString();
+    (form.querySelector('#resistance') as InputElement).value = resistance.toString();
   }
 
   /// add to json if the display property is not set to 'none'.
   void addIfDisplayed(Map json, dynamic property, String className) {
     if (querySelector('div.' + className).style.display != 'none') {
-      json[id.toString()][className] = property;
+      json[id][className] = property;
     }
   }
 
-  Map<String, dynamic> toJson() {
-    var json = {id.toString(): {}};
+  Map<int, dynamic> toJson() {
+    var json = {id: {}};
     addIfDisplayed(json, name, 'nom');
     addIfDisplayed(json, maxNbr, 'nbr_max');
     addIfDisplayed(json, rarity, 'rarete');
@@ -109,7 +161,7 @@ class Card {
     addIfDisplayed(json, devotions, 'devotions');
     addIfDisplayed(json, constraints, 'contraintes');
     addIfDisplayed(json, keywords, 'mots_cles');
-    addIfDisplayed(json, effect, 'texte_effet');
+    addIfDisplayed(json, effect, 'effet');
     addIfDisplayed(json, power, 'puissance');
     addIfDisplayed(json, resistance, 'resistance');
     return json;
@@ -122,15 +174,11 @@ class Card {
   }
 
   Map getPropertiesMap() {
-    return toJson()[id.toString()];
+    return toJson()[id];
   }
 
-  void addToMap(Map<String, dynamic> map) {
-    map[id.toString()] = getPropertiesMap();
-  }
-
-  void incrementId() {
-    (querySelector('#id') as InputElement).valueAsNumber = id + 1;
+  void addToMap(Map<int, dynamic> map) {
+    map[id] = getPropertiesMap();
   }
 
   @override

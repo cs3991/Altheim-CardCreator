@@ -1,22 +1,26 @@
-import 'dart:async';
 import 'dart:convert';
 import 'dart:html';
 import 'Card.dart';
 
 class Collection {
   Set<Card> collectionSet = {};
-  Map<String, dynamic> collectionJson = {};
+  Map<Card, HtmlElement> collectionElementsMap = {};
+  Map<int, dynamic> collectionJson = {};
 
-  /// Adds a div corresponding to a card in the element collection in the html
+  /// Create a div corresponding to a card in the element collection
   HtmlElement _createListElement(Card card) {
-    var newElement = DivElement();
-    newElement.children.add(ButtonElement()
-      ..text = '×'
-      ..onClick.listen((event) {
-        remove(card);
-      }));
-    newElement.appendText('   ' + card.name);
-    return newElement;
+    return DivElement()
+      ..className = 'collectioncarte'
+      ..children.add(ParagraphElement()..text = card.name)
+      ..children.add(ImageElement()
+        ..src = 'cross.png'
+        ..onClick.listen((event) {
+          remove(card);
+        }));
+  }
+
+  void _incrementId() {
+    (querySelector('#id') as InputElement).valueAsNumber += 1;
   }
 
   void updateJson() {
@@ -36,20 +40,30 @@ class Collection {
 
   void add(Card card) {
     collectionSet.add(card.copy()).toString();
-    card.incrementId();
-    updateJson();
-    updateHtml();
+    if (!collectionElementsMap.containsKey(card)) {
+      collectionElementsMap[card] = _createListElement(card);
+      querySelector('#liste_collection').children.add(collectionElementsMap[card]);
+      _incrementId();
+    }
+    print('Collection : $collectionSet');
+    // updateJson();
+    // updateHtml();
   }
 
   void remove(Card card) {
     collectionSet.remove(card).toString();
-    updateJson();
-    updateHtml();
+    collectionElementsMap[card].remove();
+    collectionElementsMap.remove(card);
+    // updateJson();
+    // updateHtml();
+    print('Collection : $collectionSet');
   }
 
   void clear() {
     collectionSet = {};
-    updateHtml();
-    updateJson();
+    collectionElementsMap = {};
+    // updateHtml();
+    // updateJson();
+    print('Collection : $collectionSet');
   }
 }
