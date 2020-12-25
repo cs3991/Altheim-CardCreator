@@ -48,7 +48,7 @@ class ButtonListeners {
     });
 // Button add to collection
     querySelector('#add_card_collection').onClick.listen((event) {
-      collection.add(Card.empty());
+      collection.add(Card.empty(), propertiesForm);
     });
   }
 }

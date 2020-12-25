@@ -1,8 +1,8 @@
-import 'dart:convert';
 import 'dart:html';
-
 import 'Card.dart';
 import 'CardType.dart';
+
+// todo: idée d'amélioration : mettre les champs en attribut de PropertiesForm
 
 class PropertiesForm {
   Card card = Card.empty();
@@ -151,5 +151,10 @@ class PropertiesForm {
     for (var constraint in querySelectorAll('.contraintes .expandable')) {
       constraint.remove();
     }
+  }
+
+  void changeCard(Card card) {
+    this.card = card;
+    card.toForm(this);
   }
 }

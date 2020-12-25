@@ -1,43 +1,50 @@
 import 'dart:html';
 
 import 'CardType.dart';
+import 'Collection.dart';
 import 'Form.dart';
 
 class Card {
-  int id = 0;
-  String extension;
-  String rarity;
-  String name;
-  int maxNbr;
-  CardType type;
-  List<String> subtypes;
-  List<String> devotions;
-  Map<String, dynamic> constraints;
-  Map<String, dynamic> keywords;
-  String effect;
-  int power;
-  int resistance;
+  int id;
+  String extension = 'aube';
+  String rarity = 'commune';
+  String name = '';
+  int maxNbr = 0;
+  CardType type = CardType.creature;
+  List<String> subtypes = <String>[];
+  List<String> devotions = <String>[];
+  Map<String, dynamic> constraints = <String, dynamic>{};
+  Map<String, dynamic> keywords = <String, dynamic>{};
+  String effect = '';
+  int power = 0;
+  int resistance = 0;
+
+  static int maxId = 0;
 
   Card(this.id, this.name, this.maxNbr, this.type, this.extension, this.rarity, this.subtypes, this.devotions,
       this.constraints, this.keywords, this.effect, this.power, this.resistance);
 
-  Card.empty();
+  Card.empty() {
+    id = createId();
+  }
 
-  Card.fromJson(Map<int, dynamic> json) {
-    id = json.keys.first;
-    var cardProperties = json[id];
-    name = cardProperties['nom'];
-    maxNbr = cardProperties['nbr_max'];
-    type = CardTypeExtension.fromString(cardProperties['type']);
-    rarity = cardProperties['rarete'];
-    extension = cardProperties['extension'];
-    subtypes = cardProperties['sous_types'];
-    devotions = cardProperties['devotions'];
-    constraints = cardProperties['contraintes'];
-    keywords = cardProperties['mots_cles'];
-    effect = cardProperties['effet'];
-    power = cardProperties['puissance'];
-    resistance = cardProperties['resistance'];
+  Card.fromJson(Map<int, dynamic> json)
+      : id = json.keys.first,
+        name = json.values.first['nom'],
+        maxNbr = json.values.first['nbr_max'],
+        type = CardTypeExtension.fromString(json.values.first['type']),
+        rarity = json.values.first['rarete'],
+        extension = json.values.first['extension'],
+        subtypes = json.values.first['sous_types'],
+        devotions = json.values.first['devotions'],
+        constraints = json.values.first['contraintes'],
+        keywords = json.values.first['mots_cles'],
+        effect = json.values.first['effet'],
+        power = json.values.first['puissance'],
+        resistance = json.values.first['resistance'];
+
+  int createId() {
+    return ++maxId;
   }
 
   /// Updates all attributes of card to match the values in the form.
@@ -89,17 +96,18 @@ class Card {
       power = int.tryParse((form.querySelector('#puissance') as InputElement).value);
       resistance = int.tryParse((form.querySelector('#resistance') as InputElement).value);
     }
-    print(toJson());
   }
 
   void toForm(PropertiesForm propertiesForm) {
     var form = propertiesForm.form;
+    (querySelector('#type') as SelectElement).value = type.toText();
     (querySelector('#id') as InputElement).valueAsNumber = id;
     (querySelector('#nbr_max') as InputElement).valueAsNumber = maxNbr;
     (form.querySelector('#nom') as InputElement).value = name;
     (form.querySelector('#rarete') as SelectElement).value = rarity;
     (form.querySelector('#extension') as SelectElement).value = extension;
     (form.querySelector('#type') as SelectElement).value = type.toText();
+    propertiesForm.changeType(type);
     propertiesForm.removeAllSubtypes();
     for (var subtype in subtypes) {
       propertiesForm.addSubType(subtype);
@@ -116,31 +124,15 @@ class Card {
       (element as CheckboxInputElement).checked = false;
     });
     for (var keyword in keywords.entries) {
-      print('.' + keyword.key);
       (querySelector('#' + keyword.key) as CheckboxInputElement).checked = true;
       if (querySelectorAll('#' + keyword.key + '_nb').isNotEmpty) {
         (querySelectorAll('#' + keyword.key + '_nb')[0] as InputElement).value = keyword.value.toString();
       }
     }
-    // keywords = {};
-    // for (dynamic keyword in form.querySelectorAll('input.mots_cles')) {
-    //   var checked = keyword.checked;
-    //   var value = keyword.value;
-    //   if (checked) {
-    //     List<InputElement> nb = form.querySelectorAll('input#' + value + '_nb');
-    //     if (nb.isEmpty) {
-    //       keywords[value] = 1;
-    //     } else if (nb[0].value == '') {
-    //       keywords[value] = 1;
-    //     } else {
-    //       keywords[value] = int.parse((nb[0].value == null) ? '1' : nb[0].value);
-    //     }
-    //   }
-    //
-    //   // keywords = data['mots_cles'];
     (form.querySelector('#texte_effet') as TextAreaElement).value = effect;
     (form.querySelector('#puissance') as InputElement).value = power.toString();
     (form.querySelector('#resistance') as InputElement).value = resistance.toString();
+    propertiesForm.card = this;
   }
 
   /// add to json if the display property is not set to 'none'.
@@ -199,7 +191,6 @@ class Card {
   }
 
   /// to be able to compare two different cards : Card('name') == Card('name'); -> true
-  // todo : better implementation with ids
   @override
   bool operator ==(Object other) =>
       identical(this, other) || other is Card && runtimeType == other.runtimeType && id == other.id;

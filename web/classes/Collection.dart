@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'dart:html';
 import 'Card.dart';
+import 'Form.dart';
 
 class Collection {
   Set<Card> collectionSet = {};
@@ -8,14 +9,18 @@ class Collection {
   Map<int, dynamic> collectionJson = {};
 
   /// Create a div corresponding to a card in the element collection
-  HtmlElement _createListElement(Card card) {
+  HtmlElement _createListElement(Card card, PropertiesForm propertiesForm) {
     return DivElement()
       ..className = 'collectioncarte'
+      ..onClick.listen((event) {
+        propertiesForm.changeCard(card);
+        event.stopPropagation();
+      })
       ..children.add(ParagraphElement()..text = card.name)
       ..children.add(ImageElement()
         ..src = 'cross.png'
         ..onClick.listen((event) {
-          remove(card);
+          remove(card, propertiesForm);
         }));
   }
 
@@ -23,6 +28,7 @@ class Collection {
     (querySelector('#id') as InputElement).valueAsNumber += 1;
   }
 
+  // todo rewrite for the new collection
   void updateJson() {
     collectionJson = {};
     for (var card in collectionSet) {
@@ -31,39 +37,43 @@ class Collection {
     (querySelector('#collection_text_area') as TextAreaElement).value = jsonEncode(collectionJson);
   }
 
-  void updateHtml() {
+  // Not used anymore
+  void updateHtml(PropertiesForm propertiesForm) {
     querySelector('#liste_collection').children.clear(); // empty the list before adding all elements of collectionSet
     for (var card in collectionSet) {
-      querySelector('#liste_collection').children.add(_createListElement(card));
+      querySelector('#liste_collection').children.add(_createListElement(card, propertiesForm));
     }
   }
 
-  void add(Card card) {
-    collectionSet.add(card.copy()).toString();
+  void add(Card card, PropertiesForm propertiesForm) {
+    collectionSet.add(card);
     if (!collectionElementsMap.containsKey(card)) {
-      collectionElementsMap[card] = _createListElement(card);
+      collectionElementsMap[card] = _createListElement(card, propertiesForm);
       querySelector('#liste_collection').children.add(collectionElementsMap[card]);
       _incrementId();
     }
-    print('Collection : $collectionSet');
+    card.toForm(propertiesForm);
+    print('CollectionElem : $collectionElementsMap');
     // updateJson();
-    // updateHtml();
   }
 
-  void remove(Card card) {
+  void remove(Card card, PropertiesForm propertiesForm) {
     collectionSet.remove(card).toString();
     collectionElementsMap[card].remove();
     collectionElementsMap.remove(card);
+    collectionSet.last.toForm(propertiesForm);
     // updateJson();
-    // updateHtml();
     print('Collection : $collectionSet');
   }
 
   void clear() {
-    collectionSet = {};
-    collectionElementsMap = {};
-    // updateHtml();
+    collectionSet = <Card>{};
+    collectionElementsMap = <Card, HtmlElement>{};
     // updateJson();
     print('Collection : $collectionSet');
+  }
+
+  void changeName(Card card) {
+    collectionElementsMap[card].firstChild.text = card.name;
   }
 }
