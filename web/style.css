@@ -75,12 +75,14 @@ main
 .collection
 {
   display: flex;
-  flex-direction: column;
+  padding-top: 20px;
+  flex-flow: column nowrap;
   justify-content: space-between;
   background: #262626;
   color: #CCCCCC;
   border-radius: 20px 0px 0px 0px;
   width: 13%;
+  height: calc(100vh - 100px);
 }
 
 #liste_collection
@@ -118,7 +120,7 @@ h1
     margin: auto;
     margin-top: 10px;
     border-radius: 10px;
-    height: 34px;
+    flex: 0 0 34px;
     width: 90%;
 }
 
@@ -313,11 +315,8 @@ select
 {
   display: flex;
   flex-direction: column;
-}
-
-.bot_left
-{
     margin-bottom: 10px;
+    margin-top: 20px;
 }
 .bot_left>button
 {
@@ -357,8 +356,12 @@ button:active
 {
   display: flex;
   flex-direction: column;
-  justify-content: center;
-	margin-top: 20px;
+  justify-content: start;
+  flex: 0 0 calc(100% - 180px);
+	margin-top: 0;
+    overflow-y: auto;
+    overflow-x: hidden;
+    height: calc(100% - 105px);
 }
 
 .expandable
