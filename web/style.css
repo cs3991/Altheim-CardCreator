@@ -115,6 +115,18 @@ h1
   cursor: pointer;
 }
 
+.collectioncarte:hover
+{
+    background-color: #424242;
+}
+
+.collectioncarte.selected
+{
+    border: 1px solid #A3CBE6;
+    background-color: #4D4D4D;
+    margin-top: 8px;
+}
+
 .collection_top .button_add
 {
     margin: auto;

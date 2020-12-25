@@ -7,7 +7,7 @@ import 'Form.dart';
 class Card {
   int id;
   String extension = 'aube';
-  String rarity = 'commune';
+  String rarity = 'banal';
   String name = '';
   int maxNbr = 0;
   CardType type = CardType.creature;
@@ -90,15 +90,13 @@ class Card {
           keywords[value] = int.parse((nb[0].value == null) ? '1' : nb[0].value);
         }
       }
-
-      // keywords = data['mots_cles'];
       effect = (form.querySelector('#texte_effet') as TextAreaElement).value;
       power = int.tryParse((form.querySelector('#puissance') as InputElement).value);
       resistance = int.tryParse((form.querySelector('#resistance') as InputElement).value);
     }
   }
 
-  void toForm(PropertiesForm propertiesForm) {
+  void activate(PropertiesForm propertiesForm) {
     var form = propertiesForm.form;
     (querySelector('#type') as SelectElement).value = type.toText();
     (querySelector('#id') as InputElement).valueAsNumber = id;
@@ -121,6 +119,9 @@ class Card {
       propertiesForm.addConstraints(constraint, constraints[constraint].toString());
     }
     querySelectorAll('input[type="checkbox"].mot-cles').forEach((element) {
+      (element as CheckboxInputElement).checked = false;
+    });
+    querySelectorAll('input[type="checkbox"].mots_cles').forEach((element) {
       (element as CheckboxInputElement).checked = false;
     });
     for (var keyword in keywords.entries) {

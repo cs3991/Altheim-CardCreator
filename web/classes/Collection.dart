@@ -14,13 +14,17 @@ class Collection {
       ..className = 'collectioncarte'
       ..onClick.listen((event) {
         propertiesForm.changeCard(card);
-        event.stopPropagation();
+        collectionElementsMap.forEach((key, value) {
+          value.classes.remove('selected');
+        });
+        collectionElementsMap[card].classes.add('selected');
       })
       ..children.add(ParagraphElement()..text = card.name)
       ..children.add(ImageElement()
         ..src = 'cross.png'
         ..onClick.listen((event) {
           remove(card, propertiesForm);
+          event.stopPropagation();
         }));
   }
 
@@ -28,7 +32,7 @@ class Collection {
     (querySelector('#id') as InputElement).valueAsNumber += 1;
   }
 
-  // todo rewrite for the new collection
+  // todo: rewrite for the new collection
   void updateJson() {
     collectionJson = {};
     for (var card in collectionSet) {
@@ -52,7 +56,11 @@ class Collection {
       querySelector('#liste_collection').children.add(collectionElementsMap[card]);
       _incrementId();
     }
-    card.toForm(propertiesForm);
+    card.activate(propertiesForm);
+    collectionElementsMap.forEach((key, value) {
+      value.classes.remove('selected');
+    });
+    collectionElementsMap[card].classes.add('selected');
     print('CollectionElem : $collectionElementsMap');
     // updateJson();
   }
@@ -61,7 +69,13 @@ class Collection {
     collectionSet.remove(card).toString();
     collectionElementsMap[card].remove();
     collectionElementsMap.remove(card);
-    collectionSet.last.toForm(propertiesForm);
+    if (collectionSet.isNotEmpty) {
+      collectionSet.last.activate(propertiesForm);
+      collectionElementsMap.forEach((key, value) {
+        value.classes.remove('selected');
+      });
+      collectionElementsMap[collectionSet.last].classes.add('selected');
+    }
     // updateJson();
     print('Collection : $collectionSet');
   }

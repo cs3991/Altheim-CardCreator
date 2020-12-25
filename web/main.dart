@@ -12,28 +12,30 @@ void main() {
   var collection = Collection();
   ButtonListeners.initListeners(propertiesForm, collection);
   collection.add(
-      Card.fromJson({
-        40: {
-          'nom': 'Nom',
-          'nbr_max': 2,
-          'rarete': 'banal',
-          'extension': 'aube',
-          'type': 'creature',
-          'sous_types': ['Sub', 'type'],
-          'devotions': ['devo', 'tion'],
-          'contraintes': {'contr': 1, 'toioj': 3},
-          'mots_cles': <String, dynamic>{},
-          "effet": "Texte",
-          "puissance": 1,
-          "resistance": 2
-        }
-      }),
+      // Card.fromJson({
+      //   40: {
+      //     'nom': 'Nom',
+      //     'nbr_max': 2,
+      //     'rarete': 'banal',
+      //     'extension': 'aube',
+      //     'type': 'creature',
+      //     'sous_types': ['Sub', 'type'],
+      //     'devotions': ['devo', 'tion'],
+      //     'contraintes': {'contr': 1, 'toioj': 3},
+      //     'mots_cles': <String, dynamic>{},
+      //     "effet": "Texte",
+      //     "puissance": 1,
+      //     "resistance": 2
+      //   }
+      // }),
+      Card.empty(),
       propertiesForm);
-  collection.collectionSet.first.toForm(propertiesForm);
+  collection.collectionSet.first.activate(propertiesForm);
   // Each change in the form triggers the update of the card
   propertiesForm.form.onInput.listen((event) {
     propertiesForm.updateJson();
     collection.changeName(propertiesForm.card);
+    print(collection.collectionSet);
   });
 
   var trigger = ActionPlaceholder(
@@ -59,6 +61,7 @@ void main() {
   );
 
   propertiesForm.card.updateFromForm(propertiesForm.form);
+
   // querySelector('#json').text = jsonEncode(propertiesForm.card.toJson());
 
   // querySelector('#button_add_collection').onClick.listen((event) {
@@ -67,4 +70,8 @@ void main() {
   // querySelector('#button_clear_collection').onClick.listen((event) {
   //   collection.clear();
   // });
+
+  window.onBeforeUnload.listen((event) {
+    (event as BeforeUnloadEvent).returnValue = 'Are you sure you want to leave?';
+  });
 }

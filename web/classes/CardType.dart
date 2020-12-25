@@ -10,7 +10,7 @@ extension CardTypeExtension on CardType {
       case (CardType.miracle):
         return 'miracle';
       case (CardType.divinity):
-        return 'divinity';
+        return 'divinite';
       case (CardType.place):
         return 'lieu';
       default:

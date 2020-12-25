@@ -155,6 +155,6 @@ class PropertiesForm {
 
   void changeCard(Card card) {
     this.card = card;
-    card.toForm(this);
+    card.activate(this);
   }
 }
