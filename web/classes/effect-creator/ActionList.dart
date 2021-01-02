@@ -175,7 +175,8 @@ final List<Map<String, dynamic>> actions = [
   },
   {
     'name': 'modifier_stats',
-    'doc': 'Ajoute des points de puissance et de résistance à une carte. Valeur négatives possibles.',
+    'doc':
+        'Ajoute des points de puissance et de résistance à une carte. Valeur négatives possibles.',
     'params': [
       {
         'name': 'carte',
@@ -303,7 +304,8 @@ final List<Map<String, dynamic>> actions = [
   },
   {
     'name': 'blessures_infligees',
-    'doc': "Le nombre de blessures infligées par l'attaque. Ne peut s'utiliser que quand le déclencheur est attaque.",
+    'doc':
+        "Le nombre de blessures infligées par l'attaque. Ne peut s'utiliser que quand le déclencheur est attaque.",
     'params': [],
     'return': {'type': 'int'},
     'enable_if': {
@@ -322,7 +324,8 @@ final List<Map<String, dynamic>> actions = [
   },
   {
     'name': 'attaquant',
-    'doc': "La carte qui a initié l'attaque. Ne peut s'utiliser que quand le déclencheur est attaque ou défense.",
+    'doc':
+        "La carte qui a initié l'attaque. Ne peut s'utiliser que quand le déclencheur est attaque ou défense.",
     'params': [],
     'return': {'type': 'carte'},
     'enable_if': {
@@ -341,7 +344,8 @@ final List<Map<String, dynamic>> actions = [
   },
   {
     'name': 'carte_animee',
-    'doc': "La carte qui est animée. Ne peut s'utiliser que quand le déclencheur est animation ou migration.",
+    'doc':
+        "La carte qui est animée. Ne peut s'utiliser que quand le déclencheur est animation ou migration.",
     'params': [],
     'return': {'type': 'carte'},
     'enable_if': {
@@ -350,7 +354,8 @@ final List<Map<String, dynamic>> actions = [
   },
   {
     'name': 'cette_carte',
-    'doc': "Cette carte (celle dont vous êtes en train d'éditer les effets en ce moment).",
+    'doc':
+        "Cette carte (celle dont vous êtes en train d'éditer les effets en ce moment).",
     'params': [],
     'return': {'type': 'carte'}
   },
@@ -391,7 +396,8 @@ final List<Map<String, dynamic>> actions = [
   {
     'name': 'filtrer',
     'template': ['T'],
-    'doc': 'Une liste contenant seulement les éléments satisfaisant le prédicat.',
+    'doc':
+        'Une liste contenant seulement les éléments satisfaisant le prédicat.',
     'params': [
       {
         'name': 'prédicat',
@@ -681,7 +687,8 @@ final List<Map<String, dynamic>> actions = [
   },
   {
     'name': 'carte_invoquée',
-    'doc': 'Carte invoquée. Disponible uniquement si le déclencheur est invocation.',
+    'doc':
+        'Carte invoquée. Disponible uniquement si le déclencheur est invocation.',
     'params': [],
     'return': {'type': 'carte'},
     'enable_if': {
@@ -690,7 +697,8 @@ final List<Map<String, dynamic>> actions = [
   },
   {
     'name': 'carte_morte',
-    'doc': 'Carte qui vient de mourir. Disponible uniquement si le déclencheur est mort.',
+    'doc':
+        'Carte qui vient de mourir. Disponible uniquement si le déclencheur est mort.',
     'params': [],
     'return': {'type': 'carte'},
     'enable_if': {

@@ -30,7 +30,6 @@ class Action {
       : _doc = json['doc'],
         _name = json['name'],
         _isTemplate = json['template'] != null {
-
     // If it is a template, create Template objects
     if (_isTemplate) {
       for (var t in json['template']) {
@@ -51,7 +50,8 @@ class Action {
 
     // Add parameters placeholders
     for (var param in json['params']) {
-      var paramPlaceholder = ActionPlaceholder.fromJson(param, _placeholder, _templates);
+      var paramPlaceholder =
+          ActionPlaceholder.fromJson(param, _placeholder, _templates);
       _params.add(paramPlaceholder);
     }
   }
@@ -67,7 +67,9 @@ class Action {
     _templates.values.forEach((template) {
       template.destroy();
     });
-    _params.forEach((param) {param.destroy();});
+    _params.forEach((param) {
+      param.destroy();
+    });
   }
 
   String toJson(int indent) {

@@ -25,7 +25,9 @@ class ActionPlaceholder {
   ActionView _view;
 
   ActionPlaceholder(this._name, this._returnType, this._parent,
-      {DivElement parentDiv, this.disableTemplates = false, ActionPlaceholder triggerPlaceholder})
+      {DivElement parentDiv,
+      this.disableTemplates = false,
+      ActionPlaceholder triggerPlaceholder})
       : triggerPlaceholder = triggerPlaceholder ?? _parent?.triggerPlaceholder {
     parentDiv ??= parent._view.paramsDiv;
     _view = ActionView(this);
@@ -33,9 +35,12 @@ class ActionPlaceholder {
     _returnType.subscribeToUpdate(this);
   }
 
-  ActionPlaceholder.fromJson(Map<String, dynamic> json, ActionPlaceholder parent, Map<String, Template> templates,
+  ActionPlaceholder.fromJson(Map<String, dynamic> json,
+      ActionPlaceholder parent, Map<String, Template> templates,
       [DivElement parentDiv])
-      : this(json['name'], AbstractType.fromJson(json['type'], templates), parent, parentDiv: parentDiv);
+      : this(json['name'], AbstractType.fromJson(json['type'], templates),
+            parent,
+            parentDiv: parentDiv);
 
   List<Map<String, dynamic>> getCompatibleActions() {
     var filteredActions = actions.where((a) {
@@ -47,7 +52,8 @@ class ActionPlaceholder {
 
       // Disallow adding predicate inside another predicate
       if (a['params'].isNotEmpty &&
-          (a['params'] as List<Map<String, dynamic>>).any((param) => param['name'] == 'prédicat') &&
+          (a['params'] as List<Map<String, dynamic>>)
+              .any((param) => param['name'] == 'prédicat') &&
           findParentPredicate() != null) {
         return false;
       }
@@ -55,7 +61,9 @@ class ActionPlaceholder {
       // Handle enable_if fields
       if (a['enable_if'] != null) {
         Map<String, List<String>> cond = a['enable_if'];
-        if (cond['trigger'] != null && cond['trigger'].every((element) => element != triggerPlaceholder?.action?.name)) {
+        if (cond['trigger'] != null &&
+            cond['trigger'].every(
+                (element) => element != triggerPlaceholder?.action?.name)) {
           return false;
         }
       }
@@ -65,7 +73,8 @@ class ActionPlaceholder {
         if (a['template'] != null) return false;
       }
 
-      return _returnType.canUnify(AbstractType.tempFromJson(a['return'], a['template']));
+      return _returnType
+          .canUnify(AbstractType.tempFromJson(a['return'], a['template']));
     });
 
     var actionList = filteredActions.toList(growable: false);

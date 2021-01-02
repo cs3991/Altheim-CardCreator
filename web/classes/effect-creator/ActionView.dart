@@ -72,12 +72,15 @@ class ActionView {
       _select.append(option);
     }
 
-    _select.value = _select.options.map((e) => e.value).contains(currentValue) ? currentValue : 'null';
+    _select.value = _select.options.map((e) => e.value).contains(currentValue)
+        ? currentValue
+        : 'null';
   }
 
   void _selectChangeCallback(Event evt) {
     var val = _select.value;
-    var actionJson = actions.firstWhere((a) => a['name'] == val, orElse: () => null);
+    var actionJson =
+        actions.firstWhere((a) => a['name'] == val, orElse: () => null);
 
     _placeholder.unsetAction();
 

@@ -7,7 +7,8 @@ abstract class AbstractType {
 
   AbstractType();
 
-  factory AbstractType.fromJson(Map<String, dynamic> typeJson, Map<String, Template> templates) {
+  factory AbstractType.fromJson(
+      Map<String, dynamic> typeJson, Map<String, Template> templates) {
     var typeParameters = typeJson['parameters'];
     String typeName = typeJson['type'];
 
@@ -31,7 +32,8 @@ abstract class AbstractType {
     return ret;
   }
 
-  factory AbstractType.tempFromJson(Map<String, dynamic> typeJson, List<String> templates) {
+  factory AbstractType.tempFromJson(
+      Map<String, dynamic> typeJson, List<String> templates) {
     var typeParameters = typeJson['parameters'];
     String typeName = typeJson['type'];
 
