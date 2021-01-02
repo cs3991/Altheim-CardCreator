@@ -13,11 +13,7 @@ class Collection {
     return DivElement()
       ..className = 'collectioncarte'
       ..onClick.listen((event) {
-        propertiesForm.changeCard(card);
-        collectionElementsMap.forEach((key, value) {
-          value.classes.remove('selected');
-        });
-        collectionElementsMap[card].classes.add('selected');
+        selectCard(card, propertiesForm);
       })
       ..children.add(ParagraphElement()..text = card.name)
       ..children.add(ImageElement()
@@ -61,12 +57,11 @@ class Collection {
       value.classes.remove('selected');
     });
     collectionElementsMap[card].classes.add('selected');
-    print('CollectionElem : $collectionElementsMap');
     // updateJson();
   }
 
   void remove(Card card, PropertiesForm propertiesForm) {
-    collectionSet.remove(card).toString();
+    collectionSet.remove(card);
     collectionElementsMap[card].remove();
     collectionElementsMap.remove(card);
     if (collectionSet.isNotEmpty) {
@@ -77,14 +72,25 @@ class Collection {
       collectionElementsMap[collectionSet.last].classes.add('selected');
     }
     // updateJson();
-    print('Collection : $collectionSet');
   }
 
-  void clear() {
+  void selectCard(Card card, PropertiesForm propertiesForm) {
+    propertiesForm.changeCard(card);
+    collectionElementsMap.forEach((key, value) {
+      value.classes.remove('selected');
+    });
+    collectionElementsMap[card].classes.add('selected');
+  }
+
+  void clear(PropertiesForm propertiesForm) {
+    collectionElementsMap.forEach((card, element) {
+      element.remove();
+    });
     collectionSet = <Card>{};
     collectionElementsMap = <Card, HtmlElement>{};
+    Card.maxId = 0;
+    add(Card.empty(), propertiesForm);
     // updateJson();
-    print('Collection : $collectionSet');
   }
 
   void changeName(Card card) {

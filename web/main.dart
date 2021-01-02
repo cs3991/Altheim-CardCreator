@@ -1,5 +1,4 @@
 import 'dart:html';
-import 'dart:convert';
 import 'classes/Card.dart';
 import 'classes/Collection.dart';
 import 'classes/Form.dart';
@@ -11,31 +10,13 @@ void main() {
   var propertiesForm = PropertiesForm(querySelector('#form'));
   var collection = Collection();
   ButtonListeners.initListeners(propertiesForm, collection);
-  collection.add(
-      // Card.fromJson({
-      //   40: {
-      //     'nom': 'Nom',
-      //     'nbr_max': 2,
-      //     'rarete': 'banal',
-      //     'extension': 'aube',
-      //     'type': 'creature',
-      //     'sous_types': ['Sub', 'type'],
-      //     'devotions': ['devo', 'tion'],
-      //     'contraintes': {'contr': 1, 'toioj': 3},
-      //     'mots_cles': <String, dynamic>{},
-      //     "effet": "Texte",
-      //     "puissance": 1,
-      //     "resistance": 2
-      //   }
-      // }),
-      Card.empty(),
-      propertiesForm);
+  collection.add(Card.empty(), propertiesForm);
   collection.collectionSet.first.activate(propertiesForm);
+
   // Each change in the form triggers the update of the card
-  propertiesForm.form.onInput.listen((event) {
+  querySelector('#nom').onInput.listen((event) {
     propertiesForm.updateJson();
     collection.changeName(propertiesForm.card);
-    print(collection.collectionSet);
   });
 
   var trigger = ActionPlaceholder(

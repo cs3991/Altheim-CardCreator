@@ -50,5 +50,17 @@ class ButtonListeners {
     querySelector('#add_card_collection').onClick.listen((event) {
       collection.add(Card.empty(), propertiesForm);
     });
+// Button clear collection
+    querySelector('#empty_btn').onClick.listen((event) {
+      collection.clear(propertiesForm);
+    });
+    // Button show json
+    querySelector('#show_json').onClick.listen((event) {
+      querySelector('#json').text = 'json';
+    });
+    // Button reset card
+    querySelector('#reset_card').onClick.listen((event) {
+      // TODO: à faire
+    });
   }
 }

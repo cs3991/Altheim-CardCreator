@@ -349,7 +349,7 @@ button
   align-self: center;
   text-overflow: ellipsis;
   overflow: hidden;
-
+font-family: 'Catamaran', sans-serif;
   white-space: nowrap;
 }
 
@@ -554,18 +554,32 @@ button.effet
     border-left: solid white 2px;
 }
 
+.partie_droite
+{
+    display: inline-block;
 
+}
 
 .visualisation
 {
-  width: 10%;
-  font-family: 'Catamaran', sans-serif;
-  color: #9E9E9E;
-  margin-right: 15px;
-  text-align: left;
-  padding: 20px 0px 0px 10px;
-      box-sizing: border-box;
-      height: 100%;
-      vertical-align: top;
-      display: inline-block;
+    font-family: 'Catamaran', sans-serif;
+    color: #9E9E9E;
+    margin-right: 15px;
+    text-align: left;
+    padding: 20px 0px 0px 10px;
+    box-sizing: border-box;
+    height: 80%;
+    vertical-align: top;
+}
+
+.settings
+{
+    font-family: 'Catamaran', sans-serif;
+    color: #9E9E9E;
+    margin-right: 15px;
+    text-align: left;
+    padding: 20px 0px 0px 10px;
+    box-sizing: border-box;
+    height: 80%;
+    vertical-align: top;
 }

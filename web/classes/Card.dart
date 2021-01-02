@@ -6,8 +6,8 @@ import 'Form.dart';
 
 class Card {
   int id;
-  String extension = 'aube';
-  String rarity = 'banal';
+  String extension = '';
+  String rarity = '';
   String name = '';
   int maxNbr = 0;
   CardType type = CardType.creature;
@@ -44,7 +44,7 @@ class Card {
         resistance = json.values.first['resistance'];
 
   int createId() {
-    return ++maxId;
+    return maxId++;
   }
 
   /// Updates all attributes of card to match the values in the form.
