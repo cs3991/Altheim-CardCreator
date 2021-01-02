@@ -90,6 +90,7 @@ class ActionPlaceholder {
   void setAction(Map<String, dynamic> json) {
     unsetAction();
     _action = Action(json, this);
+    print(getRoot().toJson());
   }
 
   void unsetAction() {
@@ -119,11 +120,19 @@ class ActionPlaceholder {
     _view.updateInstantiation(template, typeInst);
   }
 
+  String toJson([int indent = 0]) {
+    return (_action == null ? '{}' : _action.toJson(indent));
+  }
+
   ActionPlaceholder findParentPredicate() {
     return _name == 'prédicat'
         ? this
         : _parent == null
             ? null
             : _parent.findParentPredicate();
+  }
+
+  ActionPlaceholder getRoot() {
+    return _parent == null ? this : _parent.getRoot();
   }
 }

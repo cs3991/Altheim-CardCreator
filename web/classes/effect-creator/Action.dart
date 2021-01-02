@@ -70,6 +70,33 @@ class Action {
     _params.forEach((param) {param.destroy();});
   }
 
+  String toJson(int indent) {
+    var lineBreak = '\n' + '  ' * indent;
+    var innerLineBreak = '\n' + '  ' * (indent + 1);
+    var sb = StringBuffer();
+    sb.write(lineBreak);
+    sb.write('{');
+    sb.write(innerLineBreak);
+    sb.write('"nom": "');
+    sb.write(_name);
+    sb.write('",');
+    sb.write(innerLineBreak);
+    sb.write('"params": ');
+    sb.write('[');
+    var first = true;
+    for (var ph in _params) {
+      if (!first) {
+        sb.write(', ');
+      }
+      sb.write(ph.toJson(indent + 1));
+      first = false;
+    }
+    sb.write(']');
+    sb.write(lineBreak);
+    sb.write('}');
+
+    return sb.toString();
+  }
 
   ActionPlaceholder get placeholder => _placeholder;
 
