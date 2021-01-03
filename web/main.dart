@@ -2,8 +2,7 @@ import 'dart:html';
 import 'classes/Card.dart';
 import 'classes/Collection.dart';
 import 'classes/Form.dart';
-import 'classes/effect-creator/ActionPlaceholder.dart';
-import 'classes/effect-creator/Type.dart';
+import 'classes/effect-creator/Effect.dart';
 import 'utils/ButtonListeners.dart';
 
 void main() {
@@ -13,33 +12,14 @@ void main() {
   collection.add(Card.empty(), propertiesForm);
   collection.collectionSet.first.activate(propertiesForm);
 
+  Effect(querySelector('#trigger_div'), querySelector('#condition_div'),
+      querySelector('#action_div'));
+
   // Each change in the form triggers the update of the card
   querySelector('#nom').onInput.listen((event) {
     propertiesForm.updateJson();
     collection.changeName(propertiesForm.card);
   });
-
-  var trigger = ActionPlaceholder(
-    'Déclencheur',
-    ExplicitType('trigger'),
-    null,
-    parentDiv: querySelector('#trigger_div'),
-    disableTemplates: true,
-  );
-  ActionPlaceholder(
-    'Condition',
-    ExplicitType('bool'),
-    null,
-    parentDiv: querySelector('#condition_div'),
-    triggerPlaceholder: trigger,
-  );
-  ActionPlaceholder(
-    'Action',
-    ExplicitType('void'),
-    null,
-    parentDiv: querySelector('#action_div'),
-    triggerPlaceholder: trigger,
-  );
 
   propertiesForm.card.updateFromForm(propertiesForm.form);
 

@@ -1,5 +1,5 @@
 import 'dart:html';
-import 'ActionList.dart';
+import 'Action.dart';
 import 'ActionPlaceholder.dart';
 import 'Template.dart';
 
@@ -79,13 +79,11 @@ class ActionView {
 
   void _selectChangeCallback(Event evt) {
     var val = _select.value;
-    var actionJson =
-        actions.firstWhere((a) => a['name'] == val, orElse: () => null);
 
     _placeholder.unsetAction();
 
-    if (actionJson != null) {
-      _placeholder.setAction(actionJson);
+    if (val != 'null') {
+      _placeholder.setAction(Action.fromActionName(val, _placeholder));
     }
 
     if (val == null) {
@@ -98,6 +96,8 @@ class ActionView {
   DivElement get paramsDiv => _paramsDiv;
 
   DivElement get mainDiv => _mainDiv;
+
+  SelectElement get select => _select;
 
   void destroy() {
     _mainDiv.remove();

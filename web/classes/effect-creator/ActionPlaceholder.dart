@@ -16,7 +16,7 @@ class ActionPlaceholder {
   /// The caller of the action
   final ActionPlaceholder _parent;
 
-  final disableTemplates;
+  final bool disableTemplates;
 
   final ActionPlaceholder triggerPlaceholder;
 
@@ -35,7 +35,7 @@ class ActionPlaceholder {
     _returnType.subscribeToUpdate(this);
   }
 
-  ActionPlaceholder.fromJson(Map<String, dynamic> json,
+  ActionPlaceholder.fromActionList(Map<String, dynamic> json,
       ActionPlaceholder parent, Map<String, Template> templates,
       [DivElement parentDiv])
       : this(json['name'], AbstractType.fromJson(json['type'], templates),
@@ -96,10 +96,13 @@ class ActionPlaceholder {
     return actionList;
   }
 
-  void setAction(Map<String, dynamic> json) {
+  void setAction(Action action, {bool updateView = false}) {
     unsetAction();
-    _action = Action(json, this);
-    print(getRoot().toJson());
+    _action = action;
+    if (updateView) {
+      _view.select.value = action.name;
+    }
+    // print(getRoot().toJson());
   }
 
   void unsetAction() {
@@ -131,6 +134,10 @@ class ActionPlaceholder {
 
   String toJson([int indent = 0]) {
     return (_action == null ? '{}' : _action.toJson(indent));
+  }
+
+  void fillFromJson(Map<String, dynamic> json) {
+    setAction(Action.fromJsonExport(json, this), updateView: true);
   }
 
   ActionPlaceholder findParentPredicate() {

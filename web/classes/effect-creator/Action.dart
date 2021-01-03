@@ -1,3 +1,4 @@
+import 'ActionList.dart';
 import 'ActionPlaceholder.dart';
 import 'Template.dart';
 import 'Type.dart';
@@ -26,7 +27,7 @@ class Action {
   /// The placeholder that contains this action
   final ActionPlaceholder _placeholder;
 
-  Action(Map<String, dynamic> json, this._placeholder)
+  Action.fromActionJson(Map<String, dynamic> json, this._placeholder)
       : _doc = json['doc'],
         _name = json['name'],
         _isTemplate = json['template'] != null {
@@ -51,9 +52,26 @@ class Action {
     // Add parameters placeholders
     for (var param in json['params']) {
       var paramPlaceholder =
-          ActionPlaceholder.fromJson(param, _placeholder, _templates);
+          ActionPlaceholder.fromActionList(param, _placeholder, _templates);
       _params.add(paramPlaceholder);
     }
+  }
+
+  Action.fromActionName(String name, ActionPlaceholder placeholder)
+      : this.fromActionJson(
+            actions.firstWhere((a) => a['name'] == name, orElse: () => null),
+            placeholder);
+
+  factory Action.fromJsonExport(
+      Map<String, dynamic> json, ActionPlaceholder placeholder) {
+    var name = json['nom'];
+    var action = Action.fromActionName(name, placeholder);
+    for (var i = 0; i < action._params.length; i++) {
+      action._params[i].setAction(
+          Action.fromJsonExport(json['params'][i], action._params[i]),
+          updateView: true);
+    }
+    return action;
   }
 
   void addConstrainedTemplate(Template template) {
