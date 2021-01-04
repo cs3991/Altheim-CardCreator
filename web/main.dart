@@ -1,8 +1,8 @@
 import 'dart:html';
+
 import 'classes/Card.dart';
 import 'classes/Collection.dart';
 import 'classes/Form.dart';
-import 'classes/effect-creator/Effect.dart';
 import 'utils/ButtonListeners.dart';
 
 void main() {
@@ -10,10 +10,7 @@ void main() {
   var collection = Collection();
   ButtonListeners.initListeners(propertiesForm, collection);
   collection.add(Card.empty(), propertiesForm);
-  collection.collectionSet.first.activate(propertiesForm);
-
-  Effect(querySelector('#trigger_div'), querySelector('#condition_div'),
-      querySelector('#action_div'));
+  propertiesForm.changeCard(collection.collectionSet.first);
 
   // Each change in the form triggers the update of the card
   querySelector('#nom').onInput.listen((event) {

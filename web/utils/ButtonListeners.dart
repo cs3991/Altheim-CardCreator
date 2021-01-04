@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'dart:html';
 
 import '../classes/Card.dart';
@@ -56,7 +57,7 @@ class ButtonListeners {
     });
     // Button show json
     querySelector('#show_json').onClick.listen((event) {
-      querySelector('#json').text = 'json';
+      print(jsonEncode(propertiesForm.card.toJson()));
     });
     // Button reset card
     querySelector('#reset_card').onClick.listen((event) {

@@ -1,4 +1,5 @@
 import 'dart:html';
+
 import 'ActionPlaceholder.dart';
 import 'Type.dart';
 
@@ -7,7 +8,35 @@ class Effect {
   ActionPlaceholder _condition;
   ActionPlaceholder _action;
 
-  Effect(DivElement triggerDiv, DivElement conditionDiv, DivElement actionDiv) {
+  Effect.fromJson(Map<String, dynamic> json) {
+    _trigger = ActionPlaceholder(
+      'Déclencheur',
+      ExplicitType('trigger'),
+      null,
+      disableTemplates: true,
+    );
+
+    _condition = ActionPlaceholder(
+      'Condition',
+      ExplicitType('bool'),
+      null,
+      triggerPlaceholder: _trigger,
+    );
+
+    _action = ActionPlaceholder(
+      'Action',
+      ExplicitType('void'),
+      null,
+      triggerPlaceholder: _trigger,
+    );
+
+    _trigger.fillFromJson(json['declencheur']);
+    _condition.fillFromJson(json['condition']);
+    _action.fillFromJson(json['action']);
+  }
+
+  Effect(
+      [DivElement triggerDiv, DivElement conditionDiv, DivElement actionDiv]) {
     _trigger = ActionPlaceholder(
       'Déclencheur',
       ExplicitType('trigger'),
@@ -33,31 +62,24 @@ class Effect {
     );
   }
 
-  String toJson([int indent = 0]) {
-    var lineBreak = '\n' + '  ' * indent;
-    var innerLineBreak = '\n' + '  ' * (indent + 1);
-
-    var sb = StringBuffer();
-    sb.write('{');
-    sb.write(innerLineBreak);
-    sb.write('"declencheur": ');
-    sb.write(_trigger.toJson(indent + 1));
-    sb.write(',');
-    sb.write(innerLineBreak);
-    sb.write('"condition": ');
-    sb.write(_condition.toJson(indent + 1));
-    sb.write(',');
-    sb.write(innerLineBreak);
-    sb.write('"action": ');
-    sb.write(_action.toJson(indent + 1));
-    sb.write(lineBreak);
-    sb.write('}');
-    return sb.toString();
+  Map<String, dynamic> toJson() {
+    var json = <String, dynamic>{};
+    json['declencheur'] = _trigger.toJson();
+    json['condition'] = _condition.toJson();
+    json['action'] = _action.toJson();
+    return json;
   }
 
-  void fillFromJson(Map<String, dynamic> json) {
-    _trigger.fillFromJson(json['declencheur']);
-    _condition.fillFromJson(json['condition']);
-    _action.fillFromJson(json['action']);
+  void attachView(
+      DivElement triggerDiv, DivElement conditionDiv, DivElement actionDiv) {
+    _trigger.attachView(triggerDiv);
+    _condition.attachView(conditionDiv);
+    _action.attachView(actionDiv);
+  }
+
+  void detachView() {
+    _trigger.detachView();
+    _condition.detachView();
+    _action.detachView();
   }
 }

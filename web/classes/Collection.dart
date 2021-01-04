@@ -1,12 +1,13 @@
 import 'dart:convert';
 import 'dart:html';
+
 import 'Card.dart';
 import 'Form.dart';
 
 class Collection {
   Set<Card> collectionSet = {};
   Map<Card, HtmlElement> collectionElementsMap = {};
-  Map<int, dynamic> collectionJson = {};
+  Map<String, dynamic> collectionJson = {};
 
   /// Create a div corresponding to a card in the element collection
   HtmlElement _createListElement(Card card, PropertiesForm propertiesForm) {
@@ -49,10 +50,12 @@ class Collection {
     collectionSet.add(card);
     if (!collectionElementsMap.containsKey(card)) {
       collectionElementsMap[card] = _createListElement(card, propertiesForm);
-      querySelector('#liste_collection').children.add(collectionElementsMap[card]);
+      querySelector('#liste_collection')
+          .children
+          .add(collectionElementsMap[card]);
       _incrementId();
     }
-    card.activate(propertiesForm);
+    propertiesForm.changeCard(card);
     collectionElementsMap.forEach((key, value) {
       value.classes.remove('selected');
     });
@@ -65,7 +68,7 @@ class Collection {
     collectionElementsMap[card].remove();
     collectionElementsMap.remove(card);
     if (collectionSet.isNotEmpty) {
-      collectionSet.last.activate(propertiesForm);
+      propertiesForm.changeCard(collectionSet.last);
       collectionElementsMap.forEach((key, value) {
         value.classes.remove('selected');
       });

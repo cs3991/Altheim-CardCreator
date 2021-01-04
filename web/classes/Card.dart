@@ -1,8 +1,8 @@
 import 'dart:html';
 
 import 'CardType.dart';
-import 'Collection.dart';
 import 'Form.dart';
+import 'effect-creator/Effect.dart';
 
 class Card {
   int id;
@@ -15,21 +15,34 @@ class Card {
   List<String> devotions = <String>[];
   Map<String, dynamic> constraints = <String, dynamic>{};
   Map<String, dynamic> keywords = <String, dynamic>{};
-  String effect = '';
+  List<Effect> effects = [Effect()]; // TODO: Handle multiple effects
+  String effectTxt = '';
   int power = 0;
   int resistance = 0;
 
   static int maxId = 0;
 
-  Card(this.id, this.name, this.maxNbr, this.type, this.extension, this.rarity, this.subtypes, this.devotions,
-      this.constraints, this.keywords, this.effect, this.power, this.resistance);
+  Card(
+      this.id,
+      this.name,
+      this.maxNbr,
+      this.type,
+      this.extension,
+      this.rarity,
+      this.subtypes,
+      this.devotions,
+      this.constraints,
+      this.keywords,
+      this.effectTxt,
+      this.power,
+      this.resistance);
 
   Card.empty() {
     id = createId();
   }
 
-  Card.fromJson(Map<int, dynamic> json)
-      : id = json.keys.first,
+  Card.fromJson(Map<String, dynamic> json)
+      : id = int.parse(json.keys.first),
         name = json.values.first['nom'],
         maxNbr = json.values.first['nbr_max'],
         type = CardTypeExtension.fromString(json.values.first['type']),
@@ -39,7 +52,8 @@ class Card {
         devotions = json.values.first['devotions'],
         constraints = json.values.first['contraintes'],
         keywords = json.values.first['mots_cles'],
-        effect = json.values.first['effet'],
+        effectTxt = json.values.first['texte_effet'],
+        effects = json.values.first['effet'].map((e) => Effect.fromJson(e)),
         power = json.values.first['puissance'],
         resistance = json.values.first['resistance'];
 
@@ -71,9 +85,10 @@ class Card {
     constraints = {};
     List<InputElement> constraintsText = form.querySelectorAll('input.contrainte_text');
     List<InputElement> constraintsNb = form.querySelectorAll('input.contrainte_nb');
-    for (int i = 0; i < constraintsText.length; i++) {
+    for (var i = 0; i < constraintsText.length; i++) {
       if (constraintsText[i].value != '') {
-        constraints[constraintsText[i].value] = int.tryParse(constraintsNb[i].value);
+        constraints[constraintsText[i].value] =
+            int.tryParse(constraintsNb[i].value);
       }
     }
     keywords = {};
@@ -87,12 +102,15 @@ class Card {
         } else if (nb[0].value == '') {
           keywords[value] = 1;
         } else {
-          keywords[value] = int.parse((nb[0].value == null) ? '1' : nb[0].value);
+          keywords[value] =
+              int.parse((nb[0].value == null) ? '1' : nb[0].value);
         }
       }
-      effect = (form.querySelector('#texte_effet') as TextAreaElement).value;
-      power = int.tryParse((form.querySelector('#puissance') as InputElement).value);
-      resistance = int.tryParse((form.querySelector('#resistance') as InputElement).value);
+      effectTxt = (form.querySelector('#texte_effet') as TextAreaElement).value;
+      power = int.tryParse(
+          (form.querySelector('#puissance') as InputElement).value);
+      resistance = int.tryParse(
+          (form.querySelector('#resistance') as InputElement).value);
     }
   }
 
@@ -127,51 +145,64 @@ class Card {
     for (var keyword in keywords.entries) {
       (querySelector('#' + keyword.key) as CheckboxInputElement).checked = true;
       if (querySelectorAll('#' + keyword.key + '_nb').isNotEmpty) {
-        (querySelectorAll('#' + keyword.key + '_nb')[0] as InputElement).value = keyword.value.toString();
+        (querySelectorAll('#' + keyword.key + '_nb')[0] as InputElement).value =
+            keyword.value.toString();
       }
     }
-    (form.querySelector('#texte_effet') as TextAreaElement).value = effect;
+    (form.querySelector('#texte_effet') as TextAreaElement).value = effectTxt;
     (form.querySelector('#puissance') as InputElement).value = power.toString();
-    (form.querySelector('#resistance') as InputElement).value = resistance.toString();
-    propertiesForm.card = this;
+    (form.querySelector('#resistance') as InputElement).value =
+        resistance.toString();
+    // TODO: Attach a view for all effects
+    effects[0].attachView(querySelector('#trigger_div'),
+        querySelector('#condition_div'), querySelector('#action_div'));
+  }
+
+  void deactivate() {
+    for (var effect in effects) {
+      effect.detachView();
+    }
   }
 
   /// add to json if the display property is not set to 'none'.
-  void addIfDisplayed(Map json, dynamic property, String className) {
+  void addIfDisplayed(Map<String, dynamic> json, String propertyName,
+      dynamic property, String className) {
     if (querySelector('div.' + className).style.display != 'none') {
-      json[id][className] = property;
+      json[id.toString()][propertyName] = property;
     }
   }
 
-  Map<int, dynamic> toJson() {
-    var json = {id: {}};
-    addIfDisplayed(json, name, 'nom');
-    addIfDisplayed(json, maxNbr, 'nbr_max');
-    addIfDisplayed(json, rarity, 'rarete');
-    addIfDisplayed(json, extension, 'extension');
-    addIfDisplayed(json, type.toText(), 'type');
-    addIfDisplayed(json, subtypes, 'sous_types');
-    addIfDisplayed(json, devotions, 'devotions');
-    addIfDisplayed(json, constraints, 'contraintes');
-    addIfDisplayed(json, keywords, 'mots_cles');
-    addIfDisplayed(json, effect, 'effet');
-    addIfDisplayed(json, power, 'puissance');
-    addIfDisplayed(json, resistance, 'resistance');
+  Map<String, dynamic> toJson() {
+    var json = {id.toString(): {}};
+    addIfDisplayed(json, 'nom', name, 'nom');
+    addIfDisplayed(json, 'nbr_max', maxNbr, 'nbr_max');
+    addIfDisplayed(json, 'rarete', rarity, 'rarete');
+    addIfDisplayed(json, 'extension', extension, 'extension');
+    addIfDisplayed(json, 'type', type.toText(), 'type');
+    addIfDisplayed(json, 'sous_types', subtypes, 'sous_types');
+    addIfDisplayed(json, 'devotions', devotions, 'devotions');
+    addIfDisplayed(json, 'contraintes', constraints, 'contraintes');
+    addIfDisplayed(json, 'mots_cles', keywords, 'mots_cles');
+    addIfDisplayed(json, 'texte_effet', effectTxt, 'effet');
+    addIfDisplayed(json, 'effet',
+        effects.map((e) => e.toJson()).toList(growable: false), 'effet');
+    addIfDisplayed(json, 'puissance', power, 'puissance');
+    addIfDisplayed(json, 'resistance', resistance, 'resistance');
     return json;
   }
 
   /// since Dart doesn't support cloning object, this function is just a workaround for this
   Card copy() {
-    return Card(id, name, maxNbr, type, extension, rarity, subtypes, devotions, constraints, keywords, effect, power,
-        resistance);
+    return Card(id, name, maxNbr, type, extension, rarity, subtypes, devotions,
+        constraints, keywords, effectTxt, power, resistance);
   }
 
   Map getPropertiesMap() {
-    return toJson()[id];
+    return toJson()[id.toString()];
   }
 
-  void addToMap(Map<int, dynamic> map) {
-    map[id] = getPropertiesMap();
+  void addToMap(Map<String, dynamic> map) {
+    map[id.toString()] = getPropertiesMap();
   }
 
   @override
@@ -186,7 +217,7 @@ class Card {
         'devotions: $devotions, \n'
         'constraints: $constraints, \n'
         'keywords: $keywords, \n'
-        'effect: $effect, \n'
+        'effect: $effectTxt, \n'
         'power: $power, \n'
         'resistance: $resistance\n';
   }

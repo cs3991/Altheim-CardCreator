@@ -1,4 +1,5 @@
 import 'dart:html';
+
 import 'Card.dart';
 import 'CardType.dart';
 
@@ -154,6 +155,7 @@ class PropertiesForm {
   }
 
   void changeCard(Card card) {
+    this.card?.deactivate();
     this.card = card;
     card.activate(this);
   }

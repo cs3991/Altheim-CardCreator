@@ -1,4 +1,5 @@
 import 'dart:html';
+
 import 'Action.dart';
 import 'ActionPlaceholder.dart';
 import 'Template.dart';
@@ -12,7 +13,7 @@ class ActionView {
   InputElement _intInput;
   SpanElement _returnTypeTxt;
 
-  ActionView(this._placeholder) {
+  ActionView(this._placeholder, DivElement div) {
     _mainDiv = document.createElement('div');
     _mainDiv.setAttribute('class', 'action_div');
 
@@ -42,12 +43,16 @@ class ActionView {
 
     _paramsDiv = document.createElement('div');
     _paramsDiv.setAttribute('class', 'action_params');
+    _populateParams();
     _mainDiv.append(paramsDiv);
+
+    div.append(_mainDiv);
   }
 
   void _populateSelect() {
     if (_select == null) return;
     var currentValue = _select.value;
+    print(currentValue);
 
     // Remove all options
     while (_select.children.isNotEmpty) {
@@ -62,34 +67,46 @@ class ActionView {
 
     for (var action in _placeholder.getCompatibleActions()) {
       var option = document.createElement('option');
-      option.setAttribute('value', action['name']);
-      if (action['template'] == 'T') {
-        option.innerText = '-- ' + action['name'] + ' --';
+      var name = action['name'];
+      option.setAttribute('value', name);
+      if (action['template'] != null) {
+        option.innerText = '-- ' + name + ' --';
       } else {
-        option.innerText = action['name'];
+        option.innerText = name;
       }
       option.setAttribute('title', action['doc']);
       _select.append(option);
+
+      // Select the action contained in the placeholder
+      if (name == _placeholder.action?.name) {
+        _select.value = name;
+      }
     }
 
-    _select.value = _select.options.map((e) => e.value).contains(currentValue)
-        ? currentValue
-        : 'null';
+    // Reselect the old value if it was set before
+    if (currentValue != '') {
+      _select.value = currentValue;
+    }
   }
 
-  void _selectChangeCallback(Event evt) {
+  void _populateParams() {
+    if (_placeholder.action == null) return;
+
+    for (var par in _placeholder.action.params) {
+      par.attachView(_paramsDiv);
+    }
+  }
+
+  void _selectChangeCallback([Event evt]) {
     var val = _select.value;
 
     _placeholder.unsetAction();
 
     if (val != 'null') {
       _placeholder.setAction(Action.fromActionName(val, _placeholder));
-    }
-
-    if (val == null) {
-      _updateIntInputTextDisplay();
-    } else {
       _intInput.style.display = 'none';
+    } else {
+      _updateIntInputTextDisplay();
     }
   }
 

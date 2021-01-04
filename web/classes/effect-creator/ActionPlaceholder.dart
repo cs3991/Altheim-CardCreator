@@ -29,9 +29,10 @@ class ActionPlaceholder {
       this.disableTemplates = false,
       ActionPlaceholder triggerPlaceholder})
       : triggerPlaceholder = triggerPlaceholder ?? _parent?.triggerPlaceholder {
-    parentDiv ??= parent._view.paramsDiv;
-    _view = ActionView(this);
-    parentDiv.append(_view.mainDiv);
+    parentDiv ??= parent?._view?.paramsDiv;
+    if (parentDiv != null) {
+      _view = ActionView(this, parentDiv);
+    }
     _returnType.subscribeToUpdate(this);
   }
 
@@ -99,7 +100,7 @@ class ActionPlaceholder {
   void setAction(Action action, {bool updateView = false}) {
     unsetAction();
     _action = action;
-    if (updateView) {
+    if (updateView && _view != null) {
       _view.select.value = action.name;
     }
     // print(getRoot().toJson());
@@ -114,7 +115,7 @@ class ActionPlaceholder {
 
   void destroy() {
     _action?.destroy();
-    _view.destroy();
+    _view?.destroy();
     if (_returnType is TemplateType) {
       (_returnType as TemplateType).template.unsubscribeToUpdates(this);
     }
@@ -129,11 +130,12 @@ class ActionPlaceholder {
   String get name => _name;
 
   void updateInstantiation(Template template, String typeInst) {
-    _view.updateInstantiation(template, typeInst);
+    _view?.updateInstantiation(template, typeInst);
   }
 
-  String toJson([int indent = 0]) {
-    return (_action == null ? '{}' : _action.toJson(indent));
+  Map<String, dynamic> toJson() {
+    if (_action == null) return <String, dynamic>{};
+    return _action.toJson();
   }
 
   void fillFromJson(Map<String, dynamic> json) {
@@ -150,5 +152,15 @@ class ActionPlaceholder {
 
   ActionPlaceholder getRoot() {
     return _parent == null ? this : _parent.getRoot();
+  }
+
+  void attachView(DivElement div) {
+    _view?.destroy();
+    _view = ActionView(this, div);
+  }
+
+  void detachView() {
+    _view?.destroy();
+    _view = null;
   }
 }
