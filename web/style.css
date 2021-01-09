@@ -288,7 +288,8 @@ select
   color: #9E9E9E;
   font-size: 25px;
   margin-top: 5px;
-  cursor: pointer
+  cursor: pointer;
+  font-family: revert;
 }
 
 
@@ -349,7 +350,7 @@ button
   align-self: center;
   text-overflow: ellipsis;
   overflow: hidden;
-font-family: 'Catamaran', sans-serif;
+  font-family: 'Catamaran', sans-serif;
   white-space: nowrap;
 }
 
@@ -583,3 +584,58 @@ button.effet
     height: 80%;
     vertical-align: top;
 }
+
+#hover_json
+{
+  width: 90%;
+  height: 25px;
+  margin: 0 5%;
+  padding-bottom: 10px;
+  z-index: 2;
+}
+
+#hover_json>div
+{
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: stretch;
+    align-content: stretch;
+    padding: 5px;
+    background: #262626;
+    border-radius: 4px;
+    margin-top: 7px;
+    -webkit-box-shadow: 2px 2px 18px 0px rgba(0,0,0,0.31);
+    box-shadow: 2px 2px 18px 0px rgba(0,0,0,0.2);
+}
+
+#hover_json>div>textarea
+{
+    flex: 1 1 100%;
+    margin: 5px;
+    height: 100px;
+}
+
+#hover_json>div>button
+{
+    flex: 1 1 45%;
+    margin: 5px;
+}
+
+#hover_json>button
+{
+  width: 100%;
+  height: 25px;
+}
+
+#hover_json:hover > div
+{
+    visibility: visible;
+}
+
+#hover_json div
+{
+    visibility: hidden;
+}
+
+
+

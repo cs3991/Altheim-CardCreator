@@ -56,8 +56,8 @@ class ButtonListeners {
       collection.clear(propertiesForm);
     });
     // Button show json
-    querySelector('#show_json').onClick.listen((event) {
-      print(jsonEncode(propertiesForm.card.toJson()));
+    querySelector('#show_json').onMouseOver.listen((event) {
+      (querySelector('#json') as TextAreaElement).value = jsonEncode(propertiesForm.card.toJson());
     });
     // Button reset card
     querySelector('#reset_card').onClick.listen((event) {
