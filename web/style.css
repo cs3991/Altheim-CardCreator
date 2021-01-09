@@ -464,6 +464,7 @@ button.effet
 
 #popup_bg
 {
+    z-index: 3;
       position: fixed;
       top: 0;
       bottom: 0;
@@ -476,6 +477,7 @@ button.effet
 }
 
 #popup{
+    z-index: 3;
     box-sizing: border-box;
     height: calc(100% - 80px);
     margin: 40px 10%;

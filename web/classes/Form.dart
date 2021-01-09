@@ -25,6 +25,7 @@ class PropertiesForm {
 
   /// activates the fields of the form corresponding to the type of card selected
   void changeType(CardType type) {
+    print("changé");
     switch (type) {
       case CardType.construction:
         activateDiv([
@@ -98,7 +99,7 @@ class PropertiesForm {
 
   /// Updates the card attribute to match the values from the form
   // and shows the resulting json in the text area (not anymore).
-  void updateJson() {
+  void update() {
     card.updateFromForm(form);
     changeType(card.type);
     // querySelector('#json').text = jsonEncode(card.toJson());
@@ -111,7 +112,7 @@ class PropertiesForm {
     newElement.setInnerHtml(html);
     newElement.querySelector('button').onClick.listen((event) {
       newElement.remove();
-      updateJson();
+      update();
     });
     var parent = querySelector(parentClass);
     parent.children.add(newElement);

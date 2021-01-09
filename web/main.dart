@@ -12,23 +12,16 @@ void main() {
   collection.add(Card.empty(), propertiesForm);
   propertiesForm.changeCard(collection.collectionSet.first);
 
+  // Update once after loading
+  propertiesForm.update();
+
   // Each change in the form triggers the update of the card
-  querySelector('#nom').onInput.listen((event) {
-    propertiesForm.updateJson();
+  querySelector('#form').onInput.listen((event) {
+    propertiesForm.update();
     collection.changeName(propertiesForm.card);
   });
 
-  propertiesForm.card.updateFromForm(propertiesForm.form);
-
-  // querySelector('#json').text = jsonEncode(propertiesForm.card.toJson());
-
-  // querySelector('#button_add_collection').onClick.listen((event) {
-  //   collection.add(propertiesForm.card);
-  // });
-  // querySelector('#button_clear_collection').onClick.listen((event) {
-  //   collection.clear();
-  // });
-
+  // Show a popup before leaving to not dismiss any unsaved change
   window.onBeforeUnload.listen((event) {
     (event as BeforeUnloadEvent).returnValue = 'Are you sure you want to leave?';
   });
