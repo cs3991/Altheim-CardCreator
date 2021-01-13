@@ -29,13 +29,12 @@ class Collection {
     (querySelector('#id') as InputElement).valueAsNumber += 1;
   }
 
-  // todo: rewrite for the new collection
   void updateJson() {
     collectionJson = {};
     for (var card in collectionSet) {
       card.addToMap(collectionJson);
     }
-    (querySelector('#collection_text_area') as TextAreaElement).value = jsonEncode(collectionJson);
+    (querySelector('#json_collection') as TextAreaElement).value = jsonEncode(collectionJson);
   }
 
   // Not used anymore
@@ -50,9 +49,7 @@ class Collection {
     collectionSet.add(card);
     if (!collectionElementsMap.containsKey(card)) {
       collectionElementsMap[card] = _createListElement(card, propertiesForm);
-      querySelector('#liste_collection')
-          .children
-          .add(collectionElementsMap[card]);
+      querySelector('#liste_collection').children.add(collectionElementsMap[card]);
       _incrementId();
     }
     propertiesForm.changeCard(card);

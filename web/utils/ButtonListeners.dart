@@ -100,5 +100,34 @@ class ButtonListeners {
     querySelector('#reset_card').onClick.listen((event) {
       // TODO: à faire
     });
+
+    // Hover button to show json (collection)
+    querySelector('#show_json_collection').onMouseOver.listen((event) {
+      collection.updateJson();
+    });
+
+    // Button copy json to clipboard (collection)
+    querySelector('#copy_collection_json').onClick.listen((event) {
+      (querySelector('#json_collection') as TextAreaElement).select();
+      document.execCommand('copy');
+    });
+
+    // Button export json file (collection)
+    querySelector('#export_collection_json').onClick.listen((event) {
+      var text = (querySelector('#json_collection') as TextAreaElement).value;
+      final bytes = utf8.encode(text);
+      final blob = Blob([bytes]);
+      final url = Url.createObjectUrlFromBlob(blob);
+      final anchor = document.createElement('a') as AnchorElement
+        ..href = url
+        ..style.display = 'none'
+        ..download = 'collection.json';
+      document.body.children.add(anchor);
+      // download
+      anchor.click();
+      // cleanup
+      document.body.children.remove(anchor);
+      Url.revokeObjectUrl(url);
+    });
   }
 }

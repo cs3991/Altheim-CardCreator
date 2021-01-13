@@ -35,8 +35,15 @@
 
         <div class="bot_left">
             <button type="button" name="empty" id="empty_btn">Vider la collection</button>
-            <button type="button" name="import" id="import_btn">Importer une collection</button>
-            <button type="button" name="export" id="export_btn">Exporter la collection</button>
+            <button type="button" name="import" id="import_btn" disabled>Importer une collection</button>
+            <div class="hover_json" id="hover_json_collection">
+                <div>
+                    <textarea id="json_collection"></textarea>
+                    <button id="copy_collection_json">Copier</button>
+                    <button id="export_collection_json">Exporter</button>
+                </div>
+                <button type="button" name="json" id="show_json_collection">Voir le code de la collection</button>
+            </div>
         </div>
     </div>
     <div class="creation">
@@ -225,10 +232,10 @@
                 <h1>Options de la carte</h1>
                 <hr>
                 <div class="bot_left">
-                    <button type="button" name="upload" id="upload_img">Uploader une illustration</button>
-                    <button type="button" name="reset" id="reset_card">Réinitialiser la carte</button>
-                    <button type="button" name="import" id="import_card">Importer une carte</button>
-                    <div id="hover_json">
+                    <button type="button" name="upload" id="upload_img" disabled>Uploader une illustration</button>
+                    <button type="button" name="reset" id="reset_card" disabled>Réinitialiser la carte</button>
+                    <button type="button" name="import" id="import_card" disabled>Importer une carte</button>
+                    <div class="hover_json" id="hover_json">
                         <button type="button" name="json" id="show_json">Voir le code de la carte</button>
                         <div>
                             <textarea id="json"></textarea>

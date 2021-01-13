@@ -587,7 +587,7 @@ button.effet
     vertical-align: top;
 }
 
-#hover_json
+.hover_json
 {
   width: 90%;
   height: 25px;
@@ -596,7 +596,7 @@ button.effet
   z-index: 2;
 }
 
-#hover_json>div
+.hover_json>div
 {
     display: flex;
     flex-flow: row wrap;
@@ -610,34 +610,45 @@ button.effet
     box-shadow: 2px 2px 18px 0px rgba(0,0,0,0.2);
 }
 
-#hover_json>div>textarea
+
+.hover_json>div>textarea
 {
     flex: 1 1 100%;
     margin: 5px;
     height: 100px;
 }
 
-#hover_json>div>button
+.hover_json>div>button
 {
     flex: 1 1 45%;
     margin: 5px;
 }
 
-#hover_json>button
+.hover_json>button
 {
   width: 100%;
   height: 25px;
 }
 
-#hover_json:hover > div
+.hover_json:hover > div
 {
     visibility: visible;
 }
 
-#hover_json div
+.hover_json div
 {
     visibility: hidden;
+    position: absolute;
 }
 
+#hover_json_collection div
+{
+   bottom: 5px;
+}
 
+button[disabled] {
+    background: #323232;
+    color: #C0c0c0;
+    cursor: not-allowed;
+}
 

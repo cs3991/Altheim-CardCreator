@@ -25,7 +25,6 @@ class PropertiesForm {
 
   /// activates the fields of the form corresponding to the type of card selected
   void changeType(CardType type) {
-    print("changé");
     switch (type) {
       case CardType.construction:
         activateDiv([
