@@ -7,7 +7,7 @@ import 'Form.dart';
 class Collection {
   Set<Card> collectionSet = {};
   Map<Card, HtmlElement> collectionElementsMap = {};
-  Map<String, dynamic> collectionJson = {};
+  List<Map<String, dynamic>> collectionJson = [];
 
   /// Create a div corresponding to a card in the element collection
   HtmlElement _createListElement(Card card, PropertiesForm propertiesForm) {
@@ -30,9 +30,9 @@ class Collection {
   }
 
   void updateJson() {
-    collectionJson = {};
+    collectionJson = [];
     for (var card in collectionSet) {
-      card.addToMap(collectionJson);
+      collectionJson.add(card.toJson());
     }
     (querySelector('#json_collection') as TextAreaElement).value = jsonEncode(collectionJson);
   }
