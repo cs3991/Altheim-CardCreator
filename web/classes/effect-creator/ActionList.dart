@@ -13,7 +13,7 @@ final List<Map<String, dynamic>> actionsTest = [
         'type': {'type': 'T'}
       },
     ],
-    'return': {'type': 'void'}
+    'return': {'type': 'rien'}
   },
   {
     'name': 'T param T',
@@ -62,27 +62,27 @@ final List<Map<String, dynamic>> actionsTest = [
     'return': {'type': 'T'}
   },
   {
-    'name': 'list<int>',
+    'name': 'list<entier>',
     'doc': '',
     'params': [],
     'return': {
       'type': 'liste',
       'parameters': [
-        {'type': 'int'}
+        {'type': 'entier'}
       ]
     }
   },
   {
-    'name': 'int',
+    'name': 'entier',
     'doc': '',
     'params': [],
-    'return': {'type': 'int'}
+    'return': {'type': 'entier'}
   },
   {
-    'name': 'bool',
+    'name': 'booléen',
     'doc': '',
     'params': [],
-    'return': {'type': 'bool'}
+    'return': {'type': 'booléen'}
   },
   {
     'name': 'T',
@@ -97,10 +97,6 @@ final List<Map<String, dynamic>> actionsTest = [
     'doc': 'Le premier élément satisfaisant le prédicat dans la liste.',
     'params': [
       {
-        'name': 'prédicat',
-        'type': {'type': 'bool'}
-      },
-      {
         'name': 'container',
         'type': {
           'type': 'liste',
@@ -108,6 +104,10 @@ final List<Map<String, dynamic>> actionsTest = [
             {'type': 'T'}
           ]
         }
+      },
+      {
+        'name': 'prédicat',
+        'type': {'type': 'booléen'}
       }
     ],
     'return': {'type': 'T'}
@@ -118,6 +118,9 @@ final List<Map<String, dynamic>> actionsTest = [
     'doc': 'L\'élément à tester pour le prédicat.',
     'params': [],
     'return': {'type': 'T'},
+    // 'enable_if': {
+    //   'descendant_of': 'prédicat'
+    // }
   },
   {
     'name': 'contient',
@@ -138,7 +141,7 @@ final List<Map<String, dynamic>> actionsTest = [
         'type': {'type': 'T'}
       },
     ],
-    'return': {'type': 'bool'}
+    'return': {'type': 'booléen'}
   },
 ];
 
@@ -153,25 +156,10 @@ final List<Map<String, dynamic>> actions = [
       },
       {
         'name': 'condition',
-        'type': {'type': 'bool'}
+        'type': {'type': 'booléen'}
       }
     ],
-    'return': {'type': 'void'}
-  },
-  {
-    'name': 'ajouter_mot_cle',
-    'doc': 'Ajoute un mot-clé à une carte',
-    'params': [
-      {
-        'name': 'carte',
-        'type': {'type': 'carte'}
-      },
-      {
-        'name': 'mot-clé',
-        'type': {'type': 'mot_clé'}
-      }
-    ],
-    'return': {'type': 'void'}
+    'return': {'type': 'rien'}
   },
   {
     'name': 'modifier_stats',
@@ -184,14 +172,14 @@ final List<Map<String, dynamic>> actions = [
       },
       {
         'name': 'puissance',
-        'type': {'type': 'int'}
+        'type': {'type': 'entier'}
       },
       {
         'name': 'résistance',
-        'type': {'type': 'int'}
+        'type': {'type': 'entier'}
       }
     ],
-    'return': {'type': 'void'}
+    'return': {'type': 'rien'}
   },
   {
     'name': 'modifier_persistance',
@@ -203,56 +191,38 @@ final List<Map<String, dynamic>> actions = [
       },
       {
         'name': 'points',
-        'type': {'type': 'int'}
+        'type': {'type': 'entier'}
       },
     ],
-    'return': {'type': 'void'}
+    'return': {'type': 'rien'}
   },
 
   {
-    'name': 'egal',
+    'name': 'égal',
     'doc': 'Vrai si a est égal à b',
+    'template': ['T'],
     'params': [
       {
         'name': 'a',
-        'type': {'type': 'int'}
+        'type': {'type': 'T'}
       },
       {
         'name': 'b',
-        'type': {'type': 'int'}
+        'type': {'type': 'T'}
       }
     ],
-    'return': {'type': 'bool'}
-  },
-  {
-    'name': 'meme_carte',
-    'doc': 'Vrai si les deux cartes sont identiques',
-    'params': [
-      {
-        'name': 'a',
-        'type': {'type': 'carte'}
-      },
-      {
-        'name': 'b',
-        'type': {'type': 'carte'}
-      }
-    ],
-    'return': {'type': 'bool'}
+    'return': {'type': 'booléen'}
   },
   {
     'name': 'instance_de',
-    'doc': 'Vrai si la carte est une instance de ce modèle de carte',
+    'doc': 'Retourne le modèle de cette carte',
     'params': [
       {
         'name': 'carte',
         'type': {'type': 'carte'}
-      },
-      {
-        'name': 'modèle',
-        'type': {'type': 'modèle_carte'}
       }
     ],
-    'return': {'type': 'bool'}
+    'return': {'type': 'modèle'}
   },
   {
     'name': 'superieur',
@@ -260,14 +230,59 @@ final List<Map<String, dynamic>> actions = [
     'params': [
       {
         'name': 'a',
-        'type': {'type': 'int'}
+        'type': {'type': 'entier'}
       },
       {
         'name': 'b',
-        'type': {'type': 'int'}
+        'type': {'type': 'entier'}
       }
     ],
-    'return': {'type': 'bool'}
+    'return': {'type': 'booléen'}
+  },
+  {
+    'name': 'additionner',
+    'doc': 'Retourne a + b',
+    'params': [
+      {
+        'name': 'a',
+        'type': {'type': 'entier'}
+      },
+      {
+        'name': 'b',
+        'type': {'type': 'entier'}
+      }
+    ],
+    'return': {'type': 'entier'}
+  },
+  {
+    'name': 'soustraire',
+    'doc': 'Retourne a - b',
+    'params': [
+      {
+        'name': 'a',
+        'type': {'type': 'entier'}
+      },
+      {
+        'name': 'b',
+        'type': {'type': 'entier'}
+      }
+    ],
+    'return': {'type': 'entier'}
+  },
+  {
+    'name': 'multiplier',
+    'doc': 'Retourne a * b',
+    'params': [
+      {
+        'name': 'a',
+        'type': {'type': 'entier'}
+      },
+      {
+        'name': 'b',
+        'type': {'type': 'entier'}
+      }
+    ],
+    'return': {'type': 'entier'}
   },
   {
     'name': 'modele',
@@ -307,7 +322,7 @@ final List<Map<String, dynamic>> actions = [
     'doc':
         "Le nombre de blessures infligées par l'attaque. Ne peut s'utiliser que quand le déclencheur est attaque.",
     'params': [],
-    'return': {'type': 'int'},
+    'return': {'type': 'entier'},
     'enable_if': {
       'trigger': ['attaque']
     }
@@ -317,7 +332,7 @@ final List<Map<String, dynamic>> actions = [
     'doc':
         "La distance parcourue par la carte durant sa migration. Ne peut s'utiliser que quand le déclencheur est migration.",
     'params': [],
-    'return': {'type': 'int'},
+    'return': {'type': 'entier'},
     'enable_if': {
       'trigger': ['migration']
     }
@@ -353,6 +368,16 @@ final List<Map<String, dynamic>> actions = [
     }
   },
   {
+    'name': 'lieu_découvert',
+    'doc':
+        "La lieu qui vient d'être découvert. Ne peut s'utiliser que quand le déclencheur est découverte.",
+    'params': [],
+    'return': {'type': 'carte'},
+    'enable_if': {
+      'trigger': ['découverte']
+    }
+  },
+  {
     'name': 'cette_carte',
     'doc':
         "Cette carte (celle dont vous êtes en train d'éditer les effets en ce moment).",
@@ -363,13 +388,13 @@ final List<Map<String, dynamic>> actions = [
     'name': 'vrai',
     'doc': 'vrai.',
     'params': [],
-    'return': {'type': 'bool'}
+    'return': {'type': 'booléen'}
   },
   {
     'name': 'faux',
     'doc': 'faux.',
     'params': [],
-    'return': {'type': 'bool'}
+    'return': {'type': 'booléen'}
   },
 
   {
@@ -378,10 +403,6 @@ final List<Map<String, dynamic>> actions = [
     'doc': 'Le premier élément satisfaisant le prédicat dans la liste.',
     'params': [
       {
-        'name': 'prédicat',
-        'type': {'type': 'bool'}
-      },
-      {
         'name': 'container',
         'type': {
           'type': 'liste',
@@ -389,6 +410,10 @@ final List<Map<String, dynamic>> actions = [
             {'type': 'T'}
           ]
         }
+      },
+      {
+        'name': 'prédicat',
+        'type': {'type': 'booléen'}
       }
     ],
     'return': {'type': 'T'}
@@ -400,18 +425,18 @@ final List<Map<String, dynamic>> actions = [
         'Une liste contenant seulement les éléments satisfaisant le prédicat.',
     'params': [
       {
-        'name': 'prédicat',
-        'type': {'type': 'bool'}
-      },
-      {
-        'name': 'container',
+        'name': 'liste',
         'type': {
           'type': 'liste',
           'parameters': [
             {'type': 'T'}
           ]
         }
-      }
+      },
+      {
+        'name': 'prédicat',
+        'type': {'type': 'booléen'}
+      },
     ],
     'return': {
       'type': 'liste',
@@ -447,7 +472,29 @@ final List<Map<String, dynamic>> actions = [
         'type': {'type': 'T'}
       },
     ],
-    'return': {'type': 'bool'}
+    'return': {'type': 'booléen'}
+  },
+  {
+    'name': 'contient_predicat',
+    'template': ['T'],
+    'doc':
+        'Vrai si la liste contient au moins un élément satisfaisant le prédicat.',
+    'params': [
+      {
+        'name': 'liste',
+        'type': {
+          'type': 'liste',
+          'parameters': [
+            {'type': 'T'}
+          ]
+        }
+      },
+      {
+        'name': 'prédicat',
+        'type': {'type': 'booléen'}
+      },
+    ],
+    'return': {'type': 'booléen'}
   },
 
   {
@@ -464,8 +511,24 @@ final List<Map<String, dynamic>> actions = [
   },
 
   {
-    'name': 'territoire',
-    'doc': 'Le territoire du joueur spécifié.',
+    'name': 'créatures_territoire',
+    'doc': 'Les créatures sur le territoire du joueur spécifié.',
+    'params': [
+      {
+        'name': 'joueur',
+        'type': {'type': 'joueur'}
+      }
+    ],
+    'return': {
+      'type': 'liste',
+      'parameters': [
+        {'type': 'carte'}
+      ]
+    }
+  },
+  {
+    'name': 'lieux_territoire',
+    'doc': 'Les lieux sur le territoire du joueur spécifié.',
     'params': [
       {
         'name': 'joueur',
@@ -571,7 +634,7 @@ final List<Map<String, dynamic>> actions = [
         'type': {'type': 'position'}
       }
     ],
-    'return': {'type': 'bool'}
+    'return': {'type': 'booléen'}
   },
   {
     'name': 'ligne',
@@ -582,7 +645,7 @@ final List<Map<String, dynamic>> actions = [
         'type': {'type': 'position'}
       }
     ],
-    'return': {'type': 'int'}
+    'return': {'type': 'entier'}
   },
   {
     'name': 'colonne',
@@ -593,7 +656,7 @@ final List<Map<String, dynamic>> actions = [
         'type': {'type': 'position'}
       }
     ],
-    'return': {'type': 'int'}
+    'return': {'type': 'entier'}
   },
 
   {
@@ -602,88 +665,88 @@ final List<Map<String, dynamic>> actions = [
     'params': [
       {
         'name': 'déclencheur',
-        'type': {'type': 'trigger'}
+        'type': {'type': 'déclencheur'}
       },
       {
         'name': 'condition',
-        'type': {'type': 'bool'}
+        'type': {'type': 'booléen'}
       },
       {
         'name': 'action',
-        'type': {'type': 'void'}
+        'type': {'type': 'rien'}
       },
       {
         'name': 'carte',
         'type': {'type': 'carte'}
       },
     ],
-    'return': {'type': 'void'}
+    'return': {'type': 'rien'}
   },
   {
     'name': 'permanence',
     'doc': 'Déclencheur : en permanence.',
     'params': [],
-    'return': {'type': 'trigger'}
+    'return': {'type': 'déclencheur'}
   },
   {
     'name': 'migration',
     'doc': 'Déclencheur : migration.',
     'params': [],
-    'return': {'type': 'trigger'}
+    'return': {'type': 'déclencheur'}
   },
   {
     'name': 'invocation',
     'doc': 'Déclencheur : invocation.',
     'params': [],
-    'return': {'type': 'trigger'}
+    'return': {'type': 'déclencheur'}
   },
   {
     'name': 'découverte',
     'doc': 'Déclencheur : découverte.',
     'params': [],
-    'return': {'type': 'trigger'}
+    'return': {'type': 'déclencheur'}
   },
   {
     'name': 'animation',
     'doc': 'Déclencheur : animation.',
     'params': [],
-    'return': {'type': 'trigger'}
+    'return': {'type': 'déclencheur'}
   },
   {
     'name': 'attaque',
     'doc': 'Déclencheur : attaque.',
     'params': [],
-    'return': {'type': 'trigger'}
+    'return': {'type': 'déclencheur'}
   },
   {
     'name': 'defense',
     'doc': 'Déclencheur : defense.',
     'params': [],
-    'return': {'type': 'trigger'}
+    'return': {'type': 'déclencheur'}
   },
   {
     'name': 'fin_tour',
     'doc': 'Déclencheur : fin de tour.',
     'params': [],
-    'return': {'type': 'trigger'}
+    'return': {'type': 'déclencheur'}
   },
   {
     'name': 'fin_action',
     'doc': 'Déclencheur : fin d\'action.',
     'params': [],
-    'return': {'type': 'trigger'}
+    'return': {'type': 'déclencheur'}
   },
   {
     'name': 'mort',
     'doc': 'Déclencheur : mort d\'une entité.',
     'params': [],
-    'return': {'type': 'trigger'}
+    'return': {'type': 'déclencheur'}
   },
   {
     'name': 'effet_declenché',
     'doc': 'Déclencheur : effet declenché par le joueur.',
     'params': [],
-    'return': {'type': 'trigger'}
+    'return': {'type': 'déclencheur'}
   },
   {
     'name': 'carte_invoquée',
@@ -705,35 +768,317 @@ final List<Map<String, dynamic>> actions = [
       'trigger': ['mort']
     }
   },
+  {
+    'name': 'choix',
+    'doc': "Afficher un choix de cartes à l'utilisateur.",
+    'params': [
+      {
+        'name': 'titre',
+        'type': {'type': 'texte'}
+      },
+      {
+        'name': 'cartes_possible',
+        'type': {
+          'type': 'liste',
+          'parameters': [
+            {'type': 'carte'}
+          ]
+        }
+      }
+    ],
+    'return': {'type': 'carte'},
+  },
+  {
+    'name': 'choix_multiple',
+    'doc': "Afficher un choix de cartes à l'utilisateur.",
+    'params': [
+      {
+        'name': 'titre',
+        'type': {'type': 'texte'}
+      },
+      {
+        'name': 'cartes_possible',
+        'type': {
+          'type': 'liste',
+          'parameters': [
+            {'type': 'carte'}
+          ]
+        }
+      }
+    ],
+    'return': {
+      'type': 'liste',
+      'parameters': [
+        {'type': 'carte'}
+      ]
+    },
+  },
+  {
+    'name': 'déplacer_carte',
+    'doc': 'Déplace une carte vers une position donnée.',
+    'params': [
+      {
+        'name': 'carte',
+        'type': {'type': 'carte'}
+      },
+      {
+        'name': 'position',
+        'type': {'type': 'position'}
+      }
+    ],
+    'return': {'type': 'rien'}
+  },
+  {
+    'name': 'infliger_blessures',
+    'doc': 'Inflige des blessures à une carte.',
+    'params': [
+      {
+        'name': 'carte',
+        'type': {'type': 'carte'}
+      },
+      {
+        'name': 'nombre_blessures',
+        'type': {'type': 'entier'}
+      }
+    ],
+    'return': {'type': 'rien'},
+  },
+  {
+    'name': 'soigner_blessures',
+    'doc': "Soigne des blessures d'une carte.",
+    'params': [
+      {
+        'name': 'carte',
+        'type': {'type': 'carte'}
+      },
+      {
+        'name': 'nombre_blessures',
+        'type': {'type': 'entier'}
+      }
+    ],
+    'return': {'type': 'rien'},
+  },
 
-// Choix (liste_de_cartes, titre du choix -> carte)
-// Choix (liste_de_cartes, titre du choix -> liste_de_cartes)
+  // Mots-clés:
+  {
+    'name': 'mot-clé_migration',
+    'doc': 'Le mot-clé migration',
+    'params': [
+      {
+        'name': 'X',
+        'type': {'type': 'entier'}
+      }
+    ],
+    'return': {'type': 'mot-clé'},
+  },
+  {
+    'name': 'mot-clé_vision',
+    'doc': 'Le mot-clé vision',
+    'params': [
+      {
+        'name': 'X',
+        'type': {'type': 'entier'}
+      }
+    ],
+    'return': {'type': 'mot-clé'},
+  },
+  {
+    'name': 'mot-clé_égide',
+    'doc': 'Le mot-clé égide',
+    'params': [],
+    'return': {'type': 'mot-clé'},
+  },
+  // {
+  //   'name': 'mot-clé_jet',
+  //   'doc': 'Le mot-clé jet',
+  //   'params': [
+  //     {
+  //       'name': 'valeur',
+  //       'type': {'type': 'entier'}
+  //     }
+  //   ],
+  //   'return': {'type': 'rien'},
+  // },
+  // {
+  //   'name': 'mot-clé_provocation',
+  //   'doc': 'Le mot-clé migration',
+  //   'params': [],
+  //   'return': {'type': 'rien'},
+  // },
 
-// Déplacer (carte, container)
+  {
+    'name': 'ajouter_mot-clé',
+    'doc': 'Ajoute un mot-clé à une carte.',
+    'params': [
+      {
+        'name': 'carte',
+        'type': {'type': 'carte'}
+      },
+      {
+        'name': 'mot-clé',
+        'type': {'type': 'mot-clé'}
+      }
+    ],
+    'return': {'type': 'rien'},
+  },
+  {
+    'name': 'supprimer_mot-clé',
+    'doc': "Supprime un mot-clé d'une carte.",
+    'params': [
+      {
+        'name': 'carte',
+        'type': {'type': 'carte'}
+      },
+      {
+        'name': 'mot-clé',
+        'type': {'type': 'mot-clé'}
+      }
+    ],
+    'return': {'type': 'rien'},
+  },
+  {
+    'name': 'cartes_adjacentes',
+    'doc': 'Les cartes adjacentes à une position.',
+    'params': [
+      {
+        'name': 'position',
+        'type': {'type': 'position'}
+      }
+    ],
+    'return': {
+      'type': 'liste',
+      'parameters': [
+        {'type': 'carte'}
+      ]
+    },
+  },
+  // {
+  //   'name': '',
+  //   'doc': "Le début d'une liste.",
+  //   'params': [
+  //     {
+  //       'name': 'position',
+  //       'type': {'type': 'position'}
+  //     }
+  //   ],
+  //   'return': {'type': 'liste', 'parameters': [{'type': 'carte'}]},
+  // },
 
-// Infliger blessure
-// soigner blessure
+  {
+    'name': 'longueur_liste',
+    'doc': "La longueur d'une liste.",
+    'template': ['T'],
+    'params': [
+      {
+        'name': 'liste',
+        'type': {
+          'type': 'liste',
+          'parameters': [
+            {'type': 'T'}
+          ]
+        }
+      }
+    ],
+    'return': {'type': 'entier'},
+  },
+  {
+    'name': 'découvrir',
+    'doc': 'Découvre un lieu.',
+    'params': [
+      {
+        'name': 'lieu',
+        'type': {
+          'type': 'carte',
+        }
+      }
+    ],
+    'return': {'type': 'rien'},
+  },
+  {
+    'name': 'retourner_face_cachée',
+    'doc': 'Retourne face cachée ("recouvre") un lieu découvert.',
+    'params': [
+      {
+        'name': 'lieu',
+        'type': {
+          'type': 'carte',
+        }
+      }
+    ],
+    'return': {'type': 'rien'},
+  },
+  {
+    'name': 'ajouter_contrainte_invocation',
+    'doc': "Ajoute une contrainte d'invocation à une carte.",
+    'params': [
+      {
+        'name': 'carte',
+        'type': {'type': 'carte'}
+      },
+      {
+        'name': 'sous-type',
+        'type': {'type': 'texte'}
+      },
+      {
+        'name': 'nombre',
+        'type': {'type': 'entier'}
+      }
+    ],
+    'return': {'type': 'rien'},
+  },
+  {
+    'name': 'transformer_carte',
+    'doc': "Change une carte en une instance d'un autre modèle.",
+    'params': [
+      {
+        'name': 'carte',
+        'type': {'type': 'carte'}
+      },
+      {
+        'name': 'modèle',
+        'type': {'type': 'modèle'}
+      }
+    ],
+    'return': {'type': 'rien'},
+  },
+  {
+    'name': 'carte_bénite-maudite',
+    'doc':
+        'La carte bénite ou maudite par cette carte. Ne peut être utilisé que quand la carte actuelle est un miracle.',
+    'params': [],
+    'return': {'type': 'carte'},
+  },
 
-// Modifier mot-clé (+ ou - x, pour mot-clés avec valeur)
-// Cartes adjacentes -> liste_de_cartes
-// Contient_carte (liste_de_cartes, prédicat)
+  {
+    'name': 'pour_toute_carte',
+    'doc':
+        "Applique une action à toutes les cartes d'une liste. Utilisez carte_actuelle_fonction à l'intérieur de cette fonction.",
+    'params': [
+      {
+        'name': 'liste',
+        'type': {
+          'type': 'liste',
+          'parameters': [
+            {'type': 'carte'}
+          ]
+        }
+      },
+      {
+        'name': 'fonction',
+        'type': {'type': 'rien'}
+      },
+    ],
+    'return': {'type': 'rien'},
+  },
+  {
+    'name': 'carte_actuelle_fonction',
+    'doc': 'Représente chaque carte qui va subir la fonction.',
+    'params': [],
+    'return': {'type': 'carte'},
+    'enable_if': {'descendant_of': 'fonction'}
+  },
+
 // Mettre au dessus du deck (carte)
-
-// Liste_cartes_dans_container (container)
-// Transformer_carte (carte, modele)
-// Compter (liste, prédicat) -> int
-// pour_tout (liste_de_carte, void)
-// Longueur_liste (liste)
-// Carte_prédicat (pour pout_tout et prédicats)
-
-// Carte_bénie/maudite (miracle)
-// lieu_découvert (pour découverte)
-// lieu (carte) (lieu sur lequel est la carte)
-// entité(s) sur lieu (lieu)
-// Découvrir (lieu)
-// Retourner (lieu)
-
-// Ajouter_contraintes (carte, sous-type, int)
 
 // Set variable
 // Get variable

@@ -11,21 +11,21 @@ class Effect {
   Effect.fromJson(Map<String, dynamic> json) {
     _trigger = ActionPlaceholder(
       'Déclencheur',
-      ExplicitType('trigger'),
+      ExplicitType('déclencheur'),
       null,
       disableTemplates: true,
     );
 
     _condition = ActionPlaceholder(
       'Condition',
-      ExplicitType('bool'),
+      ExplicitType('booléen'),
       null,
       triggerPlaceholder: _trigger,
     );
 
     _action = ActionPlaceholder(
       'Action',
-      ExplicitType('void'),
+      ExplicitType('rien'),
       null,
       triggerPlaceholder: _trigger,
     );
@@ -39,7 +39,7 @@ class Effect {
       [DivElement triggerDiv, DivElement conditionDiv, DivElement actionDiv]) {
     _trigger = ActionPlaceholder(
       'Déclencheur',
-      ExplicitType('trigger'),
+      ExplicitType('déclencheur'),
       null,
       parentDiv: triggerDiv,
       disableTemplates: true,
@@ -47,7 +47,7 @@ class Effect {
 
     _condition = ActionPlaceholder(
       'Condition',
-      ExplicitType('bool'),
+      ExplicitType('booléen'),
       null,
       parentDiv: conditionDiv,
       triggerPlaceholder: _trigger,
@@ -55,7 +55,7 @@ class Effect {
 
     _action = ActionPlaceholder(
       'Action',
-      ExplicitType('void'),
+      ExplicitType('rien'),
       null,
       parentDiv: actionDiv,
       triggerPlaceholder: _trigger,

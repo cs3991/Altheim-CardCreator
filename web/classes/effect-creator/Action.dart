@@ -45,8 +45,10 @@ class Action {
     _placeholder.returnType.unify(_returnType, this);
 
     if (_name == 'élément_actuel_prédicat') {
-      var pred = placeholder.findParentPredicate().parent;
-      pred.returnType.unify(_returnType, this);
+      var pred = placeholder.findParentWithName('prédicat').parent;
+      // Unify with the type of the elements of the list
+      pred.action.params[0].returnType.typeParameters[0]
+          .unify(_returnType, this);
     }
 
     // Add parameters placeholders
@@ -67,9 +69,7 @@ class Action {
     var name = json['nom'];
     var action = Action.fromActionName(name, placeholder);
     for (var i = 0; i < action._params.length; i++) {
-      action._params[i].setAction(
-          Action.fromJsonExport(json['params'][i], action._params[i]),
-          updateView: true);
+      action._params[i].fillFromJson(json['params'][i]);
     }
     return action;
   }

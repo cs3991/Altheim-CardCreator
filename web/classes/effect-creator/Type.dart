@@ -60,6 +60,8 @@ abstract class AbstractType {
 
   bool get isTemplate;
 
+  List<AbstractType> get typeParameters => _typeParameters;
+
   bool get isParametered {
     return _typeParameters.isNotEmpty;
   }

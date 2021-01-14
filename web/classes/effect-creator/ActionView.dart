@@ -11,28 +11,52 @@ class ActionView {
   SelectElement _select;
   DivElement _paramsDiv;
   InputElement _intInput;
+  InputElement _strInput;
   SpanElement _returnTypeTxt;
 
   ActionView(this._placeholder, DivElement div) {
     _mainDiv = document.createElement('div');
     _mainDiv.setAttribute('class', 'action_div');
 
-    // Create the label with the name of the action
-    var label = document.createElement('label');
-    label.setAttribute('class', 'action_label');
-    label.innerText = _placeholder.name;
-    _mainDiv.append(label);
+    var headerDiv = document.createElement('div');
+    headerDiv.setAttribute('class', 'action_header');
+    _mainDiv.append(headerDiv);
 
+    // Create the label with the name of the action
+    var txtName = document.createElement('span');
+    txtName.setAttribute('class', 'action_name');
+    txtName.innerText = _placeholder.name;
+    headerDiv.append(txtName);
+
+    // Create the span with the expected type
     _returnTypeTxt = document.createElement('span');
     _returnTypeTxt.setAttribute('class', 'action_type');
     _updateReturnTypeTxt();
-    _mainDiv.append(_returnTypeTxt);
+    headerDiv.append(_returnTypeTxt);
 
+    // Create the input for int raw values
     _intInput = document.createElement('input');
     _intInput.setAttribute('type', 'number');
+    _intInput.setAttribute('placeholder',
+        'Entrez un nombre ici, ou sélectionnez une fonction dans le menu déroulant');
     _intInput.setAttribute('class', 'action_input');
+    _intInput.addEventListener('input', _inputChangeCallback);
     _mainDiv.append(_intInput);
-    _updateIntInputTextDisplay();
+    if (_placeholder.isRawValue) {
+      _intInput.value = _placeholder.intRawValue.toString();
+    }
+
+    // Create the input for string raw values
+    _strInput = document.createElement('input');
+    _strInput.setAttribute('type', 'text');
+    _strInput.setAttribute('placeholder',
+        'Entrez un texte ici, ou sélectionnez une fonction dans le menu déroulant');
+    _strInput.setAttribute('class', 'action_input');
+    _strInput.addEventListener('input', _inputChangeCallback);
+    _mainDiv.append(_strInput);
+    if (_placeholder.isRawValue) {
+      _strInput.value = _placeholder.strRawValue;
+    }
 
     // Create the select representing this action
     _select = document.createElement('select');
@@ -41,6 +65,9 @@ class ActionView {
     _select.addEventListener('change', _selectChangeCallback);
     _mainDiv.append(_select);
 
+    _updateRawValuesInputDisplay();
+
+    // Create the div for the parameters
     _paramsDiv = document.createElement('div');
     _paramsDiv.setAttribute('class', 'action_params');
     _populateParams();
@@ -52,7 +79,7 @@ class ActionView {
   void _populateSelect() {
     if (_select == null) return;
     var currentValue = _select.value;
-    print(currentValue);
+    // print(currentValue);
 
     // Remove all options
     while (_select.children.isNotEmpty) {
@@ -98,15 +125,61 @@ class ActionView {
   }
 
   void _selectChangeCallback([Event evt]) {
+    _updateRawValuesInputDisplay();
     var val = _select.value;
 
     _placeholder.unsetAction();
 
     if (val != 'null') {
       _placeholder.setAction(Action.fromActionName(val, _placeholder));
-      _intInput.style.display = 'none';
-    } else {
-      _updateIntInputTextDisplay();
+    }
+  }
+
+  void _inputChangeCallback(Event evt) {
+    _updateRawValuesInputDisplay();
+    var target = evt.currentTarget;
+    var val = (target as InputElement).value;
+
+    // Not needed normally
+    // _placeholder.unsetAction();
+
+    if (val != '') {
+      if (target == _intInput) {
+        _placeholder.setRawValue(int.parse(val));
+      } else if (target == _strInput) {
+        _placeholder.setRawValue(val);
+      }
+    }
+  }
+
+  void destroy() {
+    _mainDiv.remove();
+  }
+
+  void updateInstantiation(Template template, String typeInst) {
+    _populateSelect();
+    _updateReturnTypeTxt();
+    _updateRawValuesInputDisplay();
+  }
+
+  void _updateReturnTypeTxt() {
+    _returnTypeTxt.innerText = _placeholder.returnType.toString();
+  }
+
+  void _updateRawValuesInputDisplay() {
+    _strInput.style.display = 'none';
+    _intInput.style.display = 'none';
+    _select.style.display = 'inline';
+    if (select.value == 'null') {
+      if (_placeholder.returnType.type == 'entier') {
+        _intInput.style.display = 'inline';
+      }
+      if (_placeholder.returnType.type == 'texte') {
+        _strInput.style.display = 'inline';
+      }
+    }
+    if (_intInput.value != '' || _strInput.value != '') {
+      _select.style.display = 'none';
     }
   }
 
@@ -116,25 +189,7 @@ class ActionView {
 
   SelectElement get select => _select;
 
-  void destroy() {
-    _mainDiv.remove();
-  }
+  InputElement get intInput => _intInput;
 
-  void updateInstantiation(Template template, String typeInst) {
-    _populateSelect();
-    _updateReturnTypeTxt();
-    _updateIntInputTextDisplay();
-  }
-
-  void _updateReturnTypeTxt() {
-    _returnTypeTxt.innerText = _placeholder.returnType.toString();
-  }
-
-  void _updateIntInputTextDisplay() {
-    if (_placeholder.returnType.type == 'int') {
-      _intInput.style.display = 'inline';
-    } else {
-      _intInput.style.display = 'none';
-    }
-  }
+  InputElement get stringInput => _strInput;
 }

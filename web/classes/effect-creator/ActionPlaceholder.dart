@@ -10,7 +10,7 @@ class ActionPlaceholder {
   /// The name of the action
   final String _name;
 
-  /// The expected return type ('T' , 'string', 'list'...)
+  /// The expected return type ('T' , 'texte', 'liste'...)
   final AbstractType _returnType;
 
   /// The caller of the action
@@ -19,6 +19,10 @@ class ActionPlaceholder {
   final bool disableTemplates;
 
   final ActionPlaceholder triggerPlaceholder;
+
+  bool _isRawValue = false;
+  int _intRawValue;
+  String _strRawValue;
 
   Action _action;
 
@@ -47,24 +51,39 @@ class ActionPlaceholder {
     var filteredActions = actions.where((a) {
       // Add current_element only if this placeholder is in a predicate
       if (a['name'] == 'élément_actuel_prédicat') {
-        var pred = _parent?.findParentPredicate();
-        return pred != null && _returnType.canUnify(pred._parent._returnType);
+        var pred = _parent?.findParentWithName('prédicat');
+        // Check if the placeholder can be unified with the type of the elements of the list
+        return pred != null &&
+            _returnType.canUnify(
+                pred._parent._action.params[0]._returnType.typeParameters[0]);
       }
 
       // Disallow adding predicate inside another predicate
       if (a['params'].isNotEmpty &&
           (a['params'] as List<Map<String, dynamic>>)
               .any((param) => param['name'] == 'prédicat') &&
-          findParentPredicate() != null) {
+          findParentWithName('prédicat') != null) {
+        return false;
+      }
+
+      // Disallow adding for_all inside another for_all
+      if (a['params'].isNotEmpty &&
+          (a['params'] as List<Map<String, dynamic>>)
+              .any((param) => param['name'] == 'fonction') &&
+          findParentWithName('fonction') != null) {
         return false;
       }
 
       // Handle enable_if fields
       if (a['enable_if'] != null) {
-        Map<String, List<String>> cond = a['enable_if'];
+        Map<String, dynamic> cond = a['enable_if'];
         if (cond['trigger'] != null &&
             cond['trigger'].every(
                 (element) => element != triggerPlaceholder?.action?.name)) {
+          return false;
+        }
+        if (cond['descendant_of'] != null &&
+            _parent?.findParentWithName(cond['descendant_of']) == null) {
           return false;
         }
       }
@@ -99,11 +118,29 @@ class ActionPlaceholder {
 
   void setAction(Action action, {bool updateView = false}) {
     unsetAction();
+    _isRawValue = false;
     _action = action;
     if (updateView && _view != null) {
       _view.select.value = action.name;
     }
     // print(getRoot().toJson());
+  }
+
+  void setRawValue(dynamic val, {bool updateView = false}) {
+    unsetAction();
+    _isRawValue = true;
+
+    if (val is String) {
+      _strRawValue = val;
+      if (updateView && _view != null) {
+        _view.stringInput.value = val;
+      }
+    } else if (val is int) {
+      _intRawValue = val;
+      if (updateView && _view != null) {
+        _view.intInput.value = val.toString();
+      }
+    }
   }
 
   void unsetAction() {
@@ -121,33 +158,39 @@ class ActionPlaceholder {
     }
   }
 
-  Action get action => _action;
-
-  ActionPlaceholder get parent => _parent;
-
-  AbstractType get returnType => _returnType;
-
-  String get name => _name;
-
   void updateInstantiation(Template template, String typeInst) {
     _view?.updateInstantiation(template, typeInst);
   }
 
-  Map<String, dynamic> toJson() {
-    if (_action == null) return <String, dynamic>{};
-    return _action.toJson();
+  dynamic toJson() {
+    if (_isRawValue) {
+      if (_returnType.type == 'entier') {
+        return _intRawValue;
+      } else if (_returnType.type == 'texte') {
+        return _strRawValue;
+      }
+    } else {
+      if (_action != null) {
+        return _action.toJson();
+      }
+    }
+    return <String, dynamic>{};
   }
 
-  void fillFromJson(Map<String, dynamic> json) {
-    setAction(Action.fromJsonExport(json, this), updateView: true);
+  void fillFromJson(dynamic json) {
+    if (json is Map<String, dynamic>) {
+      setAction(Action.fromJsonExport(json, this), updateView: true);
+    } else {
+      setRawValue(json, updateView: true);
+    }
   }
 
-  ActionPlaceholder findParentPredicate() {
-    return _name == 'prédicat'
+  ActionPlaceholder findParentWithName(String name) {
+    return _name == name
         ? this
         : _parent == null
             ? null
-            : _parent.findParentPredicate();
+            : _parent.findParentWithName(name);
   }
 
   ActionPlaceholder getRoot() {
@@ -163,4 +206,18 @@ class ActionPlaceholder {
     _view?.destroy();
     _view = null;
   }
+
+  Action get action => _action;
+
+  ActionPlaceholder get parent => _parent;
+
+  AbstractType get returnType => _returnType;
+
+  String get name => _name;
+
+  bool get isRawValue => _isRawValue;
+
+  int get intRawValue => _intRawValue;
+
+  String get strRawValue => _strRawValue;
 }
