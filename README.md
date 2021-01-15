@@ -8,3 +8,4 @@ Une appli Dart Web pour génerer le code JSON correspondant à une carte,
  Résultat disponible 
  [ici](https://www.etud.insa-toulouse.fr/~ysimard/altheim/).
  
+[Guide d'utilisation](Guide.md)
