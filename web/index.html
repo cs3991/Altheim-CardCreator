@@ -35,7 +35,14 @@
 
         <div class="bot_left">
             <button type="button" name="empty" id="empty_btn">Vider la collection</button>
-            <button type="button" name="import" id="import_btn" disabled>Importer une collection</button>
+            <div class="hover_json" id="import_popup_collection">
+                <div>
+                    <textarea id="json_import_collection" spellcheck="false"></textarea>
+                    <button id="import_collection_from_file">Importe un fichier</button>
+                    <button id="import_collection_from_text">Valider</button>
+                </div>
+                <button type="button" name="import" id="import_btn">Importer une collection</button>
+            </div>
             <div class="hover_json" id="hover_json_collection">
                 <div>
                     <textarea id="json_collection" readonly spellcheck="false"></textarea>
@@ -44,6 +51,7 @@
                 </div>
                 <button type="button" name="json" id="show_json_collection">Voir le code de la collection</button>
             </div>
+
         </div>
     </div>
     <div class="creation">
@@ -234,14 +242,21 @@
                 <div class="bot_left">
                     <button type="button" name="upload" id="upload_img" disabled>Uploader une illustration</button>
                     <button type="button" name="reset" id="reset_card" disabled>Réinitialiser la carte</button>
-                    <button type="button" name="import" id="import_card" disabled>Importer une carte</button>
+                    <div class="hover_json" id="import_popup">
+                        <div>
+                            <textarea id="json_import" spellcheck="false"></textarea>
+                            <button id="import_from_file">Importe un fichier</button>
+                            <button id="import_from_text">Valider</button>
+                        </div>
+                        <button type="button" name="import" id="import_card">Importer une carte</button>
+                    </div>
                     <div class="hover_json" id="hover_json">
-                        <button type="button" name="json" id="show_json">Voir le code de la carte</button>
                         <div>
                             <textarea id="json" spellcheck="false" readonly></textarea>
                             <button id="copy_card_json">Copier</button>
                             <button id="export_card_json">Exporter</button>
                         </div>
+                        <button type="button" name="json" id="show_json">Voir le code de la carte</button>
                     </div>
                 </div>
             </div>

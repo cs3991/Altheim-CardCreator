@@ -606,8 +606,8 @@ button.effet
 {
   width: 90%;
   height: 25px;
-  margin: 0 5%;
-  padding-bottom: 10px;
+  /margin: 0 5%;
+  padding: 0 5% 10px 5%;
   z-index: 2;
 }
 
@@ -620,7 +620,6 @@ button.effet
     padding: 5px;
     background: #262626;
     border-radius: 4px;
-    margin-top: 7px;
     -webkit-box-shadow: 2px 2px 18px 0px rgba(0,0,0,0.31);
     box-shadow: 2px 2px 18px 0px rgba(0,0,0,0.2);
 }
@@ -652,13 +651,30 @@ button.effet
 
 .hover_json div
 {
+    width: 300px;
     visibility: hidden;
     position: absolute;
 }
 
 #hover_json_collection div
 {
-   bottom: 5px;
+  bottom: 5px;
+  left: 13%;
+
+}
+
+#import_popup_collection div
+{
+  bottom: 41px;
+  left: 13%;
+}
+
+#import_popup div  {
+    left: calc(65vw - 275px);
+}
+
+#hover_json div  {
+    left: calc(65vw - 275px);
 }
 
 button[disabled] {
