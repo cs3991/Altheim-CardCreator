@@ -179,6 +179,7 @@ class ActionPlaceholder {
 
   void fillFromJson(dynamic json) {
     if (json is Map<String, dynamic>) {
+      if (json.isEmpty) return;
       setAction(Action.fromJsonExport(json, this), updateView: true);
     } else {
       setRawValue(json, updateView: true);

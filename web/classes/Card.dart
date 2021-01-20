@@ -41,7 +41,8 @@ class Card {
         constraints = Map<String, dynamic>.from(json['contraintes'] ?? {}),
         keywords = Map<String, dynamic>.from(json['mots_cles'] ?? {}),
         effectTxt = json['texte_effet'],
-        effects = List<Effect>.from((json['effet'] ?? []).map((e) => Effect.fromJson(e))),
+        effects =
+            List<Effect>.from(json['effet'].map((e) => Effect.fromJson(e))),
         power = json['puissance'],
         resistance = json['resistance'];
 
