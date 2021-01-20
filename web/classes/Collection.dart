@@ -57,6 +57,7 @@ class Collection {
       value.classes.remove('selected');
     });
     collectionElementsMap[card].classes.add('selected');
+    changeName(card);
     // updateJson();
   }
 

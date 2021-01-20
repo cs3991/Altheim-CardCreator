@@ -129,5 +129,21 @@ class ButtonListeners {
       document.body.children.remove(anchor);
       Url.revokeObjectUrl(url);
     });
+
+    // Button import card from text
+    querySelector('#import_from_text').onClick.listen((event) {
+      var text = (querySelector('#json_import') as TextAreaElement).value;
+      var json = jsonDecode(text);
+      collection.add(Card.fromJson(json), propertiesForm);
+    });
+
+    // Button import collection from text
+    querySelector('#import_collection_from_text').onClick.listen((event) {
+      var text = (querySelector('#json_import_collection') as TextAreaElement).value;
+      var json = jsonDecode(text);
+      json.forEach((element) {
+        collection.add(Card.fromJson(element), propertiesForm);
+      });
+    });
   }
 }

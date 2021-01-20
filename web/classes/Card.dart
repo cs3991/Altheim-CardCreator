@@ -30,18 +30,18 @@ class Card {
   }
 
   Card.fromJson(Map<String, dynamic> json)
-      : id = json['id'],
+      : id = maxId++,
         name = json['nom'],
         maxNbr = json['nbr_max'],
         type = CardTypeExtension.fromString(json['type']),
         rarity = json['rarete'],
         extension = json['extension'],
-        subtypes = json['sous_types'],
-        devotions = json['devotions'],
-        constraints = json['contraintes'],
-        keywords = json['mots_cles'],
+        subtypes = List<String>.from(json['sous_types' ?? []]),
+        devotions = List<String>.from(json['devotions'] ?? []),
+        constraints = Map<String, dynamic>.from(json['contraintes'] ?? {}),
+        keywords = Map<String, dynamic>.from(json['mots_cles'] ?? {}),
         effectTxt = json['texte_effet'],
-        effects = json['effet'].map((e) => Effect.fromJson(e)),
+        effects = List<Effect>.from((json['effet'] ?? []).map((e) => Effect.fromJson(e))),
         power = json['puissance'],
         resistance = json['resistance'];
 
